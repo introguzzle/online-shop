@@ -7,24 +7,24 @@ use service\RegistrationService;
 class RegistrationController extends Controller {
 
     private RegistrationService $service;
-    private static string $SERVICE = "service\RegistrationService";
 
     public function __construct() {
-        $this->service = new self::$SERVICE;
+        parent::__construct();
+        $this->service = new RegistrationService();
     }
 
     public function get(): void {
-        require_once "./../view/registration.phtml";
+        require_once $this->renderer->render("registration.phtml");
     }
 
     public function post(): void {
         $result = $this->service->proceed();
 
         if (gettype($result) === "boolean") {
-            require_once "./../view/login.phtml";
+            require_once $this->renderer->render("login.phtml");
         } else {
             $errors = $result;
-            require_once "./../view/registration.phtml";
+            require_once $this->renderer->render("registration.phtml");
         }
     }
 }

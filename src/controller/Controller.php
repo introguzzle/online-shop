@@ -3,9 +3,14 @@
 namespace controller;
 
 use request\Request;
+use view\Renderer;
 
 abstract class Controller {
-    public abstract function get(): void;
 
-    public abstract function post(): void;
+    protected Renderer $renderer;
+
+    public function __construct() {
+        $this->renderer = new Renderer();
+    }
+
 }

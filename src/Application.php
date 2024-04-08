@@ -24,8 +24,8 @@ class Application {
             return;
         }
 
-        $class = $route["class"];
-        $method = $route["method"];
+        $class       = $route["class"];
+        $classMethod = $route["method"];
 
         if (!class_exists($class)) {
             echo $this->noSuchClass($class);
@@ -35,27 +35,27 @@ class Application {
 
         $instance = new $class();
 
-        if (!method_exists($instance, $method)) {
-            echo $this->noSuchFunction($instance, $method);
+        if (!method_exists($instance, $classMethod)) {
+            echo $this->noSuchClassMethod($instance, $classMethod);
             require_once "./../view/404.html";
             return;
         }
 
-        $instance->$method();
+        $instance->$classMethod();
     }
 
-    public function get(string $url,
-                        string $class,
-                        string $classMethod): void {
+    public function registerGetRoute(string $url,
+                                     string $class,
+                                     string $classMethod): void {
         $this->routes[$url]["GET"] = [
             "class"   => $class,
             "method"  => $classMethod,
         ];
     }
 
-    public function post(string $url,
-                         string $class,
-                         string $classMethod): void {
+    public function registerPostRoute(string $url,
+                                      string $class,
+                                      string $classMethod): void {
         $this->routes[$url]["POST"] = [
             "class"   => $class,
             "method"  => $classMethod,
@@ -71,12 +71,12 @@ class Application {
         return "$class is not present";
     }
 
-    private function noSuchFunction(mixed $function,
-                                    mixed $class): string {
-        return "Function $function is not found in $class";
+    private function noSuchClassMethod(mixed $classMethod,
+                                       mixed $class): string {
+        return "No such requested $classMethod in class $class";
     }
 
     private function noSuchRoute(mixed $requestUri): string {
-        return "No such $requestUri";
+        return "No such requested $requestUri";
     }
 }

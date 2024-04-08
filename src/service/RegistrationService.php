@@ -2,14 +2,17 @@
 
 namespace service;
 
+use repository\UserRepository;
 use dto\User;
 use request\RegistrationRequest;
 
 class RegistrationService {
 
     private array $errors = [];
-    public function __construct() {
+    private UserRepository $userRepository;
 
+    public function __construct() {
+        $this->userRepository = new UserRepository();
     }
 
     public function proceed(): array | true {
@@ -29,12 +32,12 @@ class RegistrationService {
     private function validate(RegistrationRequest $request): bool {
         $errorsArePresent = false;
 
-        if (!str_contains($request->getEmail(), "@")) {
+        if (!filter_var($request->getEmail(), FILTER_VALIDATE_EMAIL)) {
             $this->errors["email"] = true;
             $errorsArePresent = true;
         }
 
-        if ($request->getPassword() != $request->getPasswordRepeat()) {
+        if ($request->getPassword() !== $request->getPasswordRepeat()) {
             $this->errors["password"] = true;
             $errorsArePresent = true;
         }
@@ -49,7 +52,7 @@ class RegistrationService {
         return !$errorsArePresent;
     }
 
-    private function toRequest(): RegistrationRequest|false {
+    private function toRequest(): RegistrationRequest {
         $name = $_REQUEST["name"];
         $email = $_REQUEST["email"];
         $password = $_REQUEST["psw"];
@@ -59,6 +62,6 @@ class RegistrationService {
     }
 
     public function save(User $user): void {
-        $user->save();
+        $this->userRepository->save($user);
     }
 }

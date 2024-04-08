@@ -15,7 +15,11 @@ class RegistrationRequest extends Request {
                                 string $email,
                                 string $password,
                                 string $passwordRepeat) {
-        parent::__construct("POST", "/registrate", $_REQUEST);
+        parent::__construct(
+            "POST",
+            "/registrate",
+            [$name, $email, $password, $passwordRepeat]
+        );
 
         $this->name = $name;
         $this->email = $email;
@@ -41,6 +45,6 @@ class RegistrationRequest extends Request {
     }
 
     public function toUser(): User {
-        return new User($this->name, $this->email, $this->password);
+        return new User(0, $this->name, $this->email, $this->password);
     }
 }
