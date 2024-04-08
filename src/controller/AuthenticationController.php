@@ -18,17 +18,17 @@ class AuthenticationController extends Controller {
     }
 
     public function get(): void {
-        require_once $this->renderer->render("login.phtml", true);
+        require_once $this->renderer->render("login.phtml");
     }
 
     public function login(): void {
         $result = $this->loginService->proceed();
 
         if (gettype($result) === "boolean") {
-            require_once $this->renderer->render("home.phtml", true);
+            require_once $this->renderer->render("home.phtml");
         } else {
             $errors = $result;
-            require_once $this->renderer->render("login.phtml", true);
+            require_once $this->renderer->render("login.phtml");
         }
     }
 
@@ -36,5 +36,4 @@ class AuthenticationController extends Controller {
         $this->loginService->logout();
         header("Location: /login");
     }
-
 }

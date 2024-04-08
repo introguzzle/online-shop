@@ -2,6 +2,8 @@
 
 namespace service;
 
+use model\CartRepository;
+use repository\ProfileRepository;
 use repository\UserRepository;
 use dto\User;
 use request\RegistrationRequest;
@@ -10,9 +12,12 @@ class RegistrationService {
 
     private array $errors = [];
     private UserRepository $userRepository;
+    private ProfileRepository $profileRepository;
+    private CartRepository $cartRepository;
 
     public function __construct() {
         $this->userRepository = new UserRepository();
+        $this->profileRepository = new ProfileRepository();
     }
 
     public function proceed(): array | true {
@@ -24,7 +29,10 @@ class RegistrationService {
         if (!$correct) {
             return $this->errors;
         } else {
-            $this->save($user);
+            $this->saveToRepository($user);
+            $this->saveProfile($user);
+            $this->createCart($user);
+
             return true;
         }
     }
@@ -61,7 +69,15 @@ class RegistrationService {
         return new RegistrationRequest($name, $email, $password, $passwordRepeat);
     }
 
-    public function save(User $user): void {
+    public function saveToRepository(User $user): void {
         $this->userRepository->save($user);
+    }
+
+    public function saveProfile(User $user): void {
+        $this->profileRepository->saveFromUser($user);
+    }
+
+    public function createCart(User $user): void {
+        $this->cartRepository->saveFromUser($user);
     }
 }

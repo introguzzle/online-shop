@@ -17,7 +17,7 @@
             line-height: 1.5;
             font-family: sans-serif;
             text-transform: uppercase;
-            font-size: 16px;
+            font-size: 18px;
             color: #fff;
         }
         a {
@@ -26,6 +26,7 @@
         }
         #header {
             background: #1E262D;
+            height: fit-content;
             width: 100%;
             position: relative;
         }
@@ -67,10 +68,12 @@
             position: relative;
         }
         nav li a {
+            width: 100%;
             float: left;
             padding: 35px;
         }
         nav li a:hover {
+            width: 100%;
             background: #2C3E50;
         }
         nav li ul {
@@ -80,12 +83,15 @@
             display: inline;
         }
         nav li li {
+            width: 100%;
             float: none;
         }
         nav .dropdown ul {
             position: absolute;
             left: 0;
             top: 100%;
+            width: 100%;
+            max-width: 100%;
             background: #fff;
             padding: 20px 0;
             border-bottom: 3px solid #34495e;
@@ -95,44 +101,23 @@
         }
         nav .dropdown li a {
             padding: 10px 35px;
-            font-size: 13px;
-            min-width: 200px;
+            font-size: 14px;
+            max-width: 100%
         }
-        nav .mega-dropdown {
-            width: 100%;
-            position: absolute;
-            top: 100%;
-            left: 0;
-            background: #fff;
-            overflow: hidden;
-            padding: 20px 35px;
-            border-bottom: 3px solid #34495e;
-        }
+
         nav li li a {
             float: none;
             color: #333;
             display: block;
             padding: 8px 10px;
             border-radius: 3px;
-            font-size: 13px;
+            font-size: 14px;
         }
 
         nav li li a:hover {
-            background: #bdc3c7;
+            background: #ffffff;
         }
 
-        .mega-col {
-            width: 25%;
-            float: left;
-        }
-        #menu-icon {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            margin-top: -12px;
-            margin-right: 30px;
-            display: none;
-        }
         #menu-icon span {
             border: 2px solid #fff;
             width: 30px;
@@ -160,25 +145,7 @@
                 max-height: 400px;
                 overflow-y: scroll;
             }
-            #menu-icon {
-                display: inline;
-                top: 45px;
-                cursor: pointer;
-            }
-            #menu-icon.active .first {
-                transform: rotate(45deg);
-                -webkit-transform: rotate(45deg);
-                margin-top: 10px;
-            }
-            #menu-icon.active .second {
-                transform: rotate(135deg);
-                -webkit-transform: rotate(135deg);
-                position: relative;
-                top: -9px;
-            }
-            #menu-icon.active .third {
-                display: none;
-            }
+
             .search {
                 float: none;
             }
@@ -218,9 +185,6 @@
             #header nav ul li li a:before {
                 content: "- ";
             }
-            .mega-col {
-                width: 100%;
-            }
         }
     </style>
 
@@ -231,7 +195,9 @@
     </div>
     <nav>
         <form class="search" action="">
-            <input name="q" placeholder="Search..." type="search">
+            <label>
+                <input name="q" placeholder="Search..." type="search">
+            </label>
         </form>
         <ul>
             <li><a href="/cart">Cart</a></li>
@@ -251,11 +217,16 @@
             </form>
 
             <li class="dropdown">
-                <a href="/profile">Profile</a>
+                <a href="/profile" id="profile-link">Profile</a>
                 <ul>
+                    <?php if (\session\AuthHolder::getCurrentUser() === null): ?>
                     <li><a href="/login">Login </a> </li>
                     <li><a href="/register">Register </a></li>
+                    <?php endif; ?>
+
+                    <?php if (\session\AuthHolder::getCurrentUser() !== null): ?>
                     <li><a href="/login" onclick="logout()">Logout</a></li>
+                    <?php endif; ?>
                 </ul>
             </li>
         </ul>
@@ -392,4 +363,14 @@
         event.preventDefault(); // Предотвращаем выполнение стандартного действия (перехода по ссылке)
         document.getElementById('logoutForm').submit(); // Отправляем форму
     }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const profileLink = document.getElementById("profile-link");
+
+        <?php if (!isset($_SESSION["user_id"])): ?>
+        profileLink.addEventListener("click", function(event) {
+            event.preventDefault(); // Предотвращаем переход по ссылке
+        });
+        <?php endif; ?>
+    });
 </script>

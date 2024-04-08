@@ -12,7 +12,7 @@ class HomeController extends Controller {
     }
 
     public function get(): void {
-        require_once $this->renderer->render("home.phtml", true);
+        require_once $this->renderer->render("home.phtml");
     }
 
     public function post(): void {

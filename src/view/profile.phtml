@@ -2,22 +2,43 @@
     <h1>User Profile</h1>
     <div class="profile-info">
         <img src="avatar.jpg" alt="User Avatar">
-        <p class="username">John Doe</p>
-        <p class="email">john@example.com</p>
+        <p class="username"><?php if (isset($name)) echo $name ?></p>
+        <p class="email"><?php if (isset($email)) echo $email ?></p>
+    </div>
+    <div class="edit-buttons">
+        <form method="GET" action="/profile/edit">
+        <button class="edit-btn">Edit Description</button>
+        </form>
+
+        <form method="GET" action="/profile/edit">
+            <button class="edit-btn">Edit Avatar</button>
+        </form>
     </div>
     <h2>About Me</h2>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget justo nec libero tempor finibus eget sed quam. Maecenas quis fermentum lacus. Nullam in leo a risus viverra consectetur. Suspendisse potenti. Nam vel ultrices turpis, a interdum mauris. Morbi sed odio et dui pharetra scelerisque a in nisi. Vivamus aliquet massa a leo convallis, id pharetra magna consectetur. Ut accumsan fringilla purus at laoreet. Nam accumsan id arcu a fringilla. Donec euismod odio nec lectus hendrerit ullamcorper. Etiam interdum arcu sit amet massa suscipit faucibus.</p>
 </div>
 
 <style>
-    /* Global styles */
-    body {
-        font-family: Arial, sans-serif;
-        background-color: #bdc3c7;
-        color: #fff;
-        margin: 0;
-        padding: 0;
+    .edit-buttons {
+        text-align: center;
+        justify-content: normal;
     }
+
+    .edit-btn {
+        text-transform: uppercase;
+        background-color: #ffffff;
+        color: #1E262D;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .edit-btn:hover {
+        background-color: rgb(100, 100, 100);
+    }
+
     .p-container {
         max-width: 800px;
         margin: 50px auto;

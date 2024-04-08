@@ -233,129 +233,103 @@
     </nav>
 </div>
 <body>
-    <form method="POST" action="/register">
-    <div class="l-container">
-        <h1>Register</h1>
-        <p>Please fill in this form to create an account.</p>
-        <hr>
-
-        <label class="l-label" for="name"><b>Name</b></label>
-        <?php if (isset($errors["name"])): ?>
-            <label> <?php echo "Invalid name"; ?></label>
-        <?php endif; ?>
-        <input type="text" placeholder="Enter Name" name="name" id="name" required>
-
-
-        <label class="l-label" for="email"><b>Email</b></label>
-        <?php if (isset($errors["email"])): ?>
-            <label> <?php echo "Invalid email"; ?></label>
-        <?php endif; ?>
-        <input type="text" placeholder="Enter Email" name="email" id="email" required>
-
-        <label class="l-label" for="psw"><b>Password</b></label>
-        <?php if (isset($errors["password"])): ?>
-            <label> <?php echo "Passwords don't match"; ?></label>
-        <?php endif; ?>
-        <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-
-        <label class="l-label" for="psw-repeat"><b>Repeat Password</b></label>
-        <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-
-        <button class="l-button" type="submit">Register</button>
-    </div>
-</form>
-
-<div class="l-container">
-    <form method="POST" action="/login">
-        <label class="c-label">
-            Already have an account?
-        </label>
-        <button class="l-button" type="submit">Sign In</button>
-    </form>
-</div>
-
+    
 <style>
-    .c-label {
-        text-align: center;
-        margin: 55px;
-        color: #1E262D;
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #bdc3c7;
+        color: #fff;
+        margin: 0;
+        padding: 0;
     }
 
-    .l-label {
-        text-align: center;
-        margin-bottom: 20px;
-        color: #1E262D; /* черный цвет текста */
-    }
-
-    .l-container {
-        max-width: 400px;
+    .t-container {
+        max-width: 800px;
         margin: 50px auto;
         padding: 20px;
-        background-color: #fff;
+        background-color: #1E262D;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
 
-    h1 {
+    h1, h2, p {
         text-align: center;
-        margin-bottom: 20px;
-        color: #1E262D; /* черный цвет текста */
+        color: #fff;
     }
 
-    p {
-        text-align: center;
+    .cart-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
         margin-bottom: 20px;
-        color: #1E262D; /* черный цвет текста */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
-    input[type="text"], input[type="password"] {
+    .cart-item img {
         width: 100%;
-        padding: 15px;
-        margin: 5px 0 22px 0;
-        display: inline-block;
-        border: none;
-        background: #f1f1f1;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
     }
 
-    input[type="checkbox"] {
-        display: none; /* Скрыть оригинальный чекбокс */
+    .cart-item h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
     }
 
-    /* Стилизованный внешний вид замены для чекбокса */
-    input[type="checkbox"] + label::before {
-        content: '';
-        display: inline-block;
-        width: 20px; /* Задайте размер замены */
-        height: 20px; /* Задайте размер замены */
-        border: 1px solid #ccc;
-        border-radius: 50%; /* Сделайте замену круглой */
-        margin-right: 10px; /* Добавьте отступ между чекбоксом и текстом */
+    .cart-item p {
+        color: #666;
     }
 
-    /* Стили при нажатии на чекбокс */
-    input[type="checkbox"]:checked + label::before {
-        background-color: #1E262DFF; /* Измените цвет фона при нажатии */
-    }
-
-    .l-button {
-        font-family: Arial, sans-serif;
-        font-style: revert;
-        text-transform: uppercase;
+    .checkout-button {
+        display: block;
         width: 100%;
         padding: 10px;
-        margin-bottom: 10px;
-        border: 1px solid #ccc;
-        border-radius: 25px; /* Здесь задаём округлость кнопок */
-        box-sizing: border-box;
-        background-color: #1E262DFF;
-        color: #fff;
+        margin: 20px auto;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #1E262DFF;
+        font-size: 18px;
+        text-align: center;
         cursor: pointer;
+        text-decoration: none;
     }
 
-    .l-button:hover {
+    .checkout-button:hover {
         background-color: #0056b3;
     }
 </style>
+
+<div class="t-container">
+    <h1>Shopping Cart</h1>
+    <div class="cart-item">
+        <img src="product1.jpg" alt="Product 1">
+        <h2>Product Name 1</h2>
+        <p>Price: $19.99</p>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="cart-item">
+        <img src="product2.jpg" alt="Product 2">
+        <h2>Product Name 2</h2>
+        <p>Price: $24.99</p>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+    <div class="cart-item">
+        <img src="product3.jpg" alt="Product 3">
+        <h2>Product Name 3</h2>
+        <p>Price: $29.99</p>
+        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+    </div>
+
+    <div>
+        <p>
+            Total price: 14343
+        </p>
+    </div>
+
+    <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
+</div>
 </body>
 </html>
 

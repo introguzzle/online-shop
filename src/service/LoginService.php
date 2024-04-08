@@ -32,7 +32,7 @@ class LoginService {
             return $this->errors;
         }
 
-        $this->login($user, $loginRequest->getRemember() == "0");
+        $this->login($user);
         return true;
     }
 
@@ -50,8 +50,8 @@ class LoginService {
             : new LoginRequest($email, $password, $remember);
     }
 
-    public function login(User $user, bool $doNotRemember): void {
-        $this->authService->login($user, $doNotRemember);
+    public function login(User $user): void {
+        $this->authService->login($user);
     }
 
     public function logout(): void {

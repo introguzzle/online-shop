@@ -23,13 +23,18 @@ class UserRepository implements Repository {
                 VALUES (:name, :email, :password, :created_at, :updated_at)";
 
         $stmt = $this->pdo->prepare($query);
-        $hash = password_hash($object->getPassword(), PASSWORD_BCRYPT);
 
-        $stmt->bindParam(':name', $object->getName());
-        $stmt->bindParam(':email', $object->getEmail());
-        $stmt->bindParam(':password', $hash);
-        $stmt->bindParam(':created_at', $object->getCreatedAt());
-        $stmt->bindParam(':updated_at', $object->getUpdatedAt());
+        $name = $object->getName();
+        $email = $object->getEmail();
+        $password = password_hash($object->getPassword(), PASSWORD_BCRYPT);
+        $createdAt = $object->getCreatedAt();
+        $updatedAt = $object->getUpdatedAt();
+
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':email', $email);
+        $stmt->bindParam(':password', $password);
+        $stmt->bindParam(':created_at', $createdAt);
+        $stmt->bindParam(':updated_at', $updatedAt);
 
         try {
             $stmt->execute();

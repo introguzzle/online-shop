@@ -6,7 +6,7 @@ use repository\UserRepository;
 use dto\User;
 
 class SessionAuthenticationService implements AuthenticationService {
-    private ?User $user;
+    private static ?User $user;
     private UserRepository $userRepository;
 
     public function __construct() {
@@ -19,36 +19,33 @@ class SessionAuthenticationService implements AuthenticationService {
     }
 
     public function getCurrentUser(): ?User {
-        if (isset($this->user)) {
-            return $this->user;
+        if (isset(self::$user)) {
+            return self::$user;
         }
 
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
 
-        return $this->userRepository->getById($_SESSION["user_id"]);
+        if (isset($_SESSION["user_id"])) {
+            return $this->userRepository->getById($_SESSION["user_id"]);
+        } else {
+            return null;
+        }
     }
 
-    public function login(User $user, bool $setLifeTime): bool {
-        $this->user = $user;
-
+    public function login(User $user): bool {
         session_start();
-
-        if ($setLifeTime)
-            session_set_cookie_params(3000);
+        self::$user = $user;
 
         $_SESSION["user_id"] = $user->getId();
         return true;
     }
 
     public function logout(): void {
-        $this->user = null;
-
         session_start();
-        unset($_SESSION["user_id"]);
+        self::$user = null;
 
-        session_unset();
         session_destroy();
     }
 }

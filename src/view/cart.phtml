@@ -1,0 +1,85 @@
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #bdc3c7;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .t-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #1E262D;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2, p {
+        text-align: center;
+        color: #fff;
+    }
+
+    .cart-item {
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .cart-item img {
+        width: 100%;
+        height: auto;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    .cart-item h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
+    .cart-item p {
+        color: #666;
+    }
+
+    .checkout-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 20px auto;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #1E262DFF;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .checkout-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+
+<div class="t-container">
+    <h1>Shopping Cart</h1>
+    <?php $totalPrice = 0; if (isset($books)) foreach ($books as $book): ?>
+        <div class="cart-item">
+            <img src="<?php echo $book->getImageUrl()?>" alt="Product 1">
+            <h2><?php echo $book->getName()?></h2>
+            <p>Price: <?php echo $book->getPrice()?></p>
+            <p>Description: <?php echo $book->getDescription()?></p>
+        </div>
+    <?php endforeach;?>
+
+    <div>
+        <p>Total price: <?php echo $totalPrice ?></p>
+    </div>
+
+    <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
+</div>

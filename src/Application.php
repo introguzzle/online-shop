@@ -1,7 +1,5 @@
 <?php
 
-use request\Request;
-
 class Application {
     private array $routes = [];
 
@@ -12,7 +10,7 @@ class Application {
         if (!array_key_exists($requestUri, $this->routes)) {
             header("HTTP/1.0 404 Not Found", true, 404);
             echo $this->noSuchRoute($requestUri);
-            require_once "./../view/404.html";
+            require_once "./../view/404.phtml";
             return;
         }
 
@@ -20,7 +18,7 @@ class Application {
 
         if (!isset($route)) {
             echo $this->noSuchMethod($requestUri, $requestMethod);
-            require_once "./../view/404.html";
+            require_once "./../view/404.phtml";
             return;
         }
 
@@ -29,7 +27,7 @@ class Application {
 
         if (!class_exists($class)) {
             echo $this->noSuchClass($class);
-            require_once "./../view/404.html";
+            require_once "./../view/404.phtml";
             return;
         }
 
@@ -37,7 +35,7 @@ class Application {
 
         if (!method_exists($instance, $classMethod)) {
             echo $this->noSuchClassMethod($instance, $classMethod);
-            require_once "./../view/404.html";
+            require_once "./../view/404.phtml";
             return;
         }
 

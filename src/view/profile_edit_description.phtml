@@ -1,0 +1,70 @@
+
+<div class="edit-container">
+    <h1>Edit Profile</h1>
+    <form action="/profile/edit" method="post">
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="5" placeholder="Enter your description here"></textarea>
+        <button type="submit">Save Changes</button>
+    </form>
+</div>
+
+<style>
+    /* Global styles */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #bdc3c7;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+    .edit-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #1E262D;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    h1, h2, p {
+        text-align: center;
+        color: #fff;
+    }
+    /* Form styles */
+    form {
+        margin-top: 20px;
+        text-align: center;
+    }
+    label {
+        display: block;
+        margin-bottom: 10px;
+    }
+    input[type="text"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: none;
+        border-radius: 5px;
+    }
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: none;
+        border-radius: 5px;
+        resize: none;
+    }
+    button {
+        text-transform: uppercase;
+        background-color: #ffffff;
+        color: #1E262D;
+        border: none;
+        font-size: 20px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button:hover {
+        background-color: rgb(100, 100, 100);
+    }
+</style>
