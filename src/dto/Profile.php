@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class Profile {
+class Profile extends DTO {
     private int $id;
     private int $userId;
     private string $avatarUrl;
@@ -10,8 +10,8 @@ class Profile {
 
     public function __construct(int $id,
                                 int $userId,
-                                string $avatarUrl,
-                                string $description) {
+                                string $avatarUrl = "-1",
+                                string $description = "") {
         $this->id = $id;
         $this->userId = $userId;
         $this->avatarUrl = $avatarUrl;

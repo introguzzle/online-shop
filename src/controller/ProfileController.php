@@ -3,10 +3,9 @@
 namespace controller;
 
 use service\ProfileService;
-use session\AuthHolder;
+use session\Authentication;
 
 class ProfileController extends Controller {
-
 
     private ProfileService $service;
 
@@ -16,16 +15,20 @@ class ProfileController extends Controller {
         $this->service = new ProfileService();
     }
 
-    public function get(): void {
-        $user = AuthHolder::getCurrentUser();
+    public function view(): void {
+        $user = Authentication::getUser();
 
         if (isset($user)) {
-            $name = $user->getName();
-            $email = $user->getEmail();
+            $name = $this->service->getName();
+            $email = $this->service->getEmail();
+            $description = $this->service->getDescription();
 
-            require_once $this->renderer->render("profile.phtml");
+            if ($this->service->getAvatarUrl() !== "-1")
+                $avatar = $this->service->getAvatarUrl();
+
+            require_once $this->renderer->render("profile.phtml", "Profile");
         } else {
-            require_once $this->renderer->render("404.phtml");
+            require_once $this->renderer->render("404.phtml", "404");
         }
     }
 
@@ -34,10 +37,12 @@ class ProfileController extends Controller {
     }
 
     public function getEditDescription(): void {
-        require_once $this->renderer->render("profile_edit_description.phtml");
+        require_once $this->renderer
+            ->render("profile_edit_description.phtml", "Edit description");
     }
 
     public function postEditDescription(): void {
-
+        if ($this->service->proceedEdit())
+            header("Location: /profile");
     }
 }

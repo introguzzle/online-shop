@@ -3,13 +3,14 @@
 namespace repository;
 
 use dto\Book;
+use dto\DTO;
 use dto\Profile;
 use dto\User;
 use Logger;
 use PDO;
 use Throwable;
 
-class BookRepository {
+class BookRepository implements Repository {
     private Logger $logger;
     private PDO $pdo;
 
@@ -22,7 +23,7 @@ class BookRepository {
         return [];
     }
 
-    public function getById(int $id): ?Book {
+    public function getById(int|string $id): ?Book {
         return $this->getByColumn("id", $id);
     }
 
@@ -48,7 +49,7 @@ class BookRepository {
         }
     }
 
-    public function save(Book $book): ?Book {
+    public function save(Book|DTO $dto): ?Book {
         return null;
     }
 
@@ -77,7 +78,7 @@ class BookRepository {
             $array["description"],
             $array["price"],
             $array["year"],
-            $array["img_url"]
+            $array["image_url"]
         );
     }
 }

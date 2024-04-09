@@ -1,0 +1,21 @@
+[2024-04-09 19:03:52] [ERROR] PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(test5@mail.ru) already exists. in /var/www/html/src/repository/UserRepository.php:43
+Stack trace:
+#0 /var/www/html/src/repository/UserRepository.php(43): PDOStatement->execute()
+#1 /var/www/html/src/service/RegistrationService.php(77): repository\UserRepository->save(Object(dto\User))
+#2 /var/www/html/src/service/RegistrationService.php(33): service\RegistrationService->saveUser(Object(dto\User))
+#3 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#4 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#5 /var/www/html/src/public/index.php(11): Application->run()
+#6 {main}
+[2024-04-09 19:03:52] [ERROR] TypeError: dto\Profile::__construct(): Argument #1 ($id) must be of type int, null given, called in /var/www/html/src/repository/ProfileRepository.php on line 95 and defined in /var/www/html/src/dto/Profile.php:11
+Stack trace:
+#0 /var/www/html/src/repository/ProfileRepository.php(95): dto\Profile->__construct(NULL, NULL, NULL, NULL)
+#1 /var/www/html/src/repository/ProfileRepository.php(70): repository\ProfileRepository::fetchedToProfile(Array)
+#2 /var/www/html/src/service/ProfileService.php(25): repository\ProfileRepository->save(Object(dto\Profile))
+#3 /var/www/html/src/service/RegistrationService.php(81): service\ProfileService->saveProfile(Object(dto\User))
+#4 /var/www/html/src/service/RegistrationService.php(37): service\RegistrationService->saveProfile(Object(dto\User))
+#5 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#6 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#7 /var/www/html/src/public/index.php(11): Application->run()
+#8 {main}

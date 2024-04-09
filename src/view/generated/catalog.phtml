@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application</title>
+    <title>Catalog</title>
+    <link rel="icon" type="image/png" href="https://clipart-library.com/images/di4oxapjT.png">
     <style>
         *, *:before, *:after {
             -moz-box-sizing: border-box;
@@ -219,12 +220,12 @@
             <li class="dropdown">
                 <a href="/profile" id="profile-link">Profile</a>
                 <ul>
-                    <?php if (\session\AuthHolder::getCurrentUser() === null): ?>
+                    <?php if (\session\Authentication::getUser() === null): ?>
                     <li><a href="/login">Login </a> </li>
                     <li><a href="/register">Register </a></li>
                     <?php endif; ?>
 
-                    <?php if (\session\AuthHolder::getCurrentUser() !== null): ?>
+                    <?php if (\session\Authentication::getUser() !== null): ?>
                     <li><a href="/login" onclick="logout()">Logout</a></li>
                     <?php endif; ?>
                 </ul>
@@ -233,10 +234,8 @@
     </nav>
 </div>
 <body>
-    <div class="container">
-    <br>
+    <div class="container c-container">
     <h1 style="text-align: center; color: #1E262DFF;">Book Catalog</h1>
-    <br>
 
     <?php if (isset($books)) foreach ($books as $book):?>
         <div class="book">
@@ -246,15 +245,25 @@
             <p>Year: <?php echo $book->getYear() ?></p>
             <p>Price: <?php echo $book->getPrice() ?></p>
             <p>Description: <?php echo $book->getDescription() ?></p>
-            <button class="add-to-cart-btn">Add to Cart</button>
+
+            <form action="/catalog/add-to-cart" method="POST">
+                <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
         </div>
     <?php endforeach ?>
 </div>
 
 <style>
+    .c-container {
+        margin-top: 40px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
     .book {
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -299,10 +308,80 @@
     document.addEventListener("DOMContentLoaded", function() {
         const profileLink = document.getElementById("profile-link");
 
-        <?php if (!isset($_SESSION["user_id"])): ?>
+        <?php if (\session\Authentication::getUser() === null): ?>
         profileLink.addEventListener("click", function(event) {
             event.preventDefault(); // Предотвращаем переход по ссылке
         });
         <?php endif; ?>
     });
 </script>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h2>Company</h2>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Careers</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h2>Support</h2>
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h2>Connect</h2>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #1E262D;
+        color: #fff;
+        padding: 30px 0;
+        text-align: center;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .footer-section {
+        flex: 1;
+        margin: 0 20px;
+    }
+
+    .footer-section h2 {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 5px;
+    }
+
+    .footer-section ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+        color: #ccc;
+    }
+</style>

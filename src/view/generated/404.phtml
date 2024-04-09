@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application</title>
+    <title>404</title>
+    <link rel="icon" type="image/png" href="https://clipart-library.com/images/di4oxapjT.png">
     <style>
         *, *:before, *:after {
             -moz-box-sizing: border-box;
@@ -219,12 +220,12 @@
             <li class="dropdown">
                 <a href="/profile" id="profile-link">Profile</a>
                 <ul>
-                    <?php if (\session\AuthHolder::getCurrentUser() === null): ?>
+                    <?php if (\session\Authentication::getUser() === null): ?>
                     <li><a href="/login">Login </a> </li>
                     <li><a href="/register">Register </a></li>
                     <?php endif; ?>
 
-                    <?php if (\session\AuthHolder::getCurrentUser() !== null): ?>
+                    <?php if (\session\Authentication::getUser() !== null): ?>
                     <li><a href="/login" onclick="logout()">Logout</a></li>
                     <?php endif; ?>
                 </ul>
@@ -233,34 +234,46 @@
     </nav>
 </div>
 <body>
+    <div class="white-box">
     <div class="t-container">
-    <h1>404 - Not Found</h1>
-    <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
-    <p>Please check the URL or go back to the <a href="/">homepage</a>.</p>
+        <h1>404 - Not Found</h1>
+        <p>The page you are looking for might have been removed or is temporarily unavailable.</p>
+        <p>Please check the URL or go back to the <a href="/">homepage</a>.</p>
+    </div>
 </div>
 
 <style>
+    .white-box {
+        background-color: #ffffff; /* Устанавливаем белый цвет фона */
+        margin-top: 40px;
+        margin-left: 40px;
+        margin-right: 40px;
+        padding: 20px; /* Добавляем внутренний отступ для контента */
+        border: 2px solid #ffffff; /* Добавляем рамку черного цвета */
+        border-radius: 30px; /* Добавляем скругленные углы */
+    }
+
     .t-container {
-        font-family: Arial, sans-serif;
-        color: #212529;
-        text-align: center;
-        justify-content: center;
+    font-family: Arial, sans-serif;
+    color: #212529;
+    text-align: center;
+    justify-content: center;
     }
 
     .t-container h1 {
-        font-size: 3rem;
-        margin-bottom: 20px;
+    font-size: 3rem;
+    margin-bottom: 20px;
     }
 
     .t-container p {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
     }
 
     .t-container a {
-        color: #007bff;
-        text-decoration: none;
-        font-weight: bold;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
     }
 </style>
 </body>
@@ -275,7 +288,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const profileLink = document.getElementById("profile-link");
 
-        <?php if (!isset($_SESSION["user_id"])): ?>
+        <?php if (\session\Authentication::getUser() === null): ?>
         profileLink.addEventListener("click", function(event) {
             event.preventDefault(); // Предотвращаем переход по ссылке
         });

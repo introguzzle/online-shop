@@ -17,18 +17,18 @@ class AuthenticationController extends Controller {
         $this->loginService = new LoginService();
     }
 
-    public function get(): void {
-        require_once $this->renderer->render("login.phtml");
+    public function view(): void {
+        require_once $this->renderer->render("login.phtml", "Login");
     }
 
     public function login(): void {
         $result = $this->loginService->proceed();
 
         if (gettype($result) === "boolean") {
-            require_once $this->renderer->render("home.phtml");
+            require_once $this->renderer->render("home.phtml", "Home");
         } else {
             $errors = $result;
-            require_once $this->renderer->render("login.phtml");
+            require_once $this->renderer->render("login.phtml", "Login");
         }
     }
 

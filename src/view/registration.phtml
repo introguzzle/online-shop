@@ -6,20 +6,20 @@
 
         <label class="l-label" for="name"><b>Name</b></label>
         <?php if (isset($errors["name"])): ?>
-            <label> <?php echo "Invalid name"; ?></label>
+            <label class="l-label error-label"> <?php echo $errors["name"]; ?></label>
         <?php endif; ?>
         <input type="text" placeholder="Enter Name" name="name" id="name" required>
 
 
         <label class="l-label" for="email"><b>Email</b></label>
         <?php if (isset($errors["email"])): ?>
-            <label> <?php echo "Invalid email"; ?></label>
+            <label class="l-label error-label"> <?php echo $errors["email"]; ?></label>
         <?php endif; ?>
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
         <label class="l-label" for="psw"><b>Password</b></label>
         <?php if (isset($errors["password"])): ?>
-            <label> <?php echo "Passwords don't match"; ?></label>
+            <label class="l-label error-label"> <?php echo $errors["password"]; ?></label>
         <?php endif; ?>
         <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
 
@@ -50,6 +50,10 @@
         text-align: center;
         margin-bottom: 20px;
         color: #1E262D; /* черный цвет текста */
+    }
+
+    .error-label {
+        color: rgb(255, 0, 0);
     }
 
     .l-container {

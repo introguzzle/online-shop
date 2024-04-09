@@ -11,8 +11,8 @@ class HomeController extends Controller {
         parent::__construct();
     }
 
-    public function get(): void {
-        require_once $this->renderer->render("home.phtml");
+    public function view(): void {
+        require_once $this->renderer->render("home.phtml", "Home");
     }
 
     public function post(): void {

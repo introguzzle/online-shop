@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Application</title>
+    <title>Cart</title>
+    <link rel="icon" type="image/png" href="https://clipart-library.com/images/di4oxapjT.png">
     <style>
         *, *:before, *:after {
             -moz-box-sizing: border-box;
@@ -219,12 +220,12 @@
             <li class="dropdown">
                 <a href="/profile" id="profile-link">Profile</a>
                 <ul>
-                    <?php if (\session\AuthHolder::getCurrentUser() === null): ?>
+                    <?php if (\session\Authentication::getUser() === null): ?>
                     <li><a href="/login">Login </a> </li>
                     <li><a href="/register">Register </a></li>
                     <?php endif; ?>
 
-                    <?php if (\session\AuthHolder::getCurrentUser() !== null): ?>
+                    <?php if (\session\Authentication::getUser() !== null): ?>
                     <li><a href="/login" onclick="logout()">Logout</a></li>
                     <?php endif; ?>
                 </ul>
@@ -303,29 +304,17 @@
 
 <div class="t-container">
     <h1>Shopping Cart</h1>
-    <div class="cart-item">
-        <img src="product1.jpg" alt="Product 1">
-        <h2>Product Name 1</h2>
-        <p>Price: $19.99</p>
-        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
-    <div class="cart-item">
-        <img src="product2.jpg" alt="Product 2">
-        <h2>Product Name 2</h2>
-        <p>Price: $24.99</p>
-        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
-    <div class="cart-item">
-        <img src="product3.jpg" alt="Product 3">
-        <h2>Product Name 3</h2>
-        <p>Price: $29.99</p>
-        <p>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-    </div>
+    <?php $totalPrice = 0; if (isset($books)) foreach ($books as $book): ?>
+        <div class="cart-item">
+            <img src="<?php echo $book->getImageUrl()?>" alt="Product 1">
+            <h2><?php echo $book->getName()?></h2>
+            <p>Price: <?php echo $book->getPrice()?></p>
+            <p>Description: <?php echo $book->getDescription()?></p>
+        </div>
+    <?php endforeach;?>
 
     <div>
-        <p>
-            Total price: 14343
-        </p>
+        <p>Total price: <?php echo $totalPrice ?></p>
     </div>
 
     <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
@@ -342,10 +331,80 @@
     document.addEventListener("DOMContentLoaded", function() {
         const profileLink = document.getElementById("profile-link");
 
-        <?php if (!isset($_SESSION["user_id"])): ?>
+        <?php if (\session\Authentication::getUser() === null): ?>
         profileLink.addEventListener("click", function(event) {
             event.preventDefault(); // Предотвращаем переход по ссылке
         });
         <?php endif; ?>
     });
 </script>
+
+<footer>
+    <div class="footer-container">
+        <div class="footer-section">
+            <h2>Company</h2>
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Careers</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h2>Support</h2>
+            <ul>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Help Center</a></li>
+                <li><a href="#">Terms of Service</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h2>Connect</h2>
+            <ul>
+                <li><a href="#">Facebook</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Instagram</a></li>
+            </ul>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        background-color: #1E262D;
+        color: #fff;
+        padding: 30px 0;
+        text-align: center;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-around;
+    }
+
+    .footer-section {
+        flex: 1;
+        margin: 0 20px;
+    }
+
+    .footer-section h2 {
+        margin-bottom: 10px;
+    }
+
+    .footer-section ul {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .footer-section ul li {
+        margin-bottom: 5px;
+    }
+
+    .footer-section ul li a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .footer-section ul li a:hover {
+        color: #ccc;
+    }
+</style>

@@ -1,0 +1,32 @@
+[2024-04-09 19:08:17] [ERROR] PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "users_email_key"
+DETAIL:  Key (email)=(test1@mail.ru) already exists. in /var/www/html/src/repository/UserRepository.php:43
+Stack trace:
+#0 /var/www/html/src/repository/UserRepository.php(43): PDOStatement->execute()
+#1 /var/www/html/src/service/RegistrationService.php(77): repository\UserRepository->save(Object(dto\User))
+#2 /var/www/html/src/service/RegistrationService.php(33): service\RegistrationService->saveUser(Object(dto\User))
+#3 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#4 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#5 /var/www/html/src/public/index.php(11): Application->run()
+#6 {main}
+[2024-04-09 19:08:17] [ERROR] PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "profiles_user_id_key"
+DETAIL:  Key (user_id)=(1) already exists. in /var/www/html/src/repository/ProfileRepository.php:67
+Stack trace:
+#0 /var/www/html/src/repository/ProfileRepository.php(67): PDOStatement->execute()
+#1 /var/www/html/src/service/ProfileService.php(25): repository\ProfileRepository->save(Object(dto\Profile))
+#2 /var/www/html/src/service/RegistrationService.php(81): service\ProfileService->saveProfile(Object(dto\User))
+#3 /var/www/html/src/service/RegistrationService.php(37): service\RegistrationService->saveProfile(Object(dto\User))
+#4 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#5 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#6 /var/www/html/src/public/index.php(11): Application->run()
+#7 {main}
+[2024-04-09 19:08:17] [ERROR] PDOException: SQLSTATE[23505]: Unique violation: 7 ERROR:  duplicate key value violates unique constraint "carts_user_id_key"
+DETAIL:  Key (user_id)=(1) already exists. in /var/www/html/src/repository/CartRepository.php:97
+Stack trace:
+#0 /var/www/html/src/repository/CartRepository.php(97): PDOStatement->execute()
+#1 /var/www/html/src/service/CartService.php(28): repository\CartRepository->save(Object(dto\Cart))
+#2 /var/www/html/src/service/RegistrationService.php(85): service\CartService->saveCart(Object(dto\User))
+#3 /var/www/html/src/service/RegistrationService.php(38): service\RegistrationService->saveCart(Object(dto\User))
+#4 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#5 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#6 /var/www/html/src/public/index.php(11): Application->run()
+#7 {main}

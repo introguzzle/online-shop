@@ -2,15 +2,24 @@
 
 namespace controller;
 
+use service\CartService;
+
 class CartController extends Controller {
 
-    public function get() {
-        $books = [];
+    private CartService $cartService;
 
-        require_once $this->renderer->render("cart.phtml");
+    public function __construct() {
+        parent::__construct();
+        $this->cartService = new CartService();
     }
 
-    public function post() {
+    public function view(): void {
+        $books = $this->cartService->getCartBooks();
+
+        require_once $this->renderer->render("cart.phtml", "Cart");
+    }
+
+    public function post(): void {
 
     }
 }

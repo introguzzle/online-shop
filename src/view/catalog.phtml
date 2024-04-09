@@ -1,7 +1,5 @@
-<div class="container">
-    <br>
+<div class="container c-container">
     <h1 style="text-align: center; color: #1E262DFF;">Book Catalog</h1>
-    <br>
 
     <?php if (isset($books)) foreach ($books as $book):?>
         <div class="book">
@@ -11,15 +9,25 @@
             <p>Year: <?php echo $book->getYear() ?></p>
             <p>Price: <?php echo $book->getPrice() ?></p>
             <p>Description: <?php echo $book->getDescription() ?></p>
-            <button class="add-to-cart-btn">Add to Cart</button>
+
+            <form action="/catalog/add-to-cart" method="POST">
+                <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
         </div>
     <?php endforeach ?>
 </div>
 
 <style>
+    .c-container {
+        margin-top: 40px;
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+
     .book {
         background-color: #fff;
-        border-radius: 5px;
+        border-radius: 10px;
         padding: 20px;
         margin-bottom: 20px;
         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);

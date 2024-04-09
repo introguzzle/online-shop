@@ -4,13 +4,14 @@ namespace dto;
 
 use DateTime;
 
-class User {
+class User extends DTO {
     private int $id;
     private string $name;
     private string $email;
     private string $password;
     private string $createdAt;
     private string $updatedAt;
+    private int $roleId;
 
     public function __construct(int $id,
                                 string $name,
@@ -22,6 +23,7 @@ class User {
         $this->password = $password;
         $this->createdAt = (new DateTime())->format('Y-m-d H:i:s');
         $this->updatedAt = $this->createdAt;
+        $this->roleId = 1;
     }
 
     public function getId(): int {
@@ -46,5 +48,9 @@ class User {
 
     public function getUpdatedAt(): string {
         return $this->updatedAt;
+    }
+
+    public function getRoleId(): int {
+        return $this->roleId;
     }
 }

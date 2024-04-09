@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class Book {
+class Book extends DTO {
     private int $id;
     private string $name;
     private string $author;
@@ -54,6 +54,4 @@ class Book {
     public function getImageUrl(): string {
         return $this->imageUrl;
     }
-
-
 }

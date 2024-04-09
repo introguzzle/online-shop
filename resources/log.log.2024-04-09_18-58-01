@@ -1,0 +1,20 @@
+[2024-04-09 18:53:04] [ERROR] TypeError: dto\Profile::__construct(): Argument #3 ($avatarUrl) must be of type string, null given, called in /var/www/html/src/repository/ProfileRepository.php on line 95 and defined in /var/www/html/src/dto/Profile.php:11
+Stack trace:
+#0 /var/www/html/src/repository/ProfileRepository.php(95): dto\Profile->__construct(2, 2, NULL, NULL)
+#1 /var/www/html/src/repository/ProfileRepository.php(87): repository\ProfileRepository::fetchedToProfile(Array)
+#2 /var/www/html/src/repository/ProfileRepository.php(46): repository\ProfileRepository->getByColumn('user_id', '2')
+#3 /var/www/html/src/service/ProfileService.php(42): repository\ProfileRepository->getByUserId(2)
+#4 /var/www/html/src/controller/ProfileController.php(24): service\ProfileService->getDescription()
+#5 /var/www/html/src/Application.php(37): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(11): Application->run()
+#7 {main}
+[2024-04-09 18:53:15] [ERROR] PDOException: SQLSTATE[08P01]: <<Unknown error>>: 7 ERROR:  bind message supplies 1 parameters, but prepared statement "pdo_stmt_00000002" requires 3 in /var/www/html/src/repository/ProfileRepository.php:67
+Stack trace:
+#0 /var/www/html/src/repository/ProfileRepository.php(67): PDOStatement->execute()
+#1 /var/www/html/src/service/ProfileService.php(25): repository\ProfileRepository->save(Object(dto\Profile))
+#2 /var/www/html/src/service/RegistrationService.php(78): service\ProfileService->saveProfile(Object(dto\User))
+#3 /var/www/html/src/service/RegistrationService.php(34): service\RegistrationService->saveProfile(Object(dto\User))
+#4 /var/www/html/src/controller/RegistrationController.php(21): service\RegistrationService->proceed()
+#5 /var/www/html/src/Application.php(37): controller\RegistrationController->post()
+#6 /var/www/html/src/public/index.php(11): Application->run()
+#7 {main}

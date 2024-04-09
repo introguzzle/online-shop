@@ -13,7 +13,7 @@ class RegistrationController extends Controller {
         $this->service = new RegistrationService();
     }
 
-    public function get(): void {
+    public function view(): void {
         require_once $this->renderer->render("registration.phtml");
     }
 

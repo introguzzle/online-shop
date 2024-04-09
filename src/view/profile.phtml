@@ -1,31 +1,40 @@
 <div class="p-container">
     <h1>User Profile</h1>
     <div class="profile-info">
-        <img src="avatar.jpg" alt="User Avatar">
+        <img src="<?php if (isset($avatar)) echo $avatar; else echo "https://media.moddb.com/images/games/1/71/70031/1img_311846.png" ?>" alt="User Avatar">
         <p class="username"><?php if (isset($name)) echo $name ?></p>
         <p class="email"><?php if (isset($email)) echo $email ?></p>
     </div>
     <div class="edit-buttons">
         <form method="GET" action="/profile/edit">
-        <button class="edit-btn">Edit Description</button>
+            <button class="edit-btn">Edit Description</button>
         </form>
-
         <form method="GET" action="/profile/edit">
             <button class="edit-btn">Edit Avatar</button>
         </form>
     </div>
     <h2>About Me</h2>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget justo nec libero tempor finibus eget sed quam. Maecenas quis fermentum lacus. Nullam in leo a risus viverra consectetur. Suspendisse potenti. Nam vel ultrices turpis, a interdum mauris. Morbi sed odio et dui pharetra scelerisque a in nisi. Vivamus aliquet massa a leo convallis, id pharetra magna consectetur. Ut accumsan fringilla purus at laoreet. Nam accumsan id arcu a fringilla. Donec euismod odio nec lectus hendrerit ullamcorper. Etiam interdum arcu sit amet massa suscipit faucibus.</p>
+    <p>
+        <?php if (isset($description)) echo $description ?>
+    </p>
 </div>
 
 <style>
     .edit-buttons {
-        text-align: center;
-        justify-content: normal;
+        display: flex; /* Размещаем кнопки в строку */
+        justify-content: center; /* Выравниваем их по центру по горизонтали */
+        margin-bottom: 20px; /* Добавляем немного отступа снизу */
+    }
+
+    .edit-buttons form {
+        margin: 0 10px; /* Добавляем немного отступа между кнопками */
     }
 
     .edit-btn {
+        width: 200px;
+        resize: none;
         text-transform: uppercase;
+        font-size: 17px;
         background-color: #ffffff;
         color: #1E262D;
         border: none;
@@ -46,12 +55,13 @@
         background-color: #1E262D;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center; /* Центрируем содержимое контейнера */
     }
+
     h1, h2, p {
-        text-align: center;
         color: #fff;
     }
-    /* Profile styles */
+
     .profile-info {
         margin-bottom: 20px;
     }
@@ -62,6 +72,7 @@
         margin: 0 auto 20px;
         display: block;
     }
+
     .profile-info .username {
         font-size: 24px;
         font-weight: bold;

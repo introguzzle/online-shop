@@ -6,28 +6,22 @@ use repository\UserRepository;
 use dto\User;
 
 class SessionAuthenticationService implements AuthenticationService {
-    private static ?User $user;
     private UserRepository $userRepository;
 
     public function __construct() {
         $this->userRepository = new UserRepository();
     }
 
-    public function check(): bool {
+    public function isAuthenticated(): bool {
         session_start();
         return isset($_SESSION["user_id"]);
     }
 
-    public function getCurrentUser(): ?User {
-        if (isset(self::$user)) {
-            return self::$user;
-        }
-
-        if (session_status() == PHP_SESSION_NONE) {
+    public function getUser(): ?User {
+        if (session_status() == PHP_SESSION_NONE)
             session_start();
-        }
 
-        if (isset($_SESSION["user_id"])) {
+        if (isset($_SESSION["user_id"]) && $_SESSION != null) {
             return $this->userRepository->getById($_SESSION["user_id"]);
         } else {
             return null;
@@ -36,16 +30,19 @@ class SessionAuthenticationService implements AuthenticationService {
 
     public function login(User $user): bool {
         session_start();
-        self::$user = $user;
 
         $_SESSION["user_id"] = $user->getId();
+        $_SESSION["user_email"] = $user->getEmail();
+        $_SESSION["user_name"] = $user->getName();
+
         return true;
     }
 
     public function logout(): void {
         session_start();
-        self::$user = null;
 
-        session_destroy();
+        unset($_SESSION["user_id"]);
+        unset($_SESSION["user_email"]);
+        unset($_SESSION["user_name"]);
     }
 }

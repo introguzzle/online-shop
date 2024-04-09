@@ -2,6 +2,7 @@
 
 namespace repository;
 
+use dto\DTO;
 use dto\User;
 use Exception;
 use Logger;
@@ -18,23 +19,25 @@ class UserRepository implements Repository {
         $this->logger = new Logger();
     }
 
-    public function save(object $object): ?object {
-        $query = "INSERT INTO users(name, email, password, created_at, updated_at) 
-                VALUES (:name, :email, :password, :created_at, :updated_at)";
+    public function save(User|DTO $dto): ?User {
+        $query = "INSERT INTO users(name, email, password, created_at, updated_at, role_id) 
+                VALUES (:name, :email, :password, :created_at, :updated_at, :role_id)";
 
         $stmt = $this->pdo->prepare($query);
 
-        $name = $object->getName();
-        $email = $object->getEmail();
-        $password = password_hash($object->getPassword(), PASSWORD_BCRYPT);
-        $createdAt = $object->getCreatedAt();
-        $updatedAt = $object->getUpdatedAt();
+        $name = $dto->getName();
+        $email = $dto->getEmail();
+        $password = password_hash($dto->getPassword(), PASSWORD_BCRYPT);
+        $createdAt = $dto->getCreatedAt();
+        $updatedAt = $dto->getUpdatedAt();
+        $roleId = $dto->getRoleId();
 
         $stmt->bindParam(':name', $name);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':password', $password);
         $stmt->bindParam(':created_at', $createdAt);
         $stmt->bindParam(':updated_at', $updatedAt);
+        $stmt->bindParam(':role_id', $roleId);
 
         try {
             $stmt->execute();
@@ -43,7 +46,7 @@ class UserRepository implements Repository {
             return null;
         }
 
-        return $object;
+        return $dto;
     }
 
     public function saveAll(array $array): ?array {

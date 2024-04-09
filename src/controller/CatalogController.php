@@ -13,13 +13,14 @@ class CatalogController extends Controller {
         $this->catalogService = new CatalogService();
     }
 
-    public function get(): void {
+    public function view(): void {
         $books = $this->catalogService->getAllBooks();
 
-        require_once $this->renderer->render("catalog.phtml");
+        require_once $this->renderer->render("catalog.phtml", "Catalog");
     }
 
-    public function post() {
-
+    public function add(): void {
+        $this->catalogService->add();
+        header("Location: /catalog");
     }
 }

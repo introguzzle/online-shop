@@ -8,73 +8,67 @@ class Application {
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
         if (!array_key_exists($requestUri, $this->routes)) {
-            header("HTTP/1.0 404 Not Found", true, 404);
-            echo $this->noSuchRoute($requestUri);
-            require_once "./../view/404.phtml";
+            $this->error();
             return;
         }
 
         $route = $this->routes[$requestUri][$requestMethod];
 
         if (!isset($route)) {
-            echo $this->noSuchMethod($requestUri, $requestMethod);
-            require_once "./../view/404.phtml";
+            $this->error();
             return;
         }
 
-        $class       = $route["class"];
-        $classMethod = $route["method"];
+        $class          = $route["class"];
+        $instanceMethod = $route["method"];
 
         if (!class_exists($class)) {
-            echo $this->noSuchClass($class);
-            require_once "./../view/404.phtml";
+            $this->error();
             return;
         }
 
         $instance = new $class();
 
-        if (!method_exists($instance, $classMethod)) {
-            echo $this->noSuchClassMethod($instance, $classMethod);
-            require_once "./../view/404.phtml";
+        if (!method_exists($instance, $instanceMethod)) {
+            $this->error();
             return;
         }
 
-        $instance->$classMethod();
+        $instance->$instanceMethod();
     }
 
     public function registerGetRoute(string $url,
                                      string $class,
-                                     string $classMethod): void {
-        $this->routes[$url]["GET"] = [
-            "class"   => $class,
-            "method"  => $classMethod,
-        ];
+                                     string $instanceMethod): void {
+        $this->registerRoute("GET", $url, $class, $instanceMethod);
     }
 
     public function registerPostRoute(string $url,
                                       string $class,
-                                      string $classMethod): void {
-        $this->routes[$url]["POST"] = [
-            "class"   => $class,
-            "method"  => $classMethod,
-        ];
+                                      string $instanceMethod): void {
+        $this->registerRoute("POST", $url, $class, $instanceMethod);
     }
 
-    private function noSuchMethod(mixed $requestUri,
-                                  mixed $requestMethod): string {
-        return "$requestUri doesn't support $requestMethod method";
+    public function registerRoute(string $httpMethod,
+                                  string | array $urls,
+                                  string $class,
+                                  string $instanceMethod): void {
+        if (gettype($urls) == "string") {
+            $this->routes[$urls][$httpMethod] = [
+                "class"   => $class,
+                "method"  => $instanceMethod,
+            ];
+        } else {
+            foreach ($urls as $url) {
+                $this->routes[$url][$httpMethod] = [
+                    "class"   => $class,
+                    "method"  => $instanceMethod,
+                ];
+            }
+        }
     }
 
-    private function noSuchClass(mixed $class): string {
-        return "$class is not present";
-    }
-
-    private function noSuchClassMethod(mixed $classMethod,
-                                       mixed $class): string {
-        return "No such requested $classMethod in class $class";
-    }
-
-    private function noSuchRoute(mixed $requestUri): string {
-        return "No such requested $requestUri";
+    private function error(): void {
+        header("Location: /404");
     }
 }

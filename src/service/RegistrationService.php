@@ -2,7 +2,7 @@
 
 namespace service;
 
-use model\CartRepository;
+use repository\CartRepository;
 use repository\ProfileRepository;
 use repository\UserRepository;
 use dto\User;
@@ -12,12 +12,13 @@ class RegistrationService {
 
     private array $errors = [];
     private UserRepository $userRepository;
-    private ProfileRepository $profileRepository;
-    private CartRepository $cartRepository;
+    private ProfileService $profileService;
+    private CartService $cartService;
 
     public function __construct() {
         $this->userRepository = new UserRepository();
-        $this->profileRepository = new ProfileRepository();
+        $this->profileService = new ProfileService();
+        $this->cartService = new CartService();
     }
 
     public function proceed(): array | true {
@@ -29,9 +30,12 @@ class RegistrationService {
         if (!$correct) {
             return $this->errors;
         } else {
-            $this->saveToRepository($user);
+            $this->saveUser($user);
+
+            $user = $this->userRepository->getByEmail($user->getEmail());
+
             $this->saveProfile($user);
-            $this->createCart($user);
+            $this->saveCart($user);
 
             return true;
         }
@@ -40,20 +44,25 @@ class RegistrationService {
     private function validate(RegistrationRequest $request): bool {
         $errorsArePresent = false;
 
+        if ($this->userRepository->getByEmail($request->getEmail()) !== null) {
+            $this->errors["email"] = "Email is already taken";
+            $errorsArePresent = true;
+        }
+
         if (!filter_var($request->getEmail(), FILTER_VALIDATE_EMAIL)) {
-            $this->errors["email"] = true;
+            $this->errors["email"] = "Invalid email";
             $errorsArePresent = true;
         }
 
         if ($request->getPassword() !== $request->getPasswordRepeat()) {
-            $this->errors["password"] = true;
+            $this->errors["password"] = "Invalid password";
             $errorsArePresent = true;
         }
 
         $nameLength = strlen($request->getName());
 
         if ($nameLength <= 4 || $nameLength >= 255) {
-            $this->errors["name"] = true;
+            $this->errors["name"] = "Invalid name";
             $errorsArePresent = true;
         }
 
@@ -69,15 +78,15 @@ class RegistrationService {
         return new RegistrationRequest($name, $email, $password, $passwordRepeat);
     }
 
-    public function saveToRepository(User $user): void {
+    public function saveUser(User $user): void {
         $this->userRepository->save($user);
     }
 
     public function saveProfile(User $user): void {
-        $this->profileRepository->saveFromUser($user);
+        $this->profileService->saveProfile($user);
     }
 
-    public function createCart(User $user): void {
-        $this->cartRepository->saveFromUser($user);
+    public function saveCart(User $user): void {
+        $this->cartService->saveCart($user);
     }
 }
