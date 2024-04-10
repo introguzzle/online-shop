@@ -2,13 +2,11 @@
 
 namespace service;
 
-use repository\CartRepository;
-use repository\ProfileRepository;
 use repository\UserRepository;
 use dto\User;
 use request\RegistrationRequest;
 
-class RegistrationService {
+class RegistrationService implements Service {
 
     private array $errors = [];
     private UserRepository $userRepository;

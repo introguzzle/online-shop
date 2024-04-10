@@ -7,8 +7,7 @@ use dto\User;
 use repository\CartRepository;
 use session\Authentication;
 
-class CartService {
-
+class CartService implements Service {
 
     private CartRepository $cartRepository;
 

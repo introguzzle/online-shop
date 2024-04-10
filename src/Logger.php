@@ -2,7 +2,7 @@
 
 class Logger {
 
-    private static string $LOG_FILE = "./../../resources/log.log";
+    private static string $LOG_FILE = "./../../resources/logs/log.log";
     private static int $MAX_FILE_SIZE = 1024;
 
     public function error(string $error): void {

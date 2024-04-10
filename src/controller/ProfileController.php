@@ -37,12 +37,15 @@ class ProfileController extends Controller {
     }
 
     public function getEditDescription(): void {
-        require_once $this->renderer
-            ->render("profile_edit_description.phtml", "Edit description");
+        require_once $this->renderer->render(
+            "profile_edit_description.phtml",
+            "Edit description"
+        );
     }
 
     public function postEditDescription(): void {
-        if ($this->service->proceedEdit())
+        if ($this->service->proceedEdit()) {
             header("Location: /profile");
+        }
     }
 }

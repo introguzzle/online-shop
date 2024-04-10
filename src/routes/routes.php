@@ -5,6 +5,7 @@ use controller\CatalogController;
 use controller\ErrorController;
 use controller\HomeController;
 use controller\AuthenticationController;
+use controller\OrderController;
 use controller\ProfileController;
 use controller\RegistrationController;
 
@@ -32,3 +33,5 @@ $app->registerGetRoute("/catalog", CatalogController::class, "view");
 $app->registerPostRoute("/catalog/add-to-cart", CatalogController::class, "add");
 
 $app->registerGetRoute("/cart", CartController::class, "view");
+
+$app->registerGetRoute("/checkout", OrderController::class, "view");

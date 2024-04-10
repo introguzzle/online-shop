@@ -1,0 +1,77 @@
+<div class="t-container">
+    <h1>Order Details</h1>
+    <form action="/submit-order" method="post">
+        <label for="address">Address:</label>
+        <input class="address" type="text" id="address" name="address" required>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="Format: 123-456-7890" required>
+
+        <label for="card-number">Credit Card Number:</label>
+        <input type="text" id="card-number" name="card-number" pattern="[0-9]{16}" placeholder="Enter 16-digit card number" required>
+
+        <button type="submit">Place Order</button>
+    </form>
+</div>
+
+<style>
+    .t-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #1E262D;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .phone input {
+        text-transform: uppercase;
+    }
+
+    .card input {
+        text-transform: uppercase;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        text-transform: uppercase;
+    }
+
+    .address {
+        text-transform: none;
+    }
+
+    button {
+        background-color: #ffffff;
+        text-transform: uppercase;
+        color: #1E262D;
+        font-size: 20px;
+        border: none;
+        width: 66%;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: block;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+</style>

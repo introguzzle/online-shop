@@ -6,7 +6,7 @@ use repository\BookRepository;
 use repository\CartRepository;
 use session\Authentication;
 
-class CatalogService {
+class CatalogService implements Service {
     private BookRepository $bookRepository;
     private CartRepository $cartRepository;
 

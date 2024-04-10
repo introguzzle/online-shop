@@ -7,7 +7,7 @@ use dto\User;
 use repository\ProfileRepository;
 use session\Authentication;
 
-class ProfileService {
+class ProfileService implements Service {
 
 
     private ProfileRepository $profileRepository;

@@ -5,7 +5,7 @@ namespace session;
 use dto\User;
 use service\SessionAuthenticationService;
 
-class Authentication {
+final class Authentication {
 
     public static function getUser(): ?User {
         $service = new SessionAuthenticationService();

@@ -2,13 +2,12 @@
 
 namespace controller;
 
-use dto\User;
-use service\AuthenticationService;
+use reflector\Resolver;
 use service\LoginService;
-use service\SessionAuthenticationService;
-use view\Renderer;
 
 class AuthenticationController extends Controller {
+
+    public static $routes = ["/login" => ["GET", "login"]];
 
     private LoginService $loginService;
 

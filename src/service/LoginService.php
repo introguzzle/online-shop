@@ -6,7 +6,7 @@ use repository\UserRepository;
 use dto\User;
 use request\LoginRequest;
 
-class LoginService {
+class LoginService implements Service {
 
     private array $errors = [];
     private AuthenticationService $authService;

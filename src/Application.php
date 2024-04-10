@@ -3,6 +3,19 @@
 class Application {
     private array $routes = [];
 
+    public function register(): void {
+        $files = scandir(__DIR__ . "/src");
+
+        $phpFiles = array_filter($files, function($file) {
+            return pathinfo($file, PATHINFO_EXTENSION) === 'php';
+        });
+    }
+
+    public function r(): void {
+        $requestUri = $_SERVER["REQUEST_URI"];
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+    }
+
     public function run(): void {
         $requestUri = $_SERVER["REQUEST_URI"];
         $requestMethod = $_SERVER["REQUEST_METHOD"];
