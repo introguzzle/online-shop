@@ -1,0 +1,20 @@
+[2024-04-10 20:56:55] [ERROR] ReflectionException: Class "service\Book" does not exist in /var/www/html/src/repository/Repository.php:153
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(153): ReflectionClass->__construct('service\\Book')
+#1 /var/www/html/src/repository/Repository.php(180): repository\Repository->fetchToDTO('service\\Book', 1)
+#2 /var/www/html/src/repository/Repository.php(37): repository\Repository->allFetchedToDTO('service\\Book', Array)
+#3 /var/www/html/src/service/CatalogService.php(19): repository\Repository->getAll('service\\Book')
+#4 /var/www/html/src/controller/CatalogController.php(17): service\CatalogService->getAllBooks()
+#5 /var/www/html/src/Application.php(33): controller\CatalogController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-10 20:56:56] [ERROR] ReflectionException: Class "service\Book" does not exist in /var/www/html/src/repository/Repository.php:153
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(153): ReflectionClass->__construct('service\\Book')
+#1 /var/www/html/src/repository/Repository.php(180): repository\Repository->fetchToDTO('service\\Book', 1)
+#2 /var/www/html/src/repository/Repository.php(37): repository\Repository->allFetchedToDTO('service\\Book', Array)
+#3 /var/www/html/src/service/CatalogService.php(19): repository\Repository->getAll('service\\Book')
+#4 /var/www/html/src/controller/CatalogController.php(17): service\CatalogService->getAllBooks()
+#5 /var/www/html/src/Application.php(33): controller\CatalogController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}

@@ -3,9 +3,12 @@
 namespace view;
 
 class Renderer {
-    public function render(string $view,
-                           string $title = "Application",
-                           bool   $renderLayout = true): string {
+    public function render(
+        string $view,
+        string $title = "Application",
+        bool   $renderLayout = true
+    ): string
+    {
         ob_start();
         $result = file_get_contents("./../view/$view");
 

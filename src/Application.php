@@ -3,24 +3,18 @@
 class Application {
     private array $routes = [];
 
-    public function register(): void {
-        $files = scandir(__DIR__ . "/src");
-
-        $phpFiles = array_filter($files, function($file) {
-            return pathinfo($file, PATHINFO_EXTENSION) === 'php';
-        });
-    }
-
-    public function r(): void {
+    public function run(): void
+    {
         $requestUri = $_SERVER["REQUEST_URI"];
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
-    }
-
-    public function run(): void {
-        $requestUri = $_SERVER["REQUEST_URI"];
-        $requestMethod = $_SERVER["REQUEST_METHOD"];
 
         if (!array_key_exists($requestUri, $this->routes)) {
+            $this->error();
+            return;
+        }
+
+        $requestMethod = $_SERVER["REQUEST_METHOD"];
+
+        if (!isset($this->routes[$requestUri][$requestMethod])) {
             $this->error();
             return;
         }
@@ -32,56 +26,56 @@ class Application {
             return;
         }
 
-        $class          = $route["class"];
-        $instanceMethod = $route["method"];
+        if (is_array($route)) {
+            $instance       = $route["instance"];
+            $instanceMethod = $route["method"];
 
-        if (!class_exists($class)) {
-            $this->error();
-            return;
-        }
+            $instance->$instanceMethod();
 
-        $instance = new $class();
-
-        if (!method_exists($instance, $instanceMethod)) {
-            $this->error();
-            return;
-        }
-
-        $instance->$instanceMethod();
-    }
-
-    public function registerGetRoute(string $url,
-                                     string $class,
-                                     string $instanceMethod): void {
-        $this->registerRoute("GET", $url, $class, $instanceMethod);
-    }
-
-    public function registerPostRoute(string $url,
-                                      string $class,
-                                      string $instanceMethod): void {
-        $this->registerRoute("POST", $url, $class, $instanceMethod);
-    }
-
-    public function registerRoute(string $httpMethod,
-                                  string | array $urls,
-                                  string $class,
-                                  string $instanceMethod): void {
-        if (gettype($urls) == "string") {
-            $this->routes[$urls][$httpMethod] = [
-                "class"   => $class,
-                "method"  => $instanceMethod,
-            ];
         } else {
-            foreach ($urls as $url) {
-                $this->routes[$url][$httpMethod] = [
-                    "class"   => $class,
-                    "method"  => $instanceMethod,
-                ];
-            }
+            $route();
         }
     }
 
-    private function error(): void {
+    public function registerGetRoute(
+        string | array $urls,
+        callable | array $callback
+    ): void
+    {
+        $this->registerRoute("GET", $urls, $callback);
+    }
+
+    public function registerPostRoute(
+        string | array $urls,
+        callable | array $callback
+    ): void
+    {
+        $this->registerRoute("POST", $urls, $callback);
+    }
+
+    public function registerRoute(
+        string $httpMethod,
+        string | array $urls,
+        callable | array $callback
+    ): void
+    {
+        if (is_array($callback)) {
+            $callback = [
+                "instance" => new $callback[0](),
+                "method"   => $callback[1]
+            ];
+        }
+
+        if (is_array($urls)) {
+            foreach ($urls as $url)
+                $this->routes[$url][$httpMethod] = $callback;
+        } else {
+            $this->routes[$urls][$httpMethod] = $callback;
+        }
+    }
+
+    private function error(): void
+    {
         header("Location: /404");
     }
 }

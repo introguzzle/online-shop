@@ -11,21 +11,21 @@ use PDO;
 use repository\Repository;
 use Throwable;
 
-class CartRepository implements Repository {
-
-    private Logger $logger;
-    private PDO $pdo;
+class CartRepository extends Repository
+{
     private UserRepository $userRepository;
     private BookRepository $bookRepository;
 
-    public function __construct() {
-        $this->pdo = PDOHolder::getPdo();
-        $this->logger = new Logger();
+    public function __construct()
+    {
+        parent::__construct();
+
         $this->userRepository = new UserRepository();
         $this->bookRepository = new BookRepository();
     }
 
-    public function saveFromUser(User $user): void {
+    public function saveFromUser(User $user): void
+    {
         $user = $this->userRepository->getByEmail($user->getEmail());
         $id = $user->getId();
 
@@ -39,7 +39,8 @@ class CartRepository implements Repository {
         }
     }
 
-    function saveBook(User $user, Book $book): ?Book {
+    function saveBook(User $user, Book $book): ?Book
+    {
         $stmt = $this->pdo->prepare("INSERT INTO cart_book(cart_id, book_id) VALUES (:cart_id, :book_id)");
 
         $cartId = $user->getId();
@@ -57,7 +58,8 @@ class CartRepository implements Repository {
         }
     }
 
-    public function getByUserId(int $userId): ?Cart {
+    public function getByUserId(int $userId): ?Cart
+    {
         $stmt = $this->pdo->prepare("SELECT * FROM carts WHERE user_id=:user_id");
 
         $stmt->bindParam(":user_id", $userId);
@@ -73,39 +75,12 @@ class CartRepository implements Repository {
         }
     }
 
-    function saveAll(array $array): ?array {
 
-    }
-
-    function getById(int|string $id): ?object {
-    }
-
-    function getAll(): ?array {
-
-    }
-
-    public function save(Cart|DTO $dto): ?Cart {
-        $query = "INSERT INTO carts(user_id) VALUES (:user_id)";
-
-        $stmt = $this->pdo->prepare($query);
-
-        $userId = $dto->getUserId();
-
-        $stmt->bindParam(":user_id", $userId);
-
-        try {
-            $stmt->execute();
-            return $dto;
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
-    }
-
-    public function getAllBooksById(int $cartId): ?array {
+    public function getAllBooksById(int $cartId): ?array
+    {
         $stmt = $this->pdo->prepare("SELECT book_id FROM cart_book WHERE cart_id=:cart_id");
 
-        $stmt->bindParam(":cart_id", $cartId);
+        $stmt->bindValue(":cart_id", $cartId);
 
         try {
             $stmt->execute();
@@ -123,5 +98,10 @@ class CartRepository implements Repository {
             $this->logger->error($t);
             return null;
         }
+    }
+
+    public function getTableName(): string
+    {
+        return "carts";
     }
 }

@@ -1,0 +1,18 @@
+[2024-04-10 19:17:29] [INFO] INSERT INTO users (created_at, updated_at, role_id, id, password, name, email) VALUES (:created_at, :updated_at, :role_id, :id, :password, :name, :email)
+[2024-04-10 19:17:29] [ERROR] PDOException: SQLSTATE[22007]: Invalid datetime format: 7 ERROR:  invalid input syntax for type timestamp: "em"
+CONTEXT:  unnamed portal parameter $1 = '...' in /var/www/html/src/repository/Repository.php:89
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(89): PDOStatement->execute()
+#1 /var/www/html/src/controller/AuthenticationController.php(27): repository\Repository->save(Object(dto\User))
+#2 /var/www/html/src/Application.php(33): controller\AuthenticationController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-10 19:21:30] [INFO] INSERT INTO users (created_at, updated_at, role_id, id, password, name, email) VALUES (:created_at, :updated_at, :role_id, :id, :password, :name, :email)
+[2024-04-10 19:21:30] [ERROR] PDOException: SQLSTATE[22007]: Invalid datetime format: 7 ERROR:  invalid input syntax for type timestamp: "em"
+CONTEXT:  unnamed portal parameter $1 = '...' in /var/www/html/src/repository/Repository.php:89
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(89): PDOStatement->execute()
+#1 /var/www/html/src/controller/AuthenticationController.php(27): repository\Repository->save(Object(dto\User))
+#2 /var/www/html/src/Application.php(33): controller\AuthenticationController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}

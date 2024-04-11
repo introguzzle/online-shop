@@ -23,7 +23,7 @@ class CartService implements Service {
     }
 
     public function saveCart(User $user): void {
-        $cart = new Cart(0, $user->getId());
+        $cart = new Cart($user->getId());
         $this->cartRepository->save($cart);
     }
 }

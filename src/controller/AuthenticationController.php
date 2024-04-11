@@ -2,7 +2,9 @@
 
 namespace controller;
 
+use dto\User;
 use reflector\Resolver;
+use repository\UserRepository;
 use service\LoginService;
 
 class AuthenticationController extends Controller {
@@ -11,16 +13,19 @@ class AuthenticationController extends Controller {
 
     private LoginService $loginService;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         $this->loginService = new LoginService();
     }
 
-    public function view(): void {
+    public function view(): void
+    {
         require_once $this->renderer->render("login.phtml", "Login");
     }
 
-    public function login(): void {
+    public function login(): void
+    {
         $result = $this->loginService->proceed();
 
         if (gettype($result) === "boolean") {
@@ -31,7 +36,8 @@ class AuthenticationController extends Controller {
         }
     }
 
-    public function logout(): void {
+    public function logout(): void
+    {
         $this->loginService->logout();
         header("Location: /login");
     }

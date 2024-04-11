@@ -23,7 +23,7 @@ class ProfileService implements Service {
     }
 
     public function saveProfile(User $user): void {
-        $profile = new Profile(0, $user->getId());
+        $profile = new Profile($user->getId());
         $this->profileRepository->save($profile);
     }
 

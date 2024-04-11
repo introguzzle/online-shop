@@ -1,0 +1,17 @@
+[2024-04-10 19:02:18] [ERROR] ReflectionException: Class "users" does not exist in /var/www/html/src/repository/Repository.php:122
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(122): ReflectionClass->__construct('users')
+#1 /var/www/html/src/repository/Repository.php(43): repository\Repository->fetchToDTO('users', Array)
+#2 /var/www/html/src/repository/UserRepository.php(26): repository\Repository->getByColumn('users', 'email', 'test1@mail.ru')
+#3 /var/www/html/src/controller/AuthenticationController.php(27): repository\UserRepository->getByEmail('test1@mail.ru')
+#4 /var/www/html/src/Application.php(33): controller\AuthenticationController->view()
+#5 /var/www/html/src/public/index.php(12): Application->run()
+#6 {main}
+[2024-04-10 19:04:34] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :created_at in /var/www/html/src/repository/Repository.php:101
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(101): PDOStatement->bindParam(':created_at', '2024-04-10 19:0...')
+#1 /var/www/html/src/repository/Repository.php(86): repository\Repository->bindParams(Object(PDOStatement), Object(dto\User))
+#2 /var/www/html/src/controller/AuthenticationController.php(27): repository\Repository->save(Object(dto\User))
+#3 /var/www/html/src/Application.php(33): controller\AuthenticationController->view()
+#4 /var/www/html/src/public/index.php(12): Application->run()
+#5 {main}

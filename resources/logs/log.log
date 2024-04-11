@@ -1,0 +1,6 @@
+[2024-04-10 21:00:54] [INFO] INSERT INTO users (created_at, updated_at, role_id, password, name, email) VALUES (:created_at, :updated_at, :role_id, :password, :name, :email)
+[2024-04-10 21:00:54] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description)
+[2024-04-10 21:00:54] [INFO] INSERT INTO carts (user_id) VALUES (:user_id)
+[2024-04-10 21:01:55] [INFO] INSERT INTO users (created_at, updated_at, role_id, password, name, email) VALUES (:created_at, :updated_at, :role_id, :password, :name, :email)
+[2024-04-10 21:01:55] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description)
+[2024-04-10 21:01:55] [INFO] INSERT INTO carts (user_id) VALUES (:user_id)

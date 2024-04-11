@@ -45,6 +45,6 @@ class RegistrationRequest extends Request {
     }
 
     public function toUser(): User {
-        return new User(0, $this->name, $this->email, $this->password);
+        return new User($this->name, $this->email, $this->password);
     }
 }

@@ -8,15 +8,11 @@ use dto\User;
 use Logger;
 use Throwable;
 
-class ProfileRepository implements Repository {
-
-    private Logger $logger;
-    private \PDO $pdo;
+class ProfileRepository extends Repository {
     private UserRepository $userRepository;
 
     public function __construct() {
-        $this->pdo = PDOHolder::getPdo();
-        $this->logger = new Logger();
+        parent::__construct();
         $this->userRepository = new UserRepository();
     }
 
@@ -34,69 +30,29 @@ class ProfileRepository implements Repository {
         }
     }
 
-    public function saveAll(array $array): ?array {
-        return [];
-    }
-
     public function getById(int|string $id): ?Profile {
-        return $this->getByColumn("id", $id);
+        return $this->getByColumn(Profile::class, "id", $id);
     }
 
     public function getByUserId(int $userId): ?Profile {
-        return $this->getByColumn("user_id", $userId);
+        return $this->getByColumn(Profile::class, "user_id", $userId);
     }
 
-    public function getAll(): ?array {
-        return [];
-    }
-
-    public function save(Profile|DTO $dto): ?Profile {
-        $query = "INSERT INTO profiles(user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description)";
-
-        $stmt = $this->pdo->prepare($query);
-
-        $userId = $dto->getUserId();
-        $avatarUrl = $dto->getAvatarUrl();
-        $description = $dto->getDescription();
-
-        $stmt->bindParam(":user_id", $userId);
-        $stmt->bindParam(":avatar_url", $avatarUrl);
-        $stmt->bindParam(":description", $description);
-
-        try {
-            $stmt->execute();
-            return $dto;
-
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
-    }
-
-    private function getByColumn(string $column, mixed $value): ?Profile {
+    public function getByColumn(string $dtoClass, string $column, mixed $value): ?Profile {
         $query = "SELECT * FROM profiles WHERE $column=:$column";
 
         $stmt = $this->pdo->prepare($query);
         $stmt->bindParam(":$column", $value);
         $stmt->execute();
 
-        $array = $stmt->fetch();
+        $fetched = $stmt->fetch();
 
         try {
-            return self::fetchedToProfile($array);
+            return $this->fetchToDTO($dtoClass, $fetched);
         } catch (Throwable $t) {
             $this->logger->error($t);
             return null;
         }
-    }
-
-    private static function fetchedToProfile(mixed $array): Profile {
-        return new Profile(
-            $array["id"],
-            $array["user_id"],
-            $array["avatar_url"],
-            $array["description"]
-        );
     }
 
     public function updateDescriptionById(int $id, string $value): bool {
@@ -107,22 +63,8 @@ class ProfileRepository implements Repository {
         return $this->updateColumnById("avatar_url", $id, $value);
     }
 
-    private function updateColumnById(string $column,
-                                      int $id,
-                                      string $value): bool {
-        $query = "UPDATE profiles SET $column=:value WHERE user_id=:id";
-
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindParam(":value", $value);
-        $stmt->bindParam(":id", $id);
-
-        try {
-            $stmt->execute();
-            return true;
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return false;
-        }
+    public function getTableName(): string
+    {
+        return "profiles";
     }
 }

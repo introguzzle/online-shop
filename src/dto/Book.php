@@ -11,13 +11,15 @@ class Book extends DTO {
     private int $year;
     private string $imageUrl;
 
-    public function __construct(int $id,
-                                string $name,
-                                string $author,
-                                string $description,
-                                int $price,
-                                int $year,
-                                string $imageUrl) {
+    public function __construct(
+        int $id,
+        string $name,
+        string $author,
+        string $description,
+        int $price,
+        int $year,
+        string $imageUrl
+    ) {
         $this->id = $id;
         $this->name = $name;
         $this->author = $author;
@@ -53,5 +55,20 @@ class Book extends DTO {
 
     public function getImageUrl(): string {
         return $this->imageUrl;
+    }
+
+    public function getFieldMapping(): array
+    {
+        $array = [
+            "id" => "id",
+            "name" => "name",
+            "author" => "author",
+            "description" => "description",
+            "price" => "price",
+            "year" => "year",
+            "imageUrl" => "image_url"
+        ];
+
+        return $array;
     }
 }

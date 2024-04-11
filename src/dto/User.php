@@ -13,10 +13,13 @@ class User extends DTO {
     private string $updatedAt;
     private int $roleId;
 
-    public function __construct(int $id,
-                                string $name,
-                                string $email,
-                                string $password) {
+    public function __construct(
+        string $name,
+        string $email,
+        string $password,
+        int $id = 0
+    )
+    {
         $this->id = $id;
         $this->name = $name;
         $this->email = $email;
@@ -26,31 +29,38 @@ class User extends DTO {
         $this->roleId = 1;
     }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function getEmail(): string {
+    public function getEmail(): string
+    {
         return $this->email;
     }
 
-    public function getPassword(): string {
+    public function getPassword(): string
+    {
         return $this->password;
     }
 
-    public function getCreatedAt(): string {
+    public function getCreatedAt(): string
+    {
         return $this->createdAt;
     }
 
-    public function getUpdatedAt(): string {
+    public function getUpdatedAt(): string
+    {
         return $this->updatedAt;
     }
 
-    public function getRoleId(): int {
+    public function getRoleId(): int
+    {
         return $this->roleId;
     }
 }

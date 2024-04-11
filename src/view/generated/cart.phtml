@@ -310,6 +310,7 @@
             <h2><?php echo $book->getName()?></h2>
             <p>Price: <?php echo $book->getPrice()?></p>
             <p>Description: <?php echo $book->getDescription()?></p>
+            <?php $totalPrice += $book->getPrice() ?>
         </div>
     <?php endforeach;?>
 
