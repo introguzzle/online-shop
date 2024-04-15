@@ -2,89 +2,92 @@
 
 namespace service;
 
+use dto\Errors;
+use dto\RegistrationForm;
 use repository\UserRepository;
-use dto\User;
-use request\RegistrationRequest;
+use entity\User;
 
-class RegistrationService implements Service {
-
-    private array $errors = [];
+class RegistrationService implements Service
+{
     private UserRepository $userRepository;
     private ProfileService $profileService;
     private CartService $cartService;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userRepository = new UserRepository();
         $this->profileService = new ProfileService();
         $this->cartService = new CartService();
     }
 
-    public function proceed(): array | true {
-        $registrationRequest = $this->toRequest();
-        $correct = $this->validate($registrationRequest);
+    public function processRegistration(
+        RegistrationForm $registrationForm
+    ): Errors
+    {
+        $errors = $this->validate($registrationForm);
 
-        $user = $registrationRequest->toUser();
-
-        if (!$correct) {
-            return $this->errors;
-        } else {
-            $this->saveUser($user);
-
-            $user = $this->userRepository->getByEmail($user->getEmail());
-
-            $this->saveProfile($user);
-            $this->saveCart($user);
-
-            return true;
+        if ($errors->hasAny()) {
+            return $errors;
         }
+
+        $user = $this->toUser($registrationForm);
+
+        $this->saveUser($user);
+
+        $user = $this->userRepository->getByEmail($registrationForm->getEmail());
+
+        $this->saveProfile($user);
+        $this->saveCart($user);
+
+        return $errors;
     }
 
-    private function validate(RegistrationRequest $request): bool {
-        $errorsArePresent = false;
+    private function validate(RegistrationForm $form): Errors
+    {
+        $errors = Errors::create();
 
-        if ($this->userRepository->getByEmail($request->getEmail()) !== null) {
-            $this->errors["email"] = "Email is already taken";
-            $errorsArePresent = true;
+        if ($this->userRepository->getByEmail($form->getEmail()) !== null) {
+            $errors->add("email", "Email is already taken");
         }
 
-        if (!filter_var($request->getEmail(), FILTER_VALIDATE_EMAIL)) {
-            $this->errors["email"] = "Invalid email";
-            $errorsArePresent = true;
+        if (!filter_var($form->getEmail(), FILTER_VALIDATE_EMAIL)) {
+            $errors->add("email", "Invalid email");
         }
 
-        if ($request->getPassword() !== $request->getPasswordRepeat()) {
-            $this->errors["password"] = "Invalid password";
-            $errorsArePresent = true;
+        if ($form->getPassword() !== $form->getPasswordRepeat()) {
+            $errors->add("password", "Invalid password");
         }
 
-        $nameLength = strlen($request->getName());
+        $nameLength = strlen($form->getName());
 
         if ($nameLength <= 4 || $nameLength >= 255) {
-            $this->errors["name"] = "Invalid name";
-            $errorsArePresent = true;
+            $errors->add("name", "Invalid name");
         }
 
-        return !$errorsArePresent;
+        return $errors;
     }
 
-    private function toRequest(): RegistrationRequest {
-        $name = $_REQUEST["name"];
-        $email = $_REQUEST["email"];
-        $password = $_REQUEST["psw"];
-        $passwordRepeat = $_REQUEST["psw-repeat"];
-
-        return new RegistrationRequest($name, $email, $password, $passwordRepeat);
+    private function toUser(RegistrationForm $form): User
+    {
+        return new User(
+            $form->getName(),
+            $form->getEmail(),
+            password_hash($form->getPassword(), PASSWORD_DEFAULT)
+        );
     }
 
-    public function saveUser(User $user): void {
+    public function saveUser(User $user): void
+    {
         $this->userRepository->save($user);
     }
 
-    public function saveProfile(User $user): void {
+    public function saveProfile(User $user): void
+    {
         $this->profileService->saveProfile($user);
     }
 
-    public function saveCart(User $user): void {
+    public function saveCart(User $user): void
+    {
         $this->cartService->saveCart($user);
     }
 }

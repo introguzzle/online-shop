@@ -3,7 +3,7 @@
 class Logger {
 
     private static string $LOG_FILE = "./../../resources/logs/log.log";
-    private static int $MAX_FILE_SIZE = 1024;
+    private static int $MAX_FILE_SIZE = 10241024;
 
     public function error(string $error): void {
         $this->write($error, "ERROR");

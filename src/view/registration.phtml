@@ -5,21 +5,21 @@
         <hr>
 
         <label class="l-label" for="name"><b>Name</b></label>
-        <?php if (isset($errors["name"])): ?>
-            <label class="l-label error-label"> <?php echo $errors["name"]; ?></label>
+        <?php if (isset($errors) && $errors->hasKey("name")): ?>
+            <label class="l-label error-label"> <?php echo $errors->getMessage("name"); ?></label>
         <?php endif; ?>
         <input type="text" placeholder="Enter Name" name="name" id="name" required>
 
 
         <label class="l-label" for="email"><b>Email</b></label>
-        <?php if (isset($errors["email"])): ?>
-            <label class="l-label error-label"> <?php echo $errors["email"]; ?></label>
+        <?php if (isset($errors) && $errors->hasKey("email")): ?>
+            <label class="l-label error-label"> <?php echo $errors->getMessage("email"); ?></label>
         <?php endif; ?>
         <input type="text" placeholder="Enter Email" name="email" id="email" required>
 
         <label class="l-label" for="psw"><b>Password</b></label>
-        <?php if (isset($errors["password"])): ?>
-            <label class="l-label error-label"> <?php echo $errors["password"]; ?></label>
+        <?php if (isset($errors) && $errors->hasKey("password")): ?>
+            <label class="l-label error-label"> <?php echo $errors->getMessage("password"); ?></label>
         <?php endif; ?>
         <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
 

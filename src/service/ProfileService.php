@@ -2,8 +2,8 @@
 
 namespace service;
 
-use dto\Profile;
-use dto\User;
+use entity\Profile;
+use entity\User;
 use repository\ProfileRepository;
 use session\Authentication;
 
@@ -16,7 +16,7 @@ class ProfileService implements Service {
         $this->profileRepository = new ProfileRepository();
     }
 
-    public function proceedEdit(): bool {
+    public function processDescriptionEdit(): bool {
         $id = Authentication::getUser()->getId();
 
         return $this->profileRepository->updateDescriptionById($id, $this->description());
@@ -25,10 +25,6 @@ class ProfileService implements Service {
     public function saveProfile(User $user): void {
         $profile = new Profile($user->getId());
         $this->profileRepository->save($profile);
-    }
-
-    private function description(): string {
-        return $_REQUEST["description"];
     }
 
     public function getName(): string {

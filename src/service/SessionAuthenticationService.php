@@ -2,24 +2,29 @@
 
 namespace service;
 
+use dto\LoginForm;
 use repository\UserRepository;
-use dto\User;
+use entity\User;
 
-class SessionAuthenticationService implements AuthenticationService {
+class SessionAuthenticationService implements AuthenticationService
+{
     private UserRepository $userRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->userRepository = new UserRepository();
     }
 
-    public function isAuthenticated(): bool {
-        session_start();
+    public function isAuthenticated(): bool
+    {
+        $this->startSession();
+
         return isset($_SESSION["user_id"]);
     }
 
-    public function getUser(): ?User {
-        if (session_status() != PHP_SESSION_ACTIVE)
-            session_start();
+    public function getUser(): ?User
+    {
+        $this->startSession();
 
         if (isset($_SESSION["user_id"]) && $_SESSION != null) {
             return $this->userRepository->getById($_SESSION["user_id"]);
@@ -28,21 +33,36 @@ class SessionAuthenticationService implements AuthenticationService {
         }
     }
 
-    public function login(User $user): bool {
-        session_start();
+    public function loginByUser(User $user): bool
+    {
+        $this->startSession();
 
         $_SESSION["user_id"] = $user->getId();
-        $_SESSION["user_email"] = $user->getEmail();
-        $_SESSION["user_name"] = $user->getName();
 
         return true;
     }
 
-    public function logout(): void {
-        session_start();
+    public function loginByCredentials(LoginForm $loginForm): bool
+    {
+        $user = $this->userRepository->getByEmail($loginForm->getEmail());
+
+        return $this->loginByUser($user);
+    }
+
+    public function logout(): void
+    {
+        $this->startSession();
 
         unset($_SESSION["user_id"]);
-        unset($_SESSION["user_email"]);
-        unset($_SESSION["user_name"]);
+    }
+
+    private function startSession(): void
+    {
+        set_error_handler(function() {}, E_WARNING);
+
+        if (session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+
+        restore_error_handler();
     }
 }

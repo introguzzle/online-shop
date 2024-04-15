@@ -3,5 +3,4 @@
 namespace service;
 
 interface Service {
-
 }

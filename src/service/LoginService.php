@@ -2,63 +2,51 @@
 
 namespace service;
 
+use dto\Errors;
+use dto\LoginForm;
 use repository\UserRepository;
-use dto\User;
-use request\LoginRequest;
+use entity\User;
 
-class LoginService implements Service {
+class LoginService implements Service
+{
 
-    private array $errors = [];
     private AuthenticationService $authService;
     private UserRepository $userRepository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->authService = new SessionAuthenticationService();
         $this->userRepository = new UserRepository();
     }
 
-    public function proceed(): true | array {
-        $loginRequest = $this->toRequest();
+    public function processAuthentication(
+        LoginForm $loginForm
+    ): Errors
+    {
+        $errors = Errors::create();
+        $user = $this->userRepository->getByEmail($loginForm->getEmail());
 
-        if (!isset($loginRequest)) {
-            $this->registerErrors();
-            return $this->errors;
+        if (isset($user) && password_verify($loginForm->getPassword(), $user->getPassword())) {
+            $this->loginByUser($user);
+            return $errors;
         }
 
-        $user = $this->userRepository->getByEmail($loginRequest->getEmail());
-
-        if (!isset($user) || !password_verify($loginRequest->getPassword(), $user->getPassword())) {
-            $this->registerErrors();
-            return $this->errors;
-        }
-
-        $this->login($user);
-        return true;
+        $errors->add("user", "Invalid email or password");
+        return $errors;
     }
 
-    private function toRequest(): ?LoginRequest {
-        $email = $_REQUEST["email"] ?? null;
-        $password = $_REQUEST["psw"] ?? null;
-
-        if (isset($_REQUEST["remember"]))
-            $remember = "0";
-        else
-            $remember = "1";
-
-        return $email === null || $password === null
-            ? null
-            : new LoginRequest($email, $password, $remember);
+    public function loginByUser(User $user): void
+    {
+        $this->authService->loginByUser($user);
     }
 
-    public function login(User $user): void {
-        $this->authService->login($user);
+    public function loginByCredentials(LoginForm $loginForm): void
+    {
+        $this->authService->loginByCredentials($loginForm);
     }
 
-    public function logout(): void {
+    public function logout(): void
+    {
         $this->authService->logout();
-    }
-
-    private function registerErrors(): void {
-        $this->errors["user"] = "Invalid email or password";
     }
 }

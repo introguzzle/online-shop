@@ -1,12 +1,9 @@
 <?php
 
-namespace request;
+namespace dto;
 
-use entity\User;
-
-class RegistrationRequest extends Request
+class RegistrationForm
 {
-
     private string $name;
     private string $email;
     private string $password;
@@ -19,17 +16,10 @@ class RegistrationRequest extends Request
         string $passwordRepeat
     )
     {
-        parent::__construct(
-            "POST",
-            "/registrate",
-            [$name, $email, $password, $passwordRepeat]
-        );
-
         $this->name = $name;
         $this->email = $email;
         $this->password = $password;
         $this->passwordRepeat = $passwordRepeat;
-
     }
 
     public function getName(): string
@@ -37,9 +27,19 @@ class RegistrationRequest extends Request
         return $this->name;
     }
 
+    public function setName(string $name): void
+    {
+        $this->name = $name;
+    }
+
     public function getEmail(): string
     {
         return $this->email;
+    }
+
+    public function setEmail(string $email): void
+    {
+        $this->email = $email;
     }
 
     public function getPassword(): string
@@ -47,13 +47,18 @@ class RegistrationRequest extends Request
         return $this->password;
     }
 
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
     public function getPasswordRepeat(): string
     {
         return $this->passwordRepeat;
     }
 
-    public function __toString(): string
+    public function setPasswordRepeat(string $passwordRepeat): void
     {
-        return "RegistrationRequest[$this->name, $this->email, $this->password, $this->passwordRepeat]";
+        $this->passwordRepeat = $passwordRepeat;
     }
 }

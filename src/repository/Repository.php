@@ -2,30 +2,36 @@
 
 namespace repository;
 
-use dto\DTO;
+use entity\Entity;
 use Logger;
+use repository\hydrator\DefaultHydrator;
+use repository\hydrator\Hydrator;
 use PDO;
-use PDOStatement;
-use ReflectionClass;
-use Throwable;
-use utils\DTOUtils;
 
 abstract class Repository
 {
     protected Logger $logger;
     protected PDO $pdo;
 
+    protected Hydrator $hydrator;
+
+    public const string JOIN_AND = "AND";
+    public const string JOIN_OR  = "OR";
+
     public function __construct()
     {
         $this->pdo = PDOHolder::getPdo();
         $this->logger = new Logger();
+        $this->hydrator = new DefaultHydrator();
     }
 
     public abstract function getTableName(): string;
+    public abstract function getEntityClass(): string;
 
-    public function getAll(string $dtoClass): ?array
+    public function getAll(): ?array
     {
         $table = $this->getTableName();
+
         $query = "SELECT * FROM $table";
 
         $stmt = $this->pdo->prepare($query);
@@ -33,147 +39,99 @@ abstract class Repository
 
         $fetched = $stmt->fetchAll();
 
-        try {
-            return $this->allFetchedToDTO($dtoClass, $fetched);
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
+        return $this->hydrateAll($fetched);
     }
 
-    protected function getByColumn(
-        string $dtoClass,
+    public function getByColumn(
         string $column,
         mixed $value
-    ): ?DTO
+    ): ?Entity
+    {
+        return $this->getByCriteria([$column => $value]);
+    }
+
+    public function getByCriteria(
+        array $criteria,
+        string $join = self::JOIN_AND
+    ): ?Entity
     {
         $table = $this->getTableName();
+        $conditions = [];
 
-        $query = "SELECT * FROM $table WHERE $column=:$column";
+        foreach ($criteria as $column => $value) {
+            $conditions[] = "$column = :$column";
+        }
+
+        $where = implode($join, $conditions);
+        $query = "SELECT * FROM $table WHERE $where";
 
         $stmt = $this->pdo->prepare($query);
-        $stmt->bindValue(":$column", $value);
+
+        foreach ($criteria as $column => $value) {
+            $stmt->bindValue(":$column", $value);
+        }
+
         $stmt->execute();
+        $data = $stmt->fetch();
 
-        $fetched = $stmt->fetch();
-
-        try {
-            return $this->fetchToDTO($dtoClass, $fetched);
-        } catch (Throwable $t) {
-            $this->logger->error($t);
+        if (empty($data)) {
             return null;
         }
+
+        return $this->hydrate($data);
     }
 
-    public function getColumns(): array
+    public function getById(mixed $id): ?Entity
+    {
+        return $this->getByColumn("id", $id);
+    }
+
+    public function save(Entity $entity): ?Entity
     {
         $table = $this->getTableName();
+        $entityData = $this->hydrator->extract($entity);
 
-        $query = "SELECT column_name
-                FROM information_schema.columns
-                WHERE table_name = :table_name";
+        // When saved, no need to save id since it will be auto-incremented anyway
+        unset($entityData["id"]);
 
-        $stmt = $this->pdo->prepare($query);
-
-        $stmt->bindParam(":table_name", $table);
-
-        try {
-            $stmt->execute();
-            $array = $stmt->fetchAll();
-            return self::saveFlatMap($array);
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return [];
-        }
-    }
-
-    public function save(DTO $dto): ?DTO {
-        $table = $this->getTableName();
-        $columns = $this->getColumns();
-
-        foreach ($columns as $k => $v) {
-            if ($v == "id") {
-                unset($columns[$k]);
-                break;
-            }
-        }
+        $columns = array_keys($entityData);
 
         $placeholders = implode(', ', array_map(fn($column) => ":$column", $columns));
-
         $columnNames = implode(', ', $columns);
 
         $query = "INSERT INTO $table ($columnNames) VALUES ($placeholders)";
 
         $this->logger->info($query);
 
-        try {
-            $stmt = $this->pdo->prepare($query);
+        $stmt = $this->pdo->prepare($query);
 
-            foreach ($columns as $column) {
-                $getter = DTOUtils::getGetterByField($column);
-                $value = $dto->$getter();
-
-                $stmt->bindValue(":$column", $value);
-            }
-
-            $stmt->execute();
-
-            return $dto;
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
-    }
-
-    private function saveFlatMap(array $array): array {
-        $flat = [];
-
-        foreach ($array as $item) {
-            $flat[] = $item[0];
+        foreach ($entityData as $column => $value) {
+            $stmt->bindValue(":$column", $value);
         }
 
-        return $flat;
+        $stmt->execute();
+
+        return $entity;
     }
 
-    public function fetchToDTO(
-        string $dtoClass,
-        mixed $fetched
-    ): ?DTO
+    public function hydrate(array $data): Entity
     {
-        if (is_array($fetched)) {
-            $columns = $this->getColumns();
-
-            $reflectionClass = new ReflectionClass($dtoClass);
-
-            if ($reflectionClass->hasMethod('__construct')) {
-                $constructor = $reflectionClass->getMethod('__construct');
-                $parameters = $constructor->getParameters();
-
-                $values = [];
-                foreach ($parameters as $parameter) {
-                    $snake = DTOUtils::camelToSnake($parameter->getName());
-
-                    if (in_array($snake, $columns))
-                        $values[] = $fetched[$snake];
-                }
-
-                return $reflectionClass->newInstanceArgs($values);
-            }
-        }
-
-        return null;
+        return $this->hydrator->hydrate($this->getEntityClass(), $data);
     }
 
-    public function allFetchedToDTO(
-        string $dtoClass,
-        array $allFetched
-    ): array
+    public function hydrateAll(array $data): array
     {
-        $dtos = [];
-        foreach ($allFetched as $singleFetch)
-            $dtos[] = $this->fetchToDTO($dtoClass, $singleFetch);
+        $entities = [];
 
-        return $dtos;
+        if (empty($data)) {
+            return [];
+        }
+
+        foreach ($data as $item) {
+            $entities[] = $this->hydrate($item);
+        }
+
+        return $entities;
     }
 
     public function updateColumnById(
@@ -190,12 +148,7 @@ abstract class Repository
         $stmt->bindParam(":value", $value);
         $stmt->bindParam(":id", $id);
 
-        try {
-            $stmt->execute();
-            return true;
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return false;
-        }
+        $stmt->execute();
+        return true;
     }
 }

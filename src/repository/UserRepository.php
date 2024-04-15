@@ -2,12 +2,8 @@
 
 namespace repository;
 
-use dto\DTO;
-use dto\User;
-use Exception;
-use Logger;
-use PDO;
-use Throwable;
+use entity\Entity;
+use entity\User;
 
 class UserRepository extends Repository {
 
@@ -16,18 +12,18 @@ class UserRepository extends Repository {
         parent::__construct();
     }
 
-    public function getById(mixed $id): ?User
+    public function getByEmail(string $email): User | Entity | null
     {
-        return $this->getByColumn(User::class, "id", $id);
-    }
-
-    public function getByEmail(string $email): ?User
-    {
-        return $this->getByColumn(User::class, "email", $email);
+        return $this->getByColumn("email", $email);
     }
 
     public function getTableName(): string
     {
         return "users";
+    }
+
+    public function getEntityClass(): string
+    {
+        return User::class;
     }
 }

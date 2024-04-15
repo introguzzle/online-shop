@@ -1,39 +1,42 @@
 <?php
 
-class Application {
+class Application
+{
     private array $routes = [];
+    private Logger $logger;
+
+    public function __construct() {
+        $this->logger = new Logger();
+    }
 
     public function run(): void
     {
         $requestUri = $_SERVER["REQUEST_URI"];
 
         if (!array_key_exists($requestUri, $this->routes)) {
-            $this->error();
+            $this->clientError();
             return;
         }
 
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
         if (!isset($this->routes[$requestUri][$requestMethod])) {
-            $this->error();
+            $this->clientError();
             return;
         }
 
-        $route = $this->routes[$requestUri][$requestMethod];
+        $handler = $this->routes[$requestUri][$requestMethod];
 
-        if (!isset($route)) {
-            $this->error();
-            return;
+        if (is_array($handler)) {
+            $handler[0] = new $handler[0];
         }
 
-        if (is_array($route)) {
-            $instance       = $route["instance"];
-            $instanceMethod = $route["method"];
-
-            $instance->$instanceMethod();
-
-        } else {
-            $route();
+        try {
+            $handler();
+        } catch (Throwable $t) {
+            $this->logger->error($t);
+            $this->serverError();
+            return;
         }
     }
 
@@ -59,23 +62,24 @@ class Application {
         callable | array $callback
     ): void
     {
-        if (is_array($callback)) {
-            $callback = [
-                "instance" => new $callback[0](),
-                "method"   => $callback[1]
-            ];
+        if (is_array($urls)) {
+            foreach ($urls as $url) {
+                $this->routes[$url][$httpMethod] = $callback;
+            }
+
+            return;
         }
 
-        if (is_array($urls)) {
-            foreach ($urls as $url)
-                $this->routes[$url][$httpMethod] = $callback;
-        } else {
-            $this->routes[$urls][$httpMethod] = $callback;
-        }
+        $this->routes[$urls][$httpMethod] = $callback;
     }
 
-    private function error(): void
+    private function clientError(): void
     {
         header("Location: /404");
+    }
+
+    private function serverError(): void
+    {
+        header("Location: /502");
     }
 }

@@ -4,16 +4,16 @@
     <p>Please fill in this form to log in.</p>
     <form action="/login" method="post">
         <label class="l-label" for="email"><b>Email</b></label>
-        <?php if (isset($errors["user"])): ?>
-            <label style="color: red"> <?php echo $errors["user"] ?></label>
+        <?php if (isset($errors) && $errors->hasKey("user")): ?>
+            <label style="color: red"> <?php echo $errors->getMessage("user") ?></label>
         <?php endif; ?>
         <label class="l-label">
             <input type="text" placeholder="Enter Email" name="email" required>
         </label>
 
         <label class="l-label" for="psw"><b>Password</b></label>
-        <?php if (isset($errors["password"])): ?>
-            <label style="color: red"> <?php echo $errors["password"] ?></label>
+        <?php if (isset($errors) && $errors->hasKey("password")): ?>
+            <label style="color: red"> <?php echo $errors->getMessage("user") ?></label>
         <?php endif; ?>
         <label class="l-label">
             <input type="password" placeholder="Enter Password" name="psw" required>

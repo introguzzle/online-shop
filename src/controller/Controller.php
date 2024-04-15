@@ -5,14 +5,13 @@ namespace controller;
 use request\Request;
 use view\Renderer;
 
-abstract class Controller {
+abstract class Controller
+{
 
     protected Renderer $renderer;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->renderer = new Renderer();
     }
-
-    public abstract function view();
-
 }

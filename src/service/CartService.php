@@ -2,8 +2,8 @@
 
 namespace service;
 
-use dto\Cart;
-use dto\User;
+use entity\Cart;
+use entity\User;
 use repository\CartRepository;
 use session\Authentication;
 
@@ -23,7 +23,7 @@ class CartService implements Service {
     }
 
     public function saveCart(User $user): void {
-        $cart = new Cart($user->getId());
+        $cart = new Cart(0, $user->getId());
         $this->cartRepository->save($cart);
     }
 }

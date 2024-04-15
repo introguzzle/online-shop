@@ -2,7 +2,7 @@
 
 namespace service;
 
-use dto\Book;
+use entity\Book;
 use repository\BookRepository;
 use repository\CartRepository;
 use session\Authentication;
@@ -17,7 +17,7 @@ class CatalogService implements Service {
     }
 
     public function getAllBooks(): array {
-        return $this->bookRepository->getAll(Book::class);
+        return $this->bookRepository->getAll();
     }
 
     public function add(): void {

@@ -1,8 +1,8 @@
 <?php
 
-namespace dto;
+namespace entity;
 
-class Profile extends DTO
+class Profile extends Entity
 {
     private int $id;
     private int $userId;

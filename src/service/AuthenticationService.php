@@ -2,11 +2,13 @@
 
 namespace service;
 
-use dto\User;
+use dto\LoginForm;
+use entity\User;
 
 interface AuthenticationService extends Service {
     function isAuthenticated(): bool;
     function getUser(): ?User;
-    function login(User $user): bool;
+    function loginByUser(User $user): bool;
+    function loginByCredentials(LoginForm $loginForm): bool;
     function logout(): void;
 }

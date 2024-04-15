@@ -2,106 +2,70 @@
 
 namespace repository;
 
-use dto\Book;
-use dto\Cart;
-use dto\DTO;
-use dto\User;
-use Logger;
-use PDO;
-use repository\Repository;
-use Throwable;
+use entity\Book;
+use entity\Cart;
+use entity\User;
 
 class CartRepository extends Repository
 {
-    private UserRepository $userRepository;
     private BookRepository $bookRepository;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->userRepository = new UserRepository();
         $this->bookRepository = new BookRepository();
     }
 
-    public function saveFromUser(User $user): void
+    public function saveBook(User $user, Book $book): ?Book
     {
-        $user = $this->userRepository->getByEmail($user->getEmail());
-        $id = $user->getId();
+        $query = "INSERT INTO cart_book(cart_id, book_id) VALUES (:cart_id, :book_id)";
+        $stmt = $this->pdo->prepare($query);
 
-        $stmt = $this->pdo->prepare("INSERT INTO carts(user_id) VALUES (:user_id)");
-        $stmt->bindParam(":user_id", $id);
+        $cartByUser = $this->getByUserId($user->getId());
 
-        try {
-            $stmt->execute();
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-        }
-    }
-
-    function saveBook(User $user, Book $book): ?Book
-    {
-        $stmt = $this->pdo->prepare("INSERT INTO cart_book(cart_id, book_id) VALUES (:cart_id, :book_id)");
-
-        $cartId = $user->getId();
+        $cartId = $cartByUser->getId();
         $bookId = $book->getId();
 
-        $stmt->bindParam(":cart_id", $cartId);
-        $stmt->bindParam(":book_id", $bookId);
+        $stmt->bindValue(":cart_id", $cartId);
+        $stmt->bindValue(":book_id", $bookId);
 
-        try {
-            $stmt->execute();
-            return $book;
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
+        $stmt->execute();
+
+        return $book;
     }
 
     public function getByUserId(int $userId): ?Cart
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM carts WHERE user_id=:user_id");
-
-        $stmt->bindParam(":user_id", $userId);
-
-        try {
-            $stmt->execute();
-            $array = $stmt->fetch();
-            return new Cart($array["id"], $array["user_id"]);
-
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
-        }
+        return $this->getByColumn("user_id", $userId);
     }
-
 
     public function getAllBooksById(int $cartId): ?array
     {
-        $stmt = $this->pdo->prepare("SELECT book_id FROM cart_book WHERE cart_id=:cart_id");
+        $query = "SELECT book_id FROM cart_book WHERE cart_id=:cart_id";
+        $stmt = $this->pdo->prepare($query);
 
         $stmt->bindValue(":cart_id", $cartId);
 
-        try {
-            $stmt->execute();
-            $fetched = $stmt->fetchAll();
+        $stmt->execute();
+        $fetched = $stmt->fetchAll();
 
-            $books = [];
+        $books = [];
 
-            foreach ($fetched as $array) {
-                $books[] = $this->bookRepository->getById($array["book_id"]);
-            }
-
-            return $books;
-
-        } catch (Throwable $t) {
-            $this->logger->error($t);
-            return null;
+        foreach ($fetched as $array) {
+            $books[] = $this->bookRepository->getById($array["book_id"]);
         }
+
+        return $books;
     }
 
     public function getTableName(): string
     {
         return "carts";
+    }
+
+    public function getEntityClass(): string
+    {
+        return Cart::class;
     }
 }

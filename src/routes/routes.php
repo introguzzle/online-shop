@@ -19,7 +19,7 @@ $app->registerGetRoute(["/home", "/"], function() {
 });
 
 $app->registerGetRoute("/register", [RegistrationController::class, "view"]);
-$app->registerPostRoute("/register", [RegistrationController::class, "post"]);
+$app->registerPostRoute("/register", [RegistrationController::class, "register"]);
 
 $app->registerGetRoute("/login", [AuthenticationController::class, "view"]);
 $app->registerPostRoute("/login", [AuthenticationController::class, "login"]);
@@ -29,12 +29,12 @@ $app->registerGetRoute("/profile", [ProfileController::class, "view"]);
 
 $app->registerGetRoute(
     ["/profile/edit", "/profile/edit?"],
-    [ProfileController::class, "getEditDescription"]
+    [ProfileController::class, "getDescriptionEdit"]
 );
 
 $app->registerPostRoute(
     ["/profile/edit", "/profile/edit?"],
-    [ProfileController::class, "postEditDescription"]
+    [ProfileController::class, "postDescriptionEdit"]
 );
 
 
@@ -44,3 +44,4 @@ $app->registerPostRoute("/catalog/add-to-cart", [CatalogController::class, "add"
 $app->registerGetRoute("/cart", [CartController::class, "view"]);
 
 $app->registerGetRoute("/checkout", [OrderController::class, "view"]);
+$app->registerPostRoute("/submit-order", [OrderController::class, "processOrder"]);

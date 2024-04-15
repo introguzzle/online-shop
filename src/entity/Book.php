@@ -1,8 +1,9 @@
 <?php
 
-namespace dto;
+namespace entity;
 
-class Book extends DTO {
+class Book extends Entity
+{
     private int $id;
     private string $name;
     private string $author;
@@ -29,46 +30,38 @@ class Book extends DTO {
         $this->imageUrl = $imageUrl;
     }
 
-    public function getId(): int {
+    public function getId(): int
+    {
         return $this->id;
     }
 
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
-    public function getAuthor(): string {
+    public function getAuthor(): string
+    {
         return $this->author;
     }
 
-    public function getDescription(): string {
+    public function getDescription(): string
+    {
         return $this->description;
     }
 
-    public function getPrice(): int {
+    public function getPrice(): int
+    {
         return $this->price;
     }
 
-    public function getYear(): int {
+    public function getYear(): int
+    {
         return $this->year;
     }
 
-    public function getImageUrl(): string {
-        return $this->imageUrl;
-    }
-
-    public function getFieldMapping(): array
+    public function getImageUrl(): string
     {
-        $array = [
-            "id" => "id",
-            "name" => "name",
-            "author" => "author",
-            "description" => "description",
-            "price" => "price",
-            "year" => "year",
-            "imageUrl" => "image_url"
-        ];
-
-        return $array;
+        return $this->imageUrl;
     }
 }

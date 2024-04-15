@@ -5,17 +5,20 @@ namespace controller;
 use service\ProfileService;
 use session\Authentication;
 
-class ProfileController extends Controller {
+class ProfileController extends Controller
+{
 
     private ProfileService $service;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->service = new ProfileService();
     }
 
-    public function view(): void {
+    public function view(): void
+    {
         $user = Authentication::getUser();
 
         if (isset($user)) {
@@ -32,19 +35,24 @@ class ProfileController extends Controller {
         }
     }
 
-    public function post(): void {
-
+    private function acquireNewDescription(): string
+    {
+        return $_REQUEST["description"];
     }
 
-    public function getEditDescription(): void {
+    public function getDescriptionEdit(): void
+    {
         require_once $this->renderer->render(
             "profile_edit_description.phtml",
             "Edit description"
         );
     }
 
-    public function postEditDescription(): void {
-        if ($this->service->proceedEdit()) {
+    public function postDescriptionEdit(): void
+    {
+        $user = Authentication::getUser();
+
+        if ($this->service->processDescriptionEdit()) {
             header("Location: /profile");
         }
     }

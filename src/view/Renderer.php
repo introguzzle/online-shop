@@ -9,19 +9,39 @@ class Renderer {
         bool   $renderLayout = true
     ): string
     {
+        return $this->renderContent(
+            "./../view/layouts/layout.phtml",
+            $view,
+            ["{{{title}}}" => $title],
+            $renderLayout
+        );
+    }
+
+    public function renderContent(
+        string $layout,
+        string $view,
+        array  $replace,
+        bool   $renderLayout = true
+    ): string
+    {
         ob_start();
-        $result = file_get_contents("./../view/$view");
+
+        $path = "./../view/$view";
+        $result = file_get_contents($path);
 
         if ($renderLayout) {
-            $layout = file_get_contents("./../view/layouts/layout.phtml");
-            $result = str_replace("{{{content}}}", $result, $layout);
-            $result = str_replace("{{{title}}}", $title, $result);
+            $layoutContents = file_get_contents($layout);
+            $result = str_replace("{{{content}}}", $result, $layoutContents);
+
+            foreach ($replace as $key => $value) {
+                $result = str_replace($key, $value, $result);
+            }
         }
 
-        $path = "./../view/generated/$view";
-        file_put_contents($path, $result);
+        $generatedPath = "./../view/generated/$view";
+        file_put_contents($generatedPath, $result);
         ob_flush();
 
-        return $path;
+        return $generatedPath;
     }
 }
