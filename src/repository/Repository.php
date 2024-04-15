@@ -45,7 +45,7 @@ abstract class Repository
     public function getByColumn(
         string $column,
         mixed $value
-    ): ?Entity
+    ): array
     {
         return $this->getByCriteria([$column => $value]);
     }
@@ -53,7 +53,7 @@ abstract class Repository
     public function getByCriteria(
         array $criteria,
         string $join = self::JOIN_AND
-    ): ?Entity
+    ): array
     {
         $table = $this->getTableName();
         $conditions = [];
@@ -62,7 +62,7 @@ abstract class Repository
             $conditions[] = "$column = :$column";
         }
 
-        $where = implode($join, $conditions);
+        $where = implode(" " . $join . " ", $conditions);
         $query = "SELECT * FROM $table WHERE $where";
 
         $stmt = $this->pdo->prepare($query);
@@ -72,18 +72,29 @@ abstract class Repository
         }
 
         $stmt->execute();
-        $data = $stmt->fetch();
+        $data = $stmt->fetchAll();
 
         if (empty($data)) {
-            return null;
+            return [];
         }
 
-        return $this->hydrate($data);
+        return $this->hydrateAll($data);
+    }
+
+    public function deleteById(mixed $id): void
+    {
+        $table = $this->getTableName();
+
+        $query = "DELETE FROM $table WHERE id = :id";
+        $stmt = $this->pdo->prepare($query);
+
+        $stmt->bindValue(":id", $id);
+        $stmt->execute();
     }
 
     public function getById(mixed $id): ?Entity
     {
-        return $this->getByColumn("id", $id);
+        return $this->getByColumn("id", $id)[0];
     }
 
     public function save(Entity $entity): ?Entity

@@ -24,10 +24,4 @@ class CatalogController extends Controller
             "Catalog"
         );
     }
-
-    public function add(): void
-    {
-        $this->catalogService->add();
-        header("Location: /catalog");
-    }
 }

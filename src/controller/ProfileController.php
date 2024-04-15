@@ -2,6 +2,8 @@
 
 namespace controller;
 
+use repository\CartBookRepository;
+use repository\UserRepository;
 use service\ProfileService;
 use session\Authentication;
 

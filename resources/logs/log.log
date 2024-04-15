@@ -3622,3 +3622,397 @@ Stack trace:
 [2024-04-15 15:49:14] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id)
 [2024-04-15 15:49:14] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description)
 [2024-04-15 15:49:14] [INFO] INSERT INTO carts (user_id) VALUES (:user_id)
+[2024-04-15 17:09:00] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id)
+[2024-04-15 17:15:06] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:27
+Stack trace:
+#0 /var/www/html/src/Application.php(35): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(12): Application->run()
+#2 {main}
+[2024-04-15 17:59:12] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:31
+Stack trace:
+#0 /var/www/html/src/Application.php(35): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(12): Application->run()
+#2 {main}
+[2024-04-15 17:59:18] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id)
+[2024-04-15 18:01:53] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id)
+[2024-04-15 18:01:53] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description)
+[2024-04-15 18:01:53] [INFO] INSERT INTO carts (user_id) VALUES (:user_id)
+[2024-04-15 18:02:22] [ERROR] TypeError: controller\CartController::controller\{closure}(): Argument #1 ($acc) must be of type int, null given in /var/www/html/src/controller/CartController.php:34
+Stack trace:
+#0 [internal function]: controller\CartController->controller\{closure}(NULL, Object(entity\Book))
+#1 /var/www/html/src/controller/CartController.php(34): array_reduce(Array, Object(Closure))
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 18:04:41] [ERROR] TypeError: controller\CartController::controller\{closure}(): Argument #2 ($next) must be of type entity\CartBook, entity\Book given in /var/www/html/src/controller/CartController.php:34
+Stack trace:
+#0 [internal function]: controller\CartController->controller\{closure}(0, Object(entity\Book))
+#1 /var/www/html/src/controller/CartController.php(34): array_reduce(Array, Object(Closure), 0)
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 18:04:42] [ERROR] TypeError: controller\CartController::controller\{closure}(): Argument #2 ($next) must be of type entity\CartBook, entity\Book given in /var/www/html/src/controller/CartController.php:34
+Stack trace:
+#0 [internal function]: controller\CartController->controller\{closure}(0, Object(entity\Book))
+#1 /var/www/html/src/controller/CartController.php(34): array_reduce(Array, Object(Closure), 0)
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 18:12:57] [ERROR] Error: Call to undefined method repository\CartBookRepository::getAllByCartId() in /var/www/html/src/controller/CartController.php:32
+Stack trace:
+#0 /var/www/html/src/Application.php(35): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(12): Application->run()
+#2 {main}
+[2024-04-15 18:15:28] [ERROR] Error: Class "http\Exception\RuntimeException" not found in /var/www/html/src/repository/hydrator/DefaultHydrator.php:33
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:16:36] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:17:28] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(121): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(133): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(83): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:17:34] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(121): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(133): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(83): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:18:35] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:18:42] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:22:05] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/controller/ProfileController.php(25): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/Application.php(35): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-15 18:22:16] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/controller/ProfileController.php(25): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/Application.php(35): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-15 18:22:17] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/controller/ProfileController.php(25): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/Application.php(35): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-15 18:22:18] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/controller/ProfileController.php(25): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/Application.php(35): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-15 18:22:18] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/controller/ProfileController.php(25): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/Application.php(35): controller\ProfileController->view()
+#6 /var/www/html/src/public/index.php(12): Application->run()
+#7 {main}
+[2024-04-15 18:23:29] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:35
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:23:31] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:35
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:23:43] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:37
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:25:09] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(42): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/controller/CartController.php(32): repository\Repository->getAll()
+#4 /var/www/html/src/Application.php(35): controller\CartController->view()
+#5 /var/www/html/src/public/index.php(12): Application->run()
+#6 {main}
+[2024-04-15 18:27:10] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:28:01] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:36
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:28:03] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:36
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:28:35] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:29:46] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/CartBookRepository.php(43): repository\Repository->getByColumn('cart_id', 1)
+#5 /var/www/html/src/controller/CartController.php(32): repository\CartBookRepository->getByCartId(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:31:49] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(42): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/controller/CartController.php(33): repository\Repository->getAll()
+#4 /var/www/html/src/Application.php(35): controller\CartController->view()
+#5 /var/www/html/src/public/index.php(12): Application->run()
+#6 {main}
+[2024-04-15 18:32:21] [ERROR] Exception: Failed to hydrate entity\CartBook in /var/www/html/src/repository/hydrator/DefaultHydrator.php:34
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(119): repository\hydrator\DefaultHydrator->hydrate('entity\\CartBook', Array)
+#1 /var/www/html/src/repository/Repository.php(131): repository\Repository->hydrate(Array)
+#2 /var/www/html/src/repository/Repository.php(81): repository\Repository->hydrateAll(Array)
+#3 /var/www/html/src/repository/Repository.php(50): repository\Repository->getByCriteria(Array)
+#4 /var/www/html/src/repository/Repository.php(86): repository\Repository->getByColumn('id', 1)
+#5 /var/www/html/src/controller/CartController.php(33): repository\Repository->getById(1)
+#6 /var/www/html/src/Application.php(35): controller\CartController->view()
+#7 /var/www/html/src/public/index.php(12): Application->run()
+#8 {main}
+[2024-04-15 18:33:38] [ERROR] Error: Call to undefined method entity\CartBook::getImageUrl() in /var/www/html/src/view/generated/cart.phtml:243
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(40): require_once()
+#1 /var/www/html/src/Application.php(35): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 18:34:20] [ERROR] Error: Call to undefined method entity\CartBook::getImageUrl() in /var/www/html/src/view/generated/cart.phtml:243
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(43): require_once()
+#1 /var/www/html/src/Application.php(35): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 18:34:22] [ERROR] Error: Call to undefined method entity\CartBook::getImageUrl() in /var/www/html/src/view/generated/cart.phtml:243
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(43): require_once()
+#1 /var/www/html/src/Application.php(35): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 18:37:50] [ERROR] Error: Call to undefined method entity\CartBook::getImageUrl() in /var/www/html/src/view/generated/cart.phtml:243
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(44): require_once()
+#1 /var/www/html/src/Application.php(35): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 18:57:48] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:31
+Stack trace:
+#0 /var/www/html/src/Application.php(35): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(12): Application->run()
+#2 {main}
+[2024-04-15 19:09:09] [ERROR] TypeError: entity\CartBook::__construct(): Argument #1 ($cartId) must be of type int, entity\Cart given, called in /var/www/html/src/repository/CartBookRepository.php on line 28 and defined in /var/www/html/src/entity/CartBook.php:12
+Stack trace:
+#0 /var/www/html/src/repository/CartBookRepository.php(28): entity\CartBook->__construct(Object(entity\Cart), 5)
+#1 /var/www/html/src/controller/CartController.php(56): repository\CartBookRepository->saveBook(Object(entity\User), Object(entity\Book))
+#2 /var/www/html/src/Application.php(35): controller\CartController->addFromCatalog()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 19:10:05] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:10:05] [ERROR] TypeError: repository\CartBookRepository::saveBook(): Return value must be of type ?entity\Book, entity\CartBook returned in /var/www/html/src/repository/CartBookRepository.php:28
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(56): repository\CartBookRepository->saveBook(Object(entity\User), Object(entity\Book))
+#1 /var/www/html/src/Application.php(35): controller\CartController->addFromCatalog()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 19:10:55] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:28:59] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :book_id in /var/www/html/src/repository/Repository.php:71
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(71): PDOStatement->bindValue(':book_id', 1)
+#1 /var/www/html/src/repository/CartBookRepository.php(57): repository\Repository->getByCriteria(Array)
+#2 /var/www/html/src/repository/CartBookRepository.php(29): repository\CartBookRepository->getByCartIdAndBookId(1, 1)
+#3 /var/www/html/src/controller/CartController.php(56): repository\CartBookRepository->saveBook(Object(entity\User), Object(entity\Book))
+#4 /var/www/html/src/Application.php(35): controller\CartController->addFromCatalog()
+#5 /var/www/html/src/public/index.php(12): Application->run()
+#6 {main}
+[2024-04-15 19:31:10] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :book_id in /var/www/html/src/repository/Repository.php:71
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(71): PDOStatement->bindValue(':book_id', 1)
+#1 /var/www/html/src/repository/CartBookRepository.php(57): repository\Repository->getByCriteria(Array)
+#2 /var/www/html/src/repository/CartBookRepository.php(29): repository\CartBookRepository->getByCartIdAndBookId(1, 1)
+#3 /var/www/html/src/controller/CartController.php(56): repository\CartBookRepository->saveBook(Object(entity\User), Object(entity\Book))
+#4 /var/www/html/src/Application.php(35): controller\CartController->addFromCatalog()
+#5 /var/www/html/src/public/index.php(12): Application->run()
+#6 {main}
+[2024-04-15 19:33:51] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :id in /var/www/html/src/repository/Repository.php:71
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(71): PDOStatement->bindValue(':id', 1)
+#1 /var/www/html/src/controller/CartController.php(29): repository\Repository->getByCriteria(Array)
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 19:33:52] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :id in /var/www/html/src/repository/Repository.php:71
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(71): PDOStatement->bindValue(':id', 1)
+#1 /var/www/html/src/controller/CartController.php(29): repository\Repository->getByCriteria(Array)
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 19:34:27] [ERROR] PDOException: SQLSTATE[HY093]: Invalid parameter number: :id in /var/www/html/src/repository/Repository.php:73
+Stack trace:
+#0 /var/www/html/src/repository/Repository.php(73): PDOStatement->bindValue(':id', 1)
+#1 /var/www/html/src/controller/CartController.php(29): repository\Repository->getByCriteria(Array)
+#2 /var/www/html/src/Application.php(35): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(12): Application->run()
+#4 {main}
+[2024-04-15 19:35:06] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:33
+Stack trace:
+#0 /var/www/html/src/Application.php(35): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(12): Application->run()
+#2 {main}
+[2024-04-15 19:35:37] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:35:49] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:35:52] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:37:08] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:37:46] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:40:13] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:40:17] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 19:47:13] [ERROR] TypeError: Cannot access offset of type entity\Book on array in /var/www/html/src/controller/CartController.php:50
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(38): controller\CartController->bindQuantityToBooks(Array, Array)
+#1 /var/www/html/src/Application.php(35): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 19:52:18] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-15 20:11:23] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:93
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(80): controller\CartController->change(1)
+#1 /var/www/html/src/Application.php(35): controller\CartController->add()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 20:11:33] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:93
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(80): controller\CartController->change(1)
+#1 /var/www/html/src/Application.php(35): controller\CartController->add()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}
+[2024-04-15 20:11:35] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:93
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(85): controller\CartController->change(-1)
+#1 /var/www/html/src/Application.php(35): controller\CartController->remove()
+#2 /var/www/html/src/public/index.php(12): Application->run()
+#3 {main}

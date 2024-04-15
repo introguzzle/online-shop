@@ -3,6 +3,7 @@
 namespace repository\hydrator;
 
 use entity\Entity;
+use Exception;
 use http\Exception\RuntimeException;
 use ReflectionClass;
 use Throwable;
@@ -30,7 +31,7 @@ class DefaultHydrator implements Hydrator
 
             return $reflectionClass->newInstanceArgs($values);
         } catch (Throwable) {
-            throw new RuntimeException("Failed to hydrate $entityClass");
+            throw new Exception("Failed to hydrate $entityClass");
         }
     }
 

@@ -1,3 +1,45 @@
+<div class="t-container">
+    <h1>Shopping Cart</h1>
+    <br>
+    <div class="cart-items">
+        <?php if (isset($books)) foreach ($books as $book): ?>
+            <div class="cart-item">
+                <img src="<?php echo $book->getImageUrl() ?>" alt="Product 1">
+
+                <div class="item-details">
+                    <h2><?php echo $book->getName() ?></h2>
+                    <p>Price: <?php echo $book->getPrice() ?></p>
+                    <p>Description: <?php echo $book->getDescription() ?></p>
+                </div>
+
+                <form action="cart.phtml">
+                    <div class="quantity">
+                        <button class="btn-minus" formaction="/cart/remove" formmethod="POST">-</button>
+                        <label>
+                            <input type="text" value="<?php
+                            if (isset($quantityOfBooks)) {
+                                echo $quantityOfBooks[$book->getId()];
+                            } else {
+                                echo "1";
+                            }
+                            ?>" class="quantity-value">
+                        </label>
+                        <button class="btn-plus" formaction="/cart/add" formmethod="POST">+</button>
+                        <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+                    </div>
+                </form>
+
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div>
+        <p>Total price: <?php if (isset($totalPrice)) echo $totalPrice; else echo "0" ?></p>
+    </div>
+
+    <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
+</div>
+
 
 <style>
     body {
@@ -31,8 +73,7 @@
     }
 
     .cart-item img {
-        width: 100%;
-        height: auto;
+        width: 20%;
         border-radius: 5px;
         margin-bottom: 10px;
     }
@@ -64,23 +105,124 @@
     .checkout-button:hover {
         background-color: #0056b3;
     }
+
+    .quantity {
+
+    }
+
+    .quantity-value {
+        width: 50px;
+        text-align: center;
+    }
+
+    .btn-minus,
+    .btn-plus {
+        padding: 5px 10px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #1E262DFF;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+    .btn-minus:hover,
+    .btn-plus:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    .item-details {
+        width: 20%;
+        margin-left: 10px; /* Добавьте небольшое отступ слева */
+    }
+
+    .item-details h2,
+    .item-details p {
+        color: #666; /* Цвет текста для описания и цены */
+    }
+
+    .cart-items {
+        display: flex;
+        flex-wrap: wrap; /* Позволяет элементам переходить на новую строку при нехватке места */
+        justify-content: space-between; /* Равномерно распределяет элементы по горизонтали */
+    }
+
+    /* Каждый элемент корзины */
+    .cart-item {
+        width: calc(33.33% - 20px); /* Ширина каждого элемента - 33.33% с учетом промежутков */
+        margin-bottom: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Подстройка размеров изображения */
+    .cart-item img {
+        width: 100%;
+        height: 62%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+
+    /* Описание и цена */
+    .item-details {
+        width: fit-content;
+        margin-bottom: 10px;
+    }
+
+    /* Кнопки + и - */
+    .quantity {
+        margin-left: 25px;
+    }
+
+    .quantity-value {
+        font-size-adjust: initial;
+        font-size: 20px;
+        width: 50px;
+        text-align: center;
+    }
+
+    .btn-minus,
+    .btn-plus {
+        padding: 5px 10px;
+        margin: 0 5px;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(200, 200, 200);
+        color: #1E262DFF;
+        font-size: 18px;
+        cursor: pointer;
+        width: 20%;
+    }
+
+    .btn-minus:hover,
+    .btn-plus:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    /* Кнопка оформления заказа */
+    .checkout-button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin: 20px auto;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        color: #1E262DFF;
+        font-size: 18px;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .checkout-button:hover {
+        background-color: #0056b3;
+    }
+
+
 </style>
-
-<div class="t-container">
-    <h1>Shopping Cart</h1>
-    <?php $totalPrice = 0; if (isset($books)) foreach ($books as $book): ?>
-        <div class="cart-item">
-            <img src="<?php echo $book->getImageUrl()?>" alt="Product 1">
-            <h2><?php echo $book->getName()?></h2>
-            <p>Price: <?php echo $book->getPrice()?></p>
-            <p>Description: <?php echo $book->getDescription()?></p>
-            <?php $totalPrice += $book->getPrice() ?>
-        </div>
-    <?php endforeach;?>
-
-    <div>
-        <p>Total price: <?php echo $totalPrice ?></p>
-    </div>
-
-    <a href="/checkout" class="checkout-button">Proceed to Checkout</a>
-</div>

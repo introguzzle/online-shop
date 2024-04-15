@@ -67,9 +67,10 @@ CREATE TABLE user_book
 
 CREATE TABLE cart_book
 (
-    id      serial primary key,
-    cart_id bigint references carts (id),
-    book_id bigint references books (id)
+    id       serial primary key,
+    cart_id  bigint references carts (id),
+    book_id  bigint references books (id),
+    quantity bigint not null
 );
 
 CREATE TABLE orders
