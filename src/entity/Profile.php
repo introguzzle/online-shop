@@ -4,6 +4,8 @@ namespace entity;
 
 class Profile extends Entity
 {
+    public const string AVATAR_NOT_SET = "-1";
+
     private int $id;
     private int $userId;
     private string $avatarUrl;
@@ -11,11 +13,12 @@ class Profile extends Entity
 
     public function __construct(
         int $userId,
-        string $avatarUrl = "-1",
+        int $id = 0,
+        string $avatarUrl = self::AVATAR_NOT_SET,
         string $description = ""
     )
     {
-        $this->id = 0;
+        $this->id = $id;
         $this->userId = $userId;
         $this->avatarUrl = $avatarUrl;
         $this->description = $description;

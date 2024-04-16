@@ -4,7 +4,7 @@ namespace util;
 
 use ReflectionClass;
 
-class StringConverter
+final class StringConverter
 {
     private const string TAB = "    ";
     public static function toString(object $object): string

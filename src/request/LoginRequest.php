@@ -2,6 +2,8 @@
 
 namespace request;
 
+use util\Requests;
+
 class LoginRequest extends Request {
     private string $email;
     private string $password;
@@ -13,7 +15,8 @@ class LoginRequest extends Request {
         parent::__construct(
             "POST",
             "/login",
-            [$email, $password, $remember]
+            ["Content-Type: application/x-www-form-urlencoded"],
+            ["email" => $email, "password" => $password, "remember" => $remember]
         );
 
         $this->email = $email;

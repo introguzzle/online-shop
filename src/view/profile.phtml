@@ -1,9 +1,19 @@
 <div class="p-container">
     <h1>User Profile</h1>
     <div class="profile-info">
-        <img src="<?php if (isset($avatar)) echo $avatar; else echo "https://media.moddb.com/images/games/1/71/70031/1img_311846.png" ?>" alt="User Avatar">
-        <p class="username"><?php if (isset($name)) echo $name ?></p>
-        <p class="email"><?php if (isset($email)) echo $email ?></p>
+        <img src="<?php
+        if (isset($profileView)) {
+            $avatarUrl = $profileView->getProfile()->getAvatarUrl();
+
+            if ($avatarUrl === \entity\Profile::AVATAR_NOT_SET)
+                echo "https://media.moddb.com/images/games/1/71/70031/1img_311846.png";
+            else
+                echo $avatarUrl;
+        }?>"
+             alt="User Avatar">
+
+        <p class="username"><?php if (isset($profileView)) echo $profileView->getUser()->getName() ?></p>
+        <p class="email"><?php if (isset($profileView)) echo $profileView->getUser()->getEmail() ?></p>
     </div>
     <div class="edit-buttons">
         <form method="GET" action="/profile/edit">
@@ -15,7 +25,7 @@
     </div>
     <h2>About Me</h2>
     <p>
-        <?php if (isset($description)) echo $description ?>
+        <?php if (isset($profileView)) echo $profileView->getProfile()->getDescription() ?>
     </p>
 </div>
 

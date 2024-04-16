@@ -93,12 +93,12 @@ class CartController extends Controller
 
         $user = Authentication::getUser();
         $cart = $this->cartRepository->getByUserId($user->getId());
-        $cartBooks = $this->cartBookRepository->getByCartIdAndBookId(
+        $cartBook = $this->cartBookRepository->getByCartIdAndBookId(
             $cart->getId(),
             $bookId
         );
 
-        $cartBookId = ($cartBooks[0])->getId();
+        $cartBookId = $cartBook->getId();
 
         $this->cartBookRepository->changeQuantityById($cartBookId, $value);
 

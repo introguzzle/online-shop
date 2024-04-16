@@ -19,7 +19,7 @@ class CartRepository extends Repository
 
     public function getByUserId(int $userId): ?Cart
     {
-        return $this->getByColumn("user_id", $userId)[0];
+        return $this->getByColumn("user_id", $userId, true);
     }
 
     public function getTableName(): string

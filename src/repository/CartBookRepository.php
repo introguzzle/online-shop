@@ -25,13 +25,12 @@ class CartBookRepository extends Repository
         $cartId = $this->cartRepository->getByUserId($user->getId())->getId();
         $bookId = $book->getId();
 
-        $byCartIdAndBookId = $this->getByCartIdAndBookId($cartId, $bookId);
+        $cartBook = $this->getByCartIdAndBookId($cartId, $bookId);
 
-        if (empty($byCartIdAndBookId)) {
+        if ($cartBook === null) {
             return $this->save(new CartBook($cartId, $bookId));
         } else {
-            $id = ($byCartIdAndBookId[0])->getId();
-
+            $id = $cartBook->getId();
             $this->incrementQuantityById($id);
 
             return $book;
@@ -67,9 +66,9 @@ class CartBookRepository extends Repository
         }, $this->getByCartId($cartId));
     }
 
-    public function getByCartIdAndBookId(int $cartId, int $bookId): array
+    public function getByCartIdAndBookId(int $cartId, int $bookId): ?CartBook
     {
-        return $this->getByCriteria(["cart_id" => $cartId, "book_id" => $bookId]);
+        return $this->getByCriteria(["cart_id" => $cartId, "book_id" => $bookId], true);
     }
 
     public function getByBookId(int $bookId): array

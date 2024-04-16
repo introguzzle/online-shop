@@ -10,28 +10,22 @@ use session\Authentication;
 class ProfileController extends Controller
 {
 
-    private ProfileService $service;
+    private ProfileService $profileService;
 
     public function __construct()
     {
         parent::__construct();
 
-        $this->service = new ProfileService();
+        $this->profileService = new ProfileService();
     }
 
     public function view(): void
     {
-        $user = Authentication::getUser();
+        $profileView = $this->profileService->getProfileView();
 
-        if (isset($user)) {
-            $name = $this->service->getName();
-            $email = $this->service->getEmail();
-            $description = $this->service->getDescription();
-
-            if ($this->service->getAvatarUrl() !== "-1")
-                $avatar = $this->service->getAvatarUrl();
-
+        if ($profileView !== null) {
             require_once $this->renderer->render("profile.phtml", "Profile");
+
         } else {
             require_once $this->renderer->render("404.phtml", "404");
         }
@@ -53,9 +47,19 @@ class ProfileController extends Controller
     public function postDescriptionEdit(): void
     {
         $user = Authentication::getUser();
+        $errors = $this->profileService->processDescriptionEdit(
+            $user->getId(),
+            $this->acquireNewDescription()
+        );
 
-        if ($this->service->processDescriptionEdit()) {
+        if ($errors->hasNone()) {
             header("Location: /profile");
+
+        } else {
+            require_once $this->renderer->render(
+                "profile_edit_description.phtml",
+                "Edit description"
+            );
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class Errors
+class Errors extends DTO
 {
     private array $errors;
     private bool $hasErrors;
@@ -18,7 +18,10 @@ class Errors
         return new Errors();
     }
 
-    public function add(string $key, string $message): void
+    public function add(
+        string $key,
+        string $message = "Unknown error"
+    ): void
     {
         $this->errors[$key] = $message;
         $this->hasErrors = true;
@@ -44,4 +47,13 @@ class Errors
         return $this->errors[$key];
     }
 
+    public function getAllMessages(): array
+    {
+        return array_values($this->errors);
+    }
+
+    public function getAllKeys(): array
+    {
+        return array_keys($this->errors);
+    }
 }

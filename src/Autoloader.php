@@ -13,8 +13,6 @@ class Autoloader {
         return static function (string $class): bool {
             $path = Resolver::getPath($class);
 
-            file_put_contents("s.s", $path);
-
             if (file_exists($path)) {
                 require_once $path;
                 return true;

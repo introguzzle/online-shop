@@ -17,7 +17,7 @@ class ProfileRepository extends Repository {
 
     public function getByUserId(int $userId): Profile | Entity | null
     {
-        return $this->getByColumn("user_id", $userId)[0];
+        return $this->getByColumn("user_id", $userId, true);
     }
 
     public function updateDescriptionById(int $id, string $value): bool

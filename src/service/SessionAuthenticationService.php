@@ -26,7 +26,7 @@ class SessionAuthenticationService implements AuthenticationService
     {
         $this->startSession();
 
-        if (isset($_SESSION["user_id"]) && $_SESSION != null) {
+        if ($_SESSION != null && isset($_SESSION["user_id"])) {
             return $this->userRepository->getById($_SESSION["user_id"]);
         } else {
             return null;

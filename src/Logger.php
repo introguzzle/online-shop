@@ -34,7 +34,7 @@ class Logger {
     }
 
     private function rotateLogs(): void {
-        $next = self::$LOG_FILE . '.' . date('Y-m-d_H-i-s');
-        rename(self::$LOG_FILE, $next);
+        $back = self::$LOG_FILE . '.' . date('Y-m-d_H-i-s');
+        rename(self::$LOG_FILE, $back);
     }
 }

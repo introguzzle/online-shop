@@ -2,7 +2,7 @@
 
 namespace util;
 
-class Entities {
+final class Entities {
     public static function getGetterByField(string $field): string
     {
         $f = self::snakeToCamel($field);

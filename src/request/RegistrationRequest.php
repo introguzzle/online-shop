@@ -2,8 +2,6 @@
 
 namespace request;
 
-use entity\User;
-
 class RegistrationRequest extends Request
 {
 
@@ -22,7 +20,8 @@ class RegistrationRequest extends Request
         parent::__construct(
             "POST",
             "/registrate",
-            [$name, $email, $password, $passwordRepeat]
+            ["Content-Type: application/x-www-form-urlencoded"],
+            ["name" => $name, "email" => $email, "password" => $password, "passwordRepeat" => $passwordRepeat]
         );
 
         $this->name = $name;

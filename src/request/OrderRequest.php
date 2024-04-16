@@ -1,16 +1,26 @@
 <?php
 
-namespace dto;
+namespace request;
 
-class OrderForm extends DTO
+class OrderRequest extends Request
 {
     private string $address;
     private string $phone;
     private string $cardNumber;
 
-
-    public function __construct(string $address, string $phone, string $cardNumber)
+    public function __construct(
+        string $address,
+        string $phone,
+        string $cardNumber
+    )
     {
+        parent::__construct(
+            "POST",
+            "/checkout",
+            ["Content-Type: application/x-www-form-urlencoded"],
+            ["address" => $address, "phone" => $phone, "cardNumber" => $cardNumber]
+        );
+
         $this->address = $address;
         $this->phone = $phone;
         $this->cardNumber = $cardNumber;
@@ -21,30 +31,13 @@ class OrderForm extends DTO
         return $this->address;
     }
 
-    public function setAddress(string $address): void
-    {
-        $this->address = $address;
-    }
-
     public function getPhone(): string
     {
         return $this->phone;
-    }
-
-    public function setPhone(string $phone): void
-    {
-        $this->phone = $phone;
     }
 
     public function getCardNumber(): string
     {
         return $this->cardNumber;
     }
-
-    public function setCardNumber(string $cardNumber): void
-    {
-        $this->cardNumber = $cardNumber;
-    }
-
-
 }

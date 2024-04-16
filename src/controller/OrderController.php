@@ -2,7 +2,9 @@
 
 namespace controller;
 
+use dto\OrderForm;
 use entity\Order;
+use request\OrderRequest;
 use service\OrderService;
 
 class OrderController extends Controller
@@ -22,19 +24,25 @@ class OrderController extends Controller
 
     public function processOrder(): void
     {
-        $errors = $this->orderService->processOrder($this->acquireOrder());
+        $request = $this->acquireRequest();
+
+        $errors = $this->orderService->processOrder(new OrderForm(
+            $request->getAddress(),
+            $request->getPhone(),
+            $request->getCardNumber()
+        ));
 
         if ($errors->hasNone()) {
+            header("Location: /catalog");
 
         } else {
-
-            require_once $this->renderer->render();
+            require_once $this->renderer->render("checkout.phtml", "Checkout");
         }
     }
 
-    public function acquireOrder(): Order
+    public function acquireRequest(): OrderRequest
     {
-        return new Order(
+        return new OrderRequest(
             $_POST["address"],
             $_POST["phone"],
             $_POST["card-number"]

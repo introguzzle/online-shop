@@ -3,6 +3,7 @@
 namespace repository;
 
 use entity\Entity;
+use InvalidArgumentException;
 use Logger;
 use repository\hydrator\DefaultHydrator;
 use repository\hydrator\Hydrator;
@@ -44,16 +45,18 @@ abstract class Repository
 
     public function getByColumn(
         string $column,
-        mixed $value
-    ): array
+        mixed $value,
+        bool $unique = false,
+    ): Entity | array | null
     {
-        return $this->getByCriteria([$column => $value]);
+        return $this->getByCriteria([$column => $value], $unique);
     }
 
     public function getByCriteria(
         array $criteria,
+        bool $unique = false,
         string $join = self::JOIN_AND
-    ): array
+    ): Entity | array | null
     {
         $table = $this->getTableName();
         $conditions = [];
@@ -75,10 +78,10 @@ abstract class Repository
         $data = $stmt->fetchAll();
 
         if (empty($data)) {
-            return [];
+            return $unique ? null : [];
         }
 
-        return $this->hydrateAll($data);
+        return $unique ? $this->hydrate($data[0]) : $this->hydrateAll($data);
     }
 
     public function deleteById(mixed $id): void
@@ -117,12 +120,24 @@ abstract class Repository
         $stmt = $this->pdo->prepare($query);
 
         foreach ($entityData as $column => $value) {
-            $stmt->bindValue(":$column", $value);
+            $stmt->bindValue(":$column", $value, $this->acquireType($value));
         }
 
         $stmt->execute();
 
         return $entity;
+    }
+
+    private function acquireType(mixed $value): int
+    {
+        $type = gettype($value);
+
+        return match ($type) {
+            'boolean' => PDO::PARAM_BOOL,
+            'integer' => PDO::PARAM_INT,
+            'double', 'string', 'NULL' => PDO::PARAM_STR,
+            default => throw new InvalidArgumentException("Unsupported data type: " . $type),
+        };
     }
 
     public function hydrate(array $data): Entity

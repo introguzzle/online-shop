@@ -11,24 +11,48 @@ final class Authentication
     public static function getUser(): ?User
     {
         $service = new SessionAuthenticationService();
-        return $service->getUser();
+        $user = $service->getUser();
+
+        if ($user === null) {
+            throw new NotAuthenticatedException();
+        } else {
+            return $user;
+        }
     }
 
     public static function getEmail(): string
     {
         $service = new SessionAuthenticationService();
-        return $service->getUser()->getEmail();
+        $user = $service->getUser();
+
+        if ($user === null) {
+            throw new NotAuthenticatedException();
+        } else {
+            return $user->getEmail();
+        }
     }
 
     public static function getName(): string
     {
         $service = new SessionAuthenticationService();
-        return $service->getUser()->getName();
+        $user = $service->getUser();
+
+        if ($user === null) {
+            throw new NotAuthenticatedException();
+        } else {
+            return $user->getName();
+        }
     }
 
     public static function getRole(): int
     {
         $service = new SessionAuthenticationService();
-        return $service->getUser()->getRoleId();
+        $user = $service->getUser();
+
+        if ($user === null) {
+            throw new NotAuthenticatedException();
+        } else {
+            return $user->getRoleId();
+        }
     }
 }

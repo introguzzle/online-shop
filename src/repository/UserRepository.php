@@ -14,7 +14,7 @@ class UserRepository extends Repository {
 
     public function getByEmail(string $email): User | Entity | null
     {
-        return $this->getByColumn("email", $email)[0];
+        return $this->getByColumn("email", $email, true);
     }
 
     public function getTableName(): string
