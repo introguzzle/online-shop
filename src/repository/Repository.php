@@ -95,7 +95,8 @@ abstract class Repository
 
     public function getById(mixed $id): ?Entity
     {
-        return $this->getByColumn("id", $id)[0];
+        $entity = $this->getByColumn("id", $id);
+        return empty($entity) ? null : $entity[0];
     }
 
     public function save(Entity $entity): ?Entity

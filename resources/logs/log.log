@@ -4668,3 +4668,58 @@ Stack trace:
 #3 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(Array, NULL)
 #4 /var/www/html/src/public/index.php(25): core\Application->run()
 #5 {main}
+[2024-04-17 00:34:29] [ERROR] ArgumentCountError: Too few arguments to function {closure}(), 0 passed in /var/www/html/src/core/Application.php on line 68 and exactly 1 expected in /var/www/html/src/routes/routes.php:50
+Stack trace:
+#0 /var/www/html/src/core/Application.php(68): {closure}()
+#1 /var/www/html/src/core/Application.php(58): core\Application->invokeHandler(Object(Closure), NULL)
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-17 00:56:28] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 71 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(71): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(69): controller\ProfileController->view()
+#3 /var/www/html/src/core/Application.php(59): core\Application->invokeHandler(Array, NULL)
+#4 /var/www/html/src/public/index.php(25): core\Application->run()
+#5 {main}
+[2024-04-17 01:12:57] [ERROR] TypeError: service\CatalogService::getBookById(): Return value must be of type entity\Book, null returned in /var/www/html/src/service/CatalogService.php:24
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(30): service\CatalogService->getBookById(10)
+#1 /var/www/html/src/core/Application.php(70): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-17 01:14:49] [ERROR] TypeError: service\CatalogService::getBookById(): Return value must be of type entity\Book, null returned in /var/www/html/src/service/CatalogService.php:24
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(30): service\CatalogService->getBookById(10)
+#1 /var/www/html/src/core/Application.php(70): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-17 01:15:02] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:22
+Stack trace:
+#0 /var/www/html/src/core/Application.php(70): controller\CartController->view()
+#1 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-17 01:15:16] [ERROR] TypeError: service\CatalogService::getBookById(): Return value must be of type entity\Book, null returned in /var/www/html/src/service/CatalogService.php:24
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(30): service\CatalogService->getBookById(10)
+#1 /var/www/html/src/core/Application.php(70): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-17 01:15:19] [ERROR] TypeError: service\CatalogService::getBookById(): Return value must be of type entity\Book, null returned in /var/www/html/src/service/CatalogService.php:24
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(30): service\CatalogService->getBookById(10)
+#1 /var/www/html/src/core/Application.php(70): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-17 01:15:54] [ERROR] Error: Call to a member function getName() on null in /var/www/html/src/view/generated/book.phtml:241
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(34): require_once()
+#1 /var/www/html/src/core/Application.php(70): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(60): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}

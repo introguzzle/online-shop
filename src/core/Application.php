@@ -2,8 +2,10 @@
 
 namespace core;
 
+use controller\CatalogController;
 use core\container\Container;
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 use ReflectionClass;
 use ReflectionException;
 use ReflectionMethod;
@@ -46,7 +48,7 @@ class Application
             if ($class !== null) {
                 // Есть вариант с валидацией в самих реквестах.
                 // Ловить исключения здесь и передавать инстанс Errors вместо реквеста
-                // В самом контроллера проверять тип аргумента
+                // В самом контроллере проверять тип аргумента
                 // Но для этого нужно придумать какую-то дефолтную ошибку.
                 // Надо заметить, что это происходит только в случае невалидного реквеста,
                 // т.к. в конструктор не будет передано достаточно кол-во аргументов
@@ -80,16 +82,26 @@ class Application
     {
         $requestUri = $_SERVER["REQUEST_URI"];
 
+        if (preg_match('~^/catalog/(\d+)$~', $requestUri, $matches)) {
+            $id = $matches[1];
+            $_GET["id"] = $id;
+            $this->registerGetRoute("/catalog/$id", [CatalogController::class, "viewBook"]);
+        }
+
+        $clientError = false;
+
         if (!array_key_exists($requestUri, $this->routes)) {
-            $this->clientError();
-            die;
+            $clientError = true;
         }
 
         $requestMethod = $_SERVER["REQUEST_METHOD"];
 
         if (!isset($this->routes[$requestUri][$requestMethod])) {
+            $clientError = true;
+        }
+
+        if ($clientError) {
             $this->clientError();
-            die;
         }
 
         return $this->routes[$requestUri][$requestMethod];
@@ -141,14 +153,16 @@ class Application
         $this->routes[$urls][$httpMethod] = $callback;
     }
 
-    private function clientError(): void
+    #[NoReturn] private function clientError(): void
     {
         header("Location: /404");
+        die;
     }
 
-    private function serverError(): void
+    #[NoReturn] private function serverError(): void
     {
         header("Location: /502");
+        die;
     }
 
     /**
@@ -173,13 +187,21 @@ class Application
     /**
      * @throws Exception
      */
-    public function getArguments(array $parameters): array
+    private function getArguments(array $parameters): array
+    {
+        return $this->getArgumentsFrom($parameters, $_POST);
+    }
+
+    private function getArgumentsFrom(
+        array $parameters,
+        array $global
+    ): array
     {
         $arguments = [];
 
         foreach ($parameters as $parameter) {
-            if (array_key_exists($parameter->getName(), $_POST)) {
-                $arguments[] = $_POST[$parameter->getName()];
+            if (array_key_exists($parameter->getName(), $global)) {
+                $arguments[] = $global[$parameter->getName()];
             } else {
                 if ($parameter->isDefaultValueAvailable()) {
                     $arguments[] = $parameter->getDefaultValue();
@@ -188,6 +210,7 @@ class Application
                 }
             }
         }
+
         return $arguments;
     }
 }

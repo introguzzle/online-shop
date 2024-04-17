@@ -24,4 +24,20 @@ class CatalogController extends Controller
             "Catalog"
         );
     }
+
+    public function viewBook(): void
+    {
+        $book = $this->catalogService->getBookById($_GET["id"]);
+        $reviews = [1, 2, 3];
+
+        if ($book === null) {
+            header("Location: /404");
+            return;
+        }
+
+        require_once $this->renderer->render(
+            "book.phtml",
+            "Book"
+        );
+    }
 }

@@ -5,7 +5,6 @@ use controller\CatalogController;
 use controller\UserController;
 use controller\OrderController;
 use controller\ProfileController;
-use controller\RegistrationController;
 use view\Renderer;
 
 $app->registerGetRoute("/404", function() {

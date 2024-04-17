@@ -1,0 +1,89 @@
+<br>
+<div class="container c-container">
+    <div class="book">
+        <h1 style="text-align: center; color: #1E262DFF;">Book Details</h1>
+        <img src="<?php echo $book->getImageUrl()?>" alt="<?php echo $book->getName() ?>" class="book-img">
+        <h1><?php echo $book->getName() ?></h1>
+        <p><h3>Author</h3> <?php echo $book->getAuthor() ?></p>
+        <p><h3>Year</h3> <?php echo $book->getYear() ?></p>
+        <p><h3>Price</h3> <?php echo $book->getPrice() ?></p>
+        <p><h3>Description</h3> <?php echo $book->getDescription() ?></p>
+
+        <h3>Reviews</h3>
+        <div class="reviews">
+            <?php foreach ($reviews as $review): ?>
+                <div class="review">
+                    <p><?php echo "111" ?></p>
+                    <p>Rating: <?php echo "5" ?>/5</p>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <form action="/catalog/add-to-cart" method="POST">
+            <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+    </div>
+</div>
+<br>
+
+<style>
+    .c-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: auto;
+        color: #1E262DFF;
+    }
+
+    .book {
+        background-color: #fff;
+        border-radius: 20px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        border: 5px solid #fff; /* Увеличиваем размер белой рамки */
+    }
+    .book-img {
+        width: 30%;
+        border-radius: 5px;
+        margin-bottom: 10px;
+    }
+    .book h2 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    .book p {
+        color: #666;
+    }
+
+    h3 {
+        color: #1E262DFF;
+    }
+
+    .add-to-cart-btn {
+        background-color: #1E262DFF;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .add-to-cart-btn:hover {
+        background-color: #0056b3;
+    }
+
+    .reviews {
+        margin-top: 20px;
+        text-align: left;
+    }
+
+    .review {
+        border-bottom: 1px solid #ccc;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+</style>

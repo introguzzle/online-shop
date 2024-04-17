@@ -7,6 +7,7 @@ use entity\User;
 final class Authentication
 {
     private static AuthenticationService $authenticationService;
+    private static User $user;
 
     public static function init(
         AuthenticationService $authenticationService
@@ -17,21 +18,37 @@ final class Authentication
 
     public static function getUser(): ?User
     {
-        return self::$authenticationService->getUser();
+        if (!isset(self::$user)) {
+            self::$user = self::$authenticationService->getUser();
+        }
+
+        return self::$user;
     }
 
     public static function getEmail(): string
     {
-        return self::$authenticationService->getUser()->getEmail();
+        if (!isset(self::$user)) {
+            self::$user = self::$authenticationService->getUser();
+        }
+
+        return self::$user->getEmail();
     }
 
     public static function getName(): string
     {
-        return self::$authenticationService->getUser()->getName();
+        if (!isset(self::$user)) {
+            self::$user = self::$authenticationService->getUser();
+        }
+
+        return self::$user->getName();
     }
 
     public static function getRole(): int
     {
-        return self::$authenticationService->getUser()->getRoleId();
+        if (!isset(self::$user)) {
+            self::$user = self::$authenticationService->getUser();
+        }
+
+        return self::$user->getRoleId();
     }
 }
