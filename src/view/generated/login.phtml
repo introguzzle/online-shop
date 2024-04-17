@@ -220,12 +220,12 @@
             <li class="dropdown">
                 <a href="/profile" id="profile-link">Profile</a>
                 <ul>
-                    <?php if (\session\Authentication::getUser() === null): ?>
+                    <?php if (\service\authentication\Authentication::getUser() === null): ?>
                     <li><a href="/login">Login </a> </li>
                     <li><a href="/register">Register </a></li>
                     <?php endif; ?>
 
-                    <?php if (\session\Authentication::getUser() !== null): ?>
+                    <?php if (\service\authentication\Authentication::getUser() !== null): ?>
                     <li><a href="/login" onclick="logout()">Logout</a></li>
                     <?php endif; ?>
                 </ul>
@@ -252,7 +252,7 @@
             <label style="color: red"> <?php echo $errors->getMessage("user") ?></label>
         <?php endif; ?>
         <label class="l-label">
-            <input type="password" placeholder="Enter Password" name="psw" required>
+            <input type="password" placeholder="Enter Password" name="password" required>
         </label>
 
         <button class="l-button" type="submit" style="font-family: Arial,serif;">Login</button>
@@ -368,7 +368,7 @@
     document.addEventListener("DOMContentLoaded", function() {
         const profileLink = document.getElementById("profile-link");
 
-        <?php if (\session\Authentication::getUser() === null): ?>
+        <?php if (\service\authentication\Authentication::getUser() === null): ?>
         profileLink.addEventListener("click", function(event) {
             event.preventDefault(); // Предотвращаем переход по ссылке
         });

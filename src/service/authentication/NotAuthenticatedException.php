@@ -1,6 +1,6 @@
 <?php
 
-namespace session;
+namespace service\authentication;
 
 use RuntimeException;
 use Throwable;

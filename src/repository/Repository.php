@@ -4,14 +4,11 @@ namespace repository;
 
 use entity\Entity;
 use InvalidArgumentException;
-use Logger;
-use repository\hydrator\DefaultHydrator;
 use repository\hydrator\Hydrator;
 use PDO;
 
 abstract class Repository
 {
-    protected Logger $logger;
     protected PDO $pdo;
 
     protected Hydrator $hydrator;
@@ -19,11 +16,12 @@ abstract class Repository
     public const string JOIN_AND = "AND";
     public const string JOIN_OR  = "OR";
 
-    public function __construct()
+    public function __construct(
+        Hydrator $hydrator
+    )
     {
         $this->pdo = PDOHolder::getPdo();
-        $this->logger = new Logger();
-        $this->hydrator = new DefaultHydrator();
+        $this->hydrator = $hydrator;
     }
 
     public abstract function getTableName(): string;
@@ -113,10 +111,7 @@ abstract class Repository
         $placeholders = implode(', ', array_map(fn($column) => ":$column", $columns));
         $columnNames = implode(', ', $columns);
 
-        $query = "INSERT INTO $table ($columnNames) VALUES ($placeholders)";
-
-        $this->logger->info($query);
-
+        $query = "INSERT INTO $table ($columnNames) VALUES ($placeholders) RETURNING id";
         $stmt = $this->pdo->prepare($query);
 
         foreach ($entityData as $column => $value) {
@@ -124,6 +119,9 @@ abstract class Repository
         }
 
         $stmt->execute();
+        $id = ($stmt->fetch())["id"];
+
+        $entity->setId($id);
 
         return $entity;
     }
@@ -176,5 +174,20 @@ abstract class Repository
 
         $stmt->execute();
         return true;
+    }
+
+    public function beginTransaction(): bool
+    {
+        return $this->pdo->beginTransaction();
+    }
+
+    public function rollback(): bool
+    {
+        return $this->pdo->rollBack();
+    }
+
+    public function commit(): bool
+    {
+        return $this->pdo->commit();
     }
 }

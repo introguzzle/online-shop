@@ -33,4 +33,9 @@ class Request {
     public function getBody(): array {
         return $this->body;
     }
+
+    public function appendBody(string $key, mixed $value): void
+    {
+        $this->body[$key] = $value;
+    }
 }

@@ -2,19 +2,20 @@
 
 namespace repository;
 
-use entity\Book;
 use entity\Cart;
-use entity\User;
+use repository\hydrator\Hydrator;
 
 class CartRepository extends Repository
 {
     private BookRepository $bookRepository;
 
-    public function __construct()
+    public function __construct(
+        Hydrator $hydrator,
+        BookRepository $bookRepository
+    )
     {
-        parent::__construct();
-
-        $this->bookRepository = new BookRepository();
+        parent::__construct($hydrator);
+        $this->bookRepository = $bookRepository;
     }
 
     public function getByUserId(int $userId): ?Cart

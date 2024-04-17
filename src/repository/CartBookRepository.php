@@ -6,18 +6,23 @@ use entity\Book;
 use entity\CartBook;
 use entity\Entity;
 use entity\User;
+use repository\hydrator\Hydrator;
 
 class CartBookRepository extends Repository
 {
     private CartRepository $cartRepository;
     private BookRepository $bookRepository;
 
-    public function __construct()
+    public function __construct(
+        Hydrator $hydrator,
+        CartRepository $cartRepository,
+        BookRepository $bookRepository
+    )
     {
-        parent::__construct();
+        parent::__construct($hydrator);
 
-        $this->cartRepository = new CartRepository();
-        $this->bookRepository = new BookRepository();
+        $this->cartRepository = $cartRepository;
+        $this->bookRepository = $bookRepository;
     }
 
     public function saveBook(User $user, Book $book): Book | Entity | null

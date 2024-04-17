@@ -2,37 +2,28 @@
 
 namespace request;
 
-use util\Requests;
-
 class LoginRequest extends Request {
-    private string $email;
-    private string $password;
-    private string $remember;
 
     public function __construct(string $email,
                                 string $password,
-                                string $remember) {
+                                string $remember = "0") {
         parent::__construct(
             "POST",
             "/login",
             ["Content-Type: application/x-www-form-urlencoded"],
             ["email" => $email, "password" => $password, "remember" => $remember]
         );
-
-        $this->email = $email;
-        $this->password = $password;
-        $this->remember = $remember;
     }
 
     public function getEmail(): string {
-        return $this->email;
+        return $this->getBody()["email"];
     }
 
     public function getPassword(): string {
-        return $this->password;
+        return $this->getBody()["password"];
     }
 
     public function getRemember(): string {
-        return $this->remember;
+        return $this->getBody()["remember"];
     }
 }

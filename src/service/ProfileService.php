@@ -7,17 +7,15 @@ use entity\Profile;
 use entity\User;
 use modelview\ProfileView;
 use repository\ProfileRepository;
-use session\Authentication;
-use session\NotAuthenticatedException;
-use Throwable;
+use service\authentication\Authentication;
 
 class ProfileService implements Service
 {
 
     private ProfileRepository $profileRepository;
 
-    public function __construct() {
-        $this->profileRepository = new ProfileRepository();
+    public function __construct(ProfileRepository $profileRepository) {
+        $this->profileRepository = $profileRepository;
     }
 
     public function processDescriptionEdit(int $userId, string $description): Errors
@@ -35,10 +33,10 @@ class ProfileService implements Service
         return $errors;
     }
 
-    public function saveProfile(User $user): void
+    public function saveProfile(User $user): ?Profile
     {
         $profile = new Profile($user->getId());
-        $this->save($profile);
+        return $this->save($profile);
     }
 
     private function updateDescriptionById(int $id, string $description): bool
@@ -60,36 +58,16 @@ class ProfileService implements Service
         return $errors;
     }
 
-    private function save(Profile $profile): bool
+    private function save(Profile $profile): ?Profile
     {
-        $this->profileRepository->save($profile);
-
-        return true;
+        return $this->profileRepository->save($profile);
     }
 
     public function getProfileView(): ?ProfileView
     {
-        try {
-            $user = Authentication::getUser();
-            $profile = $this->profileRepository->getByUserId($user->getId());
+        $user = Authentication::getUser();
+        $profile = $this->profileRepository->getByUserId($user->getId());
 
-            return new ProfileView($profile, $user);
-        } catch (NotAuthenticatedException $e) {
-            return null;
-        }
-    }
-
-    public function getDescription(): string
-    {
-        return $this->profileRepository
-            ->getByUserId(Authentication::getUser()->getId())
-            ->getDescription();
-    }
-
-    public function getAvatarUrl(): string
-    {
-        return $this->profileRepository
-            ->getByUserId(Authentication::getUser()->getId())
-            ->getAvatarUrl();
+        return new ProfileView($profile, $user);
     }
 }

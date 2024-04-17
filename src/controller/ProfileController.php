@@ -2,33 +2,25 @@
 
 namespace controller;
 
-use repository\CartBookRepository;
-use repository\UserRepository;
+use service\authentication\Authentication;
 use service\ProfileService;
-use session\Authentication;
 
 class ProfileController extends Controller
 {
 
     private ProfileService $profileService;
 
-    public function __construct()
+    public function __construct(ProfileService $profileService)
     {
         parent::__construct();
-
-        $this->profileService = new ProfileService();
+        $this->profileService = $profileService;
     }
 
     public function view(): void
     {
         $profileView = $this->profileService->getProfileView();
 
-        if ($profileView !== null) {
-            require_once $this->renderer->render("profile.phtml", "Profile");
-
-        } else {
-            require_once $this->renderer->render("404.phtml", "404");
-        }
+        require_once $this->renderer->render("profile.phtml", "Profile");
     }
 
     private function acquireNewDescription(): string

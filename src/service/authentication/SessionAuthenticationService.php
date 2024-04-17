@@ -1,36 +1,41 @@
 <?php
 
-namespace service;
+namespace service\authentication;
 
-use dto\LoginForm;
-use repository\UserRepository;
+use dto\LoginDTO;
 use entity\User;
+use repository\UserRepository;
 
 class SessionAuthenticationService implements AuthenticationService
 {
+    private static User $user;
     private UserRepository $userRepository;
 
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
-        $this->userRepository = new UserRepository();
+        $this->userRepository = $userRepository;
     }
 
     public function isAuthenticated(): bool
     {
         $this->startSession();
 
-        return isset($_SESSION["user_id"]);
+        return isset($_SESSION["user_id"]) || isset(self::$user);
     }
 
     public function getUser(): ?User
     {
         $this->startSession();
 
-        if ($_SESSION != null && isset($_SESSION["user_id"])) {
-            return $this->userRepository->getById($_SESSION["user_id"]);
-        } else {
-            return null;
+        if (isset(self::$user)) {
+            return self::$user;
         }
+
+        if (isset($_SESSION["user_id"])) {
+            return $this->userRepository->getById($_SESSION["user_id"]);
+        }
+
+        return null;
     }
 
     public function loginByUser(User $user): bool
@@ -38,13 +43,17 @@ class SessionAuthenticationService implements AuthenticationService
         $this->startSession();
 
         $_SESSION["user_id"] = $user->getId();
+        
+        if (!isset(self::$user)) {
+            self::$user = $user;
+        }
 
         return true;
     }
 
-    public function loginByCredentials(LoginForm $loginForm): bool
+    public function loginByCredentials(LoginDTO $loginDTO): bool
     {
-        $user = $this->userRepository->getByEmail($loginForm->getEmail());
+        $user = $this->userRepository->getByEmail($loginDTO->getEmail());
 
         return $this->loginByUser($user);
     }

@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class RegistrationForm extends DTO
+class RegistrationDTO extends DTO
 {
     private string $name;
     private string $email;

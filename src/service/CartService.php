@@ -6,10 +6,11 @@ use entity\Cart;
 use entity\CartBook;
 use entity\User;
 use modelview\CartBookView;
+use modelview\CartView;
 use repository\BookRepository;
 use repository\CartBookRepository;
 use repository\CartRepository;
-use session\Authentication;
+use service\authentication\Authentication;
 
 class CartService implements Service
 {
@@ -18,21 +19,28 @@ class CartService implements Service
     private CartBookRepository $cartBookRepository;
     private BookRepository $bookRepository;
 
-    public function __construct()
+    public function __construct(
+        CartRepository $cartRepository,
+        CartBookRepository $cartBookRepository,
+        BookRepository $bookRepository
+    )
     {
-        $this->cartRepository = new CartRepository();
-        $this->bookRepository = new BookRepository();
-        $this->cartBookRepository = new CartBookRepository();
+        $this->cartRepository = $cartRepository;
+        $this->cartBookRepository = $cartBookRepository;
+        $this->bookRepository = $bookRepository;
     }
+
 
     public function addFromCatalog(int $bookId): void
     {
         $user = Authentication::getUser();
         $book = $this->bookRepository->getById($bookId);
 
-        $this->cartBookRepository->saveBook($user, $book);
+        if ($this->cartRepository->getByUserId($user->getId()) === null) {
+            $this->saveCart($user);
+        }
 
-        header("Location: /catalog");
+        $this->cartBookRepository->saveBook($user, $book);
     }
 
     public function getAllBooks(int $userId): array
@@ -48,7 +56,7 @@ class CartService implements Service
     }
 
     public function saveCart(User $user): void {
-        $cart = new Cart(0, $user->getId());
+        $cart = new Cart($user->getId());
         $this->cartRepository->save($cart);
     }
 
@@ -74,11 +82,9 @@ class CartService implements Service
         $cartBookId = $cartBook->getId();
 
         $this->cartBookRepository->changeQuantityById($cartBookId, $value);
-
-        header("Location: /cart");
     }
 
-    public function createCartBookViews(array $books, array $cartBooks): array
+    private function createCartBookViews(array $books, array $cartBooks): array
     {
         $views = [];
 
@@ -93,11 +99,22 @@ class CartService implements Service
         return $views;
     }
 
-    public function computeTotalPrice(array $cartBooks): int
+    private function computeTotalPrice(array $cartBooks): int
     {
         return array_reduce($cartBooks, function(int $acc, CartBook $cartBook): int {
             $book = $this->bookRepository->getById($cartBook->getBookId());
             return $acc + ($book->getPrice() * $cartBook->getQuantity());
         }, 0);
+    }
+
+    public function getCartView(int $userId): CartView
+    {
+        $books     = $this->getAllBooks($userId);
+        $cartBooks = $this->getAllCartBooks($userId);
+
+        return new CartView(
+            $this->createCartBookViews($books, $cartBooks),
+            $this->computeTotalPrice($cartBooks)
+        );
     }
 }

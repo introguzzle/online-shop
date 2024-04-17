@@ -1,5 +1,9 @@
 <?php
 
+namespace core;
+
+use Throwable;
+
 class Logger {
 
     private static string $LOG_FILE = "./../../resources/logs/log.log";
@@ -26,7 +30,7 @@ class Logger {
 
         try {
             fwrite($fileHandle, $log);
-        } catch (Throwable $t) {
+        } catch (Throwable) {
             return;
         } finally {
             fclose($fileHandle);

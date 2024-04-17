@@ -3,36 +3,44 @@
 namespace service;
 
 use dto\Errors;
-use dto\OrderForm;
+use dto\OrderDTO;
 use entity\Order;
 use repository\CartRepository;
 use repository\OrderRepository;
-use session\Authentication;
+use service\authentication\Authentication;
 use Throwable;
+use validation\OrderValidator;
+use validation\Validator;
 
 class OrderService implements Service
 {
     private OrderRepository $orderRepository;
     private CartRepository $cartRepository;
+    private Validator $validator;
 
-    public function __construct()
+    public function __construct(
+        OrderRepository $orderRepository,
+        CartRepository $cartRepository,
+        OrderValidator $validator
+    )
     {
-        $this->orderRepository = new OrderRepository();
-        $this->cartRepository = new CartRepository();
+        $this->orderRepository = $orderRepository;
+        $this->cartRepository = $cartRepository;
+        $this->validator = $validator;
     }
 
-    public function processOrder(OrderForm $orderForm): Errors
+    public function processOrder(OrderDTO $orderDTO): Errors
     {
-        $errors = $this->validate();
+        $errors = $this->validate($orderDTO);
 
         if ($errors->hasAny()) {
             return $errors;
         }
 
-        $order = $this->bindOrder($this->createOrder($orderForm));
+        $order = $this->bindOrder($this->createOrder($orderDTO));
 
         if (!$this->save($order)) {
-            $errors->add("order", "Failed to save");
+            $errors->add("order", "Failed to process order");
         }
 
         return $errors;
@@ -47,7 +55,7 @@ class OrderService implements Service
         return $order;
     }
 
-    private function createOrder(OrderForm $orderForm): Order
+    private function createOrder(OrderDTO $orderForm): Order
     {
         return new Order(
             $orderForm->getAddress(),
@@ -60,18 +68,15 @@ class OrderService implements Service
     {
         try {
             $this->orderRepository->save($order);
-        } catch (Throwable $t) {
-            print_r($t);
+        } catch (Throwable) {
             return false;
         }
 
         return true;
     }
 
-    private function validate(): Errors
+    private function validate(OrderDTO $dto): Errors
     {
-        $errors = Errors::create();
-
-        return $errors;
+        return $this->validator->validate($dto);
     }
 }

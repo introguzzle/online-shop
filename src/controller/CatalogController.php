@@ -9,10 +9,10 @@ class CatalogController extends Controller
 
     private CatalogService $catalogService;
 
-    public function __construct()
+    public function __construct(CatalogService $catalogService)
     {
         parent::__construct();
-        $this->catalogService = new CatalogService();
+        $this->catalogService = $catalogService;
     }
 
     public function view(): void

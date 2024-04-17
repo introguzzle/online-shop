@@ -4,15 +4,13 @@ namespace repository;
 
 use entity\Entity;
 use entity\Profile;
-use entity\User;
-use Logger;
-use Throwable;
+use repository\hydrator\Hydrator;
 
 class ProfileRepository extends Repository {
 
-    public function __construct()
+    public function __construct(Hydrator $hydrator)
     {
-        parent::__construct();
+        parent::__construct($hydrator);
     }
 
     public function getByUserId(int $userId): Profile | Entity | null

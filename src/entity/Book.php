@@ -35,9 +35,19 @@ class Book extends Entity
         return $this->id;
     }
 
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function setName(string $name): void
+    {
+        $this->name = $name;
     }
 
     public function getAuthor(): string
@@ -45,9 +55,19 @@ class Book extends Entity
         return $this->author;
     }
 
+    public function setAuthor(string $author): void
+    {
+        $this->author = $author;
+    }
+
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 
     public function getPrice(): int
@@ -55,13 +75,28 @@ class Book extends Entity
         return $this->price;
     }
 
+    public function setPrice(int $price): void
+    {
+        $this->price = $price;
+    }
+
     public function getYear(): int
     {
         return $this->year;
     }
 
+    public function setYear(int $year): void
+    {
+        $this->year = $year;
+    }
+
     public function getImageUrl(): string
     {
         return $this->imageUrl;
+    }
+
+    public function setImageUrl(string $imageUrl): void
+    {
+        $this->imageUrl = $imageUrl;
     }
 }

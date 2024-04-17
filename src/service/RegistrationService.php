@@ -3,71 +3,74 @@
 namespace service;
 
 use dto\Errors;
-use dto\RegistrationForm;
+use dto\RegistrationDTO;
+use entity\Profile;
 use repository\UserRepository;
 use entity\User;
+use Throwable;
+use validation\RegistrationValidator;
+use validation\Validator;
 
 class RegistrationService implements Service
 {
     private UserRepository $userRepository;
     private ProfileService $profileService;
-    private CartService $cartService;
+    private Validator $validator;
 
-    public function __construct()
+    public function __construct(
+        UserRepository $userRepository,
+        ProfileService $profileService,
+        RegistrationValidator $validator
+    )
     {
-        $this->userRepository = new UserRepository();
-        $this->profileService = new ProfileService();
-        $this->cartService = new CartService();
+        $this->userRepository = $userRepository;
+        $this->profileService = $profileService;
+        $this->validator = $validator;
     }
 
     public function processRegistration(
-        RegistrationForm $registrationForm
+        RegistrationDTO $registrationDTO
     ): Errors
     {
-        $errors = $this->validate($registrationForm);
+        $errors = $this->validate($registrationDTO);
 
-        if ($errors->hasAny()) {
-            return $errors;
+        try {
+            $this->userRepository->beginTransaction();
+
+            if ($errors->hasAny()) {
+                return $errors;
+            }
+
+            $user = $this->saveUser($this->createUser($registrationDTO));
+
+            if ($user === null) {
+                $this->rollback();
+                return $errors;
+            }
+
+            $profile = $this->saveProfile($user);
+
+            if ($profile === null) {
+                $this->rollback();
+                return $errors;
+            }
+
+            $this->userRepository->commit();
+
+        } catch (Throwable $t) {
+            $errors->add("internal", "Internal server error");
+            $this->rollback();
         }
-
-        $user = $this->toUser($registrationForm);
-
-        $this->saveUser($user);
-
-        $user = $this->userRepository->getByEmail($registrationForm->getEmail());
-
-        $this->saveProfile($user);
-        $this->saveCart($user);
 
         return $errors;
     }
 
-    private function validate(RegistrationForm $form): Errors
+    private function validate(RegistrationDTO $dto): Errors
     {
-        $errors = Errors::create();
-
-        if ($this->userRepository->getByEmail($form->getEmail()) !== null) {
-            $errors->add("email", "Email is already taken");
-        }
-
-        if (!filter_var($form->getEmail(), FILTER_VALIDATE_EMAIL)) {
-            $errors->add("email", "Invalid email");
-        }
-
-        if ($form->getPassword() !== $form->getPasswordRepeat()) {
-            $errors->add("password", "Invalid password");
-        }
-
-        $nameLength = strlen($form->getName());
-
-        if ($nameLength <= 4 || $nameLength >= 255) {
-            $errors->add("name", "Invalid name");
-        }
-
-        return $errors;
+        return $this->validator->validate($dto);
     }
 
-    private function toUser(RegistrationForm $form): User
+    private function createUser(RegistrationDTO $form): User
     {
         return new User(
             $form->getName(),
@@ -76,18 +79,18 @@ class RegistrationService implements Service
         );
     }
 
-    public function saveUser(User $user): void
+    public function saveUser(User $user): ?User
     {
-        $this->userRepository->save($user);
+        return $this->userRepository->save($user);
     }
 
-    public function saveProfile(User $user): void
+    public function saveProfile(User $user): ?Profile
     {
-        $this->profileService->saveProfile($user);
+        return $this->profileService->saveProfile($user);
     }
 
-    public function saveCart(User $user): void
+    private function rollback(): void
     {
-        $this->cartService->saveCart($user);
+        $this->userRepository->rollback();
     }
 }

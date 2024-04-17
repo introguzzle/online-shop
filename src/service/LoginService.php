@@ -3,30 +3,44 @@
 namespace service;
 
 use dto\Errors;
-use dto\LoginForm;
-use repository\UserRepository;
+use dto\LoginDTO;
 use entity\User;
+use repository\UserRepository;
+use service\authentication\AuthenticationService;
+use validation\LoginValidator;
+use validation\Validator;
 
 class LoginService implements Service
 {
 
     private AuthenticationService $authService;
     private UserRepository $userRepository;
+    private Validator $validator;
 
-    public function __construct()
+    public function __construct(
+        AuthenticationService $authenticationService,
+        UserRepository $userRepository,
+        LoginValidator $validator
+    )
     {
-        $this->authService = new SessionAuthenticationService();
-        $this->userRepository = new UserRepository();
+        $this->authService = $authenticationService;
+        $this->userRepository = $userRepository;
+        $this->validator = $validator;
     }
 
     public function processAuthentication(
-        LoginForm $loginForm
+        LoginDTO $loginDTO
     ): Errors
     {
-        $errors = Errors::create();
-        $user = $this->userRepository->getByEmail($loginForm->getEmail());
+        $errors = $this->validator->validate($loginDTO);
 
-        if (isset($user) && password_verify($loginForm->getPassword(), $user->getPassword())) {
+        if ($errors->hasAny()) {
+            return $errors;
+        }
+
+        $user = $this->userRepository->getByEmail($loginDTO->getEmail());
+
+        if (isset($user) && password_verify($loginDTO->getPassword(), $user->getPassword())) {
             $this->loginByUser($user);
             return $errors;
         }
@@ -35,14 +49,14 @@ class LoginService implements Service
         return $errors;
     }
 
-    public function loginByUser(User $user): void
+    private function loginByUser(User $user): bool
     {
-        $this->authService->loginByUser($user);
+        return $this->authService->loginByUser($user);
     }
 
-    public function loginByCredentials(LoginForm $loginForm): void
+    private function loginByCredentials(LoginDTO $loginDTO): bool
     {
-        $this->authService->loginByCredentials($loginForm);
+        return $this->authService->loginByCredentials($loginDTO);
     }
 
     public function logout(): void

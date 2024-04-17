@@ -3,19 +3,14 @@
 namespace repository;
 
 use entity\Book;
-use entity\Entity;
-use entity\Profile;
-use entity\User;
-use Logger;
-use PDO;
-use Throwable;
+use repository\hydrator\Hydrator;
 
 class BookRepository extends Repository
 {
 
-    public function __construct()
+    public function __construct(Hydrator $hydrator)
     {
-        parent::__construct();
+        parent::__construct($hydrator);
     }
 
     public function getTableName(): string

@@ -2,14 +2,14 @@
     <h1>Shopping Cart</h1>
     <br>
     <div class="cart-items">
-        <?php if (isset($books)) foreach ($books as $book): ?>
+        <?php if (isset($cartView)) foreach ($cartView->getCartBookViews() as $cartBook): ?>
             <div class="cart-item">
-                <img src="<?php echo $book->getImageUrl() ?>" alt="Product 1">
+                <img src="<?php echo $cartBook->getBook()->getImageUrl() ?>" alt="Product 1">
 
                 <div class="item-details">
-                    <h2><?php echo $book->getName() ?></h2>
-                    <p>Price: <?php echo $book->getPrice() ?></p>
-                    <p>Description: <?php echo $book->getDescription() ?></p>
+                    <h2><?php echo $cartBook->getBook()->getName() ?></h2>
+                    <p>Price: <?php echo $cartBook->getBook()->getPrice() ?></p>
+                    <p>Description: <?php echo $cartBook->getBook()->getDescription() ?></p>
                 </div>
 
                 <form action="cart.phtml">
@@ -17,15 +17,11 @@
                         <button class="btn-minus" formaction="/cart/remove" formmethod="POST">-</button>
                         <label>
                             <input type="text" value="<?php
-                            if (isset($quantityOfBooks)) {
-                                echo $quantityOfBooks[$book->getId()];
-                            } else {
-                                echo "1";
-                            }
+                            echo $cartBook->getCartBook()->getQuantity();
                             ?>" class="quantity-value">
                         </label>
                         <button class="btn-plus" formaction="/cart/add" formmethod="POST">+</button>
-                        <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+                        <input type="hidden" name="book_id" value="<?php echo $cartBook->getBook()->getId() ?>">
                     </div>
                 </form>
 
@@ -34,7 +30,7 @@
     </div>
 
     <div>
-        <p>Total price: <?php if (isset($totalPrice)) echo $totalPrice; else echo "0" ?></p>
+        <p>Total price: <?php if (isset($cartView)) echo $cartView->getTotalPrice(); else echo "0" ?></p>
     </div>
 
     <a href="/checkout" class="checkout-button">Proceed to Checkout</a>

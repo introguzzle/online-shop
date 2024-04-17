@@ -4,12 +4,13 @@ namespace repository;
 
 use entity\Entity;
 use entity\User;
+use repository\hydrator\Hydrator;
 
 class UserRepository extends Repository {
 
-    public function __construct()
+    public function __construct(Hydrator $hydrator)
     {
-        parent::__construct();
+        parent::__construct($hydrator);
     }
 
     public function getByEmail(string $email): User | Entity | null

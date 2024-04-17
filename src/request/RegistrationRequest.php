@@ -2,14 +2,10 @@
 
 namespace request;
 
+use dto\Errors;
+
 class RegistrationRequest extends Request
 {
-
-    private string $name;
-    private string $email;
-    private string $password;
-    private string $passwordRepeat;
-
     public function __construct(
         string $name,
         string $email,
@@ -23,36 +19,25 @@ class RegistrationRequest extends Request
             ["Content-Type: application/x-www-form-urlencoded"],
             ["name" => $name, "email" => $email, "password" => $password, "passwordRepeat" => $passwordRepeat]
         );
-
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
-        $this->passwordRepeat = $passwordRepeat;
-
     }
 
     public function getName(): string
     {
-        return $this->name;
+        return $this->getBody()["name"];
     }
 
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->getBody()["email"];
     }
 
     public function getPassword(): string
     {
-        return $this->password;
+        return $this->getBody()["password"];
     }
 
     public function getPasswordRepeat(): string
     {
-        return $this->passwordRepeat;
-    }
-
-    public function __toString(): string
-    {
-        return "RegistrationRequest[$this->name, $this->email, $this->password, $this->passwordRepeat]";
+        return $this->getBody()["passwordRepeat"];
     }
 }

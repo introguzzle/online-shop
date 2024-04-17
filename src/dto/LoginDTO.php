@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class LoginForm extends DTO
+class LoginDTO extends DTO
 {
     private string $email;
     private string $password;

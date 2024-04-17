@@ -2,7 +2,7 @@
 
 namespace controller;
 
-use dto\OrderForm;
+use dto\OrderDTO;
 use entity\Order;
 use request\OrderRequest;
 use service\OrderService;
@@ -11,10 +11,10 @@ class OrderController extends Controller
 {
     private OrderService $orderService;
 
-    public function __construct()
+    public function __construct(OrderService $orderService)
     {
         parent::__construct();
-        $this->orderService = new OrderService();
+        $this->orderService = $orderService;
     }
 
     public function view(): void
@@ -26,7 +26,7 @@ class OrderController extends Controller
     {
         $request = $this->acquireRequest();
 
-        $errors = $this->orderService->processOrder(new OrderForm(
+        $errors = $this->orderService->processOrder(new OrderDTO(
             $request->getAddress(),
             $request->getPhone(),
             $request->getCardNumber()

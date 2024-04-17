@@ -2,7 +2,7 @@
 
 namespace dto;
 
-class OrderForm extends DTO
+class OrderDTO extends DTO
 {
     private string $address;
     private string $phone;

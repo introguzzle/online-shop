@@ -4050,3 +4050,621 @@ Stack trace:
 [2024-04-16 11:34:54] [INFO] [{"id":2,"0":2,"name":"test_name2","1":"test_name2","email":"test2@mail.ru","2":"test2@mail.ru","password":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","3":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","created_at":"2024-04-15 18:01:53","4":"2024-04-15 18:01:53","updated_at":"2024-04-15 18:01:53","5":"2024-04-15 18:01:53","role_id":1,"6":1}]
 [2024-04-16 11:34:54] [INFO] [{"id":2,"0":2,"name":"test_name2","1":"test_name2","email":"test2@mail.ru","2":"test2@mail.ru","password":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","3":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","created_at":"2024-04-15 18:01:53","4":"2024-04-15 18:01:53","updated_at":"2024-04-15 18:01:53","5":"2024-04-15 18:01:53","role_id":1,"6":1}]
 [2024-04-16 11:34:54] [INFO] [{"id":2,"0":2,"name":"test_name2","1":"test_name2","email":"test2@mail.ru","2":"test2@mail.ru","password":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","3":"$2y$10$VO6ucrzCfuUoK07TtKwsOexyr0557t66BiykLZcef9GqAhyIKI7eG","created_at":"2024-04-15 18:01:53","4":"2024-04-15 18:01:53","updated_at":"2024-04-15 18:01:53","5":"2024-04-15 18:01:53","role_id":1,"6":1}]
+[2024-04-16 13:04:25] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity)
+[2024-04-16 14:31:33] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 14:46:24] [ERROR] Error: Call to undefined method modelview\CartBookView::getId() in /var/www/html/src/view/generated/cart.phtml:260
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(24): require_once()
+#1 /var/www/html/src/core/Application.php(50): controller\CartController->view()
+#2 /var/www/html/src/public/index.php(15): core\Application->run()
+#3 {main}
+[2024-04-16 15:54:07] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:54:09] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:55:29] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:40
+Stack trace:
+#0 /var/www/html/src/service/CartService.php(103): service\CartService->getAllBooks(1)
+#1 /var/www/html/src/controller/CartController.php(22): service\CartService->getCartView(1)
+#2 /var/www/html/src/core/Application.php(50): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:55:29] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:55:31] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:40
+Stack trace:
+#0 /var/www/html/src/service/CartService.php(103): service\CartService->getAllBooks(1)
+#1 /var/www/html/src/controller/CartController.php(22): service\CartService->getCartView(1)
+#2 /var/www/html/src/core/Application.php(50): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:55:32] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:55:33] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:56:02] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 77 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(77): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:56:04] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 77 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(77): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:56:34] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 75 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(75): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:57:01] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 78 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(78): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:57:03] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 78 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(78): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:57:07] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 78 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(78): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:57:59] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 74 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(74): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:58:03] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 74 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(74): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:58:05] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 74 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(74): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(22): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:58:47] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 74 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(74): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(27): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:59:37] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 76 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(76): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(24): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 15:59:40] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 76 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(76): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(24): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(50): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 16:00:08] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 16:00:08] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description) RETURNING id
+[2024-04-16 16:05:55] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:40
+Stack trace:
+#0 /var/www/html/src/service/CartService.php(103): service\CartService->getAllBooks(4)
+#1 /var/www/html/src/controller/CartController.php(22): service\CartService->getCartView(4)
+#2 /var/www/html/src/core/Application.php(50): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(15): core\Application->run()
+#4 {main}
+[2024-04-16 16:09:50] [INFO] INSERT INTO carts (user_id) VALUES (:user_id) RETURNING id
+[2024-04-16 16:09:50] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity) RETURNING id
+[2024-04-16 16:09:53] [INFO] INSERT INTO cart_book (cart_id, book_id, quantity) VALUES (:cart_id, :book_id, :quantity) RETURNING id
+[2024-04-16 16:25:05] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 16:25:05] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description) RETURNING id
+[2024-04-16 16:26:03] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 16:26:03] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description) RETURNING id
+[2024-04-16 16:26:34] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 16:26:34] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description) RETURNING id
+[2024-04-16 16:27:25] [INFO] INSERT INTO users (name, email, password, created_at, updated_at, role_id) VALUES (:name, :email, :password, :created_at, :updated_at, :role_id) RETURNING id
+[2024-04-16 16:27:25] [INFO] INSERT INTO profiles (user_id, avatar_url, description) VALUES (:user_id, :avatar_url, :description) RETURNING id
+[2024-04-16 17:59:23] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:22
+Stack trace:
+#0 /var/www/html/src/core/Application.php(52): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 17:59:26] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:22
+Stack trace:
+#0 /var/www/html/src/core/Application.php(52): controller\CartController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 18:03:21] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:23] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:24] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:49
+Stack trace:
+#0 /var/www/html/src/service/CartService.php(112): service\CartService->getAllBooks(1)
+#1 /var/www/html/src/controller/CartController.php(22): service\CartService->getCartView(1)
+#2 /var/www/html/src/core/Application.php(52): controller\CartController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:25] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:27] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:27] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:03:48] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 72 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(72): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(23): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(52): controller\ProfileController->view()
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-16 18:24:21] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(55): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:24:52] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(55): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:28:58] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(56): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:29:42] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(56): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:29:42] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(56): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:31:34] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(59): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 18:31:45] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/ProfileService.php:69
+Stack trace:
+#0 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#1 /var/www/html/src/core/Application.php(57): controller\ProfileController->view()
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-16 22:53:50] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 43 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(43): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 22:54:50] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 44 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(44): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 22:55:07] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 44 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(44): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 22:56:50] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 44 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(44): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 23:06:00] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 43 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(43): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 23:06:14] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 44 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(44): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-16 23:56:53] [ERROR] ArgumentCountError: Too few arguments to function controller\CatalogController::view(), 0 passed in /var/www/html/src/core/Application.php on line 47 and exactly 1 expected in /var/www/html/src/controller/CatalogController.php:18
+Stack trace:
+#0 /var/www/html/src/core/Application.php(47): controller\CatalogController->view()
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:48] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:49] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:50] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:52] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:53] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:58] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:58] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:58] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:02:59] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:03:29] [ERROR] Error: Value of type null is not callable in /var/www/html/src/core/Application.php:58
+Stack trace:
+#0 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(NULL)
+#1 /var/www/html/src/public/index.php(25): core\Application->run()
+#2 {main}
+[2024-04-17 00:18:20] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 71 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(71): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(58): controller\ProfileController->view()
+#3 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(Array, NULL)
+#4 /var/www/html/src/public/index.php(25): core\Application->run()
+#5 {main}
+[2024-04-17 00:22:31] [ERROR] TypeError: modelview\ProfileView::__construct(): Argument #1 ($profile) must be of type entity\Profile, null given, called in /var/www/html/src/service/ProfileService.php on line 71 and defined in /var/www/html/src/modelview/ProfileView.php:13
+Stack trace:
+#0 /var/www/html/src/service/ProfileService.php(71): modelview\ProfileView->__construct(NULL, Object(entity\User))
+#1 /var/www/html/src/controller/ProfileController.php(21): service\ProfileService->getProfileView()
+#2 /var/www/html/src/core/Application.php(58): controller\ProfileController->view()
+#3 /var/www/html/src/core/Application.php(48): core\Application->invokeHandler(Array, NULL)
+#4 /var/www/html/src/public/index.php(25): core\Application->run()
+#5 {main}

@@ -39,4 +39,26 @@ class Profile extends Entity
     public function getDescription(): string {
         return $this->description;
     }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function setUserId(int $userId): void
+    {
+        $this->userId = $userId;
+    }
+
+    public function setAvatarUrl(string $avatarUrl): void
+    {
+        $this->avatarUrl = $avatarUrl;
+    }
+
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
+    }
+
+
 }

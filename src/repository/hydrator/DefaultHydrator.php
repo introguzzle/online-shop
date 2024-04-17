@@ -11,6 +11,11 @@ use util\Entities;
 
 class DefaultHydrator implements Hydrator
 {
+    public function __construct()
+    {
+
+    }
+
     public function hydrate(string $entityClass, array $data): Entity
     {
         $columns = $this->extractColumns($data);

@@ -4,10 +4,6 @@ namespace request;
 
 class OrderRequest extends Request
 {
-    private string $address;
-    private string $phone;
-    private string $cardNumber;
-
     public function __construct(
         string $address,
         string $phone,
@@ -20,24 +16,20 @@ class OrderRequest extends Request
             ["Content-Type: application/x-www-form-urlencoded"],
             ["address" => $address, "phone" => $phone, "cardNumber" => $cardNumber]
         );
-
-        $this->address = $address;
-        $this->phone = $phone;
-        $this->cardNumber = $cardNumber;
     }
 
     public function getAddress(): string
     {
-        return $this->address;
+        return $this->getBody()["address"];
     }
 
     public function getPhone(): string
     {
-        return $this->phone;
+        return $this->getBody()["phone"];
     }
 
     public function getCardNumber(): string
     {
-        return $this->cardNumber;
+        return $this->getBody()["cardNumber"];
     }
 }
