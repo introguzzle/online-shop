@@ -189,4 +189,12 @@ abstract class Repository
         $stmt->execute();
         return true;
     }
+
+    public function count(): int
+    {
+        $table = $this->getTableName();
+        $query = "SELECT COUNT(*) FROM $table";
+
+        return $this->connection->prepare($query)->executeThenFetch()["count"];
+    }
 }

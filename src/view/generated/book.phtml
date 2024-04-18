@@ -247,6 +247,13 @@
         <p><h3>Rating</h3> <?php echo $bookView->getAverageRating() ?>
         <p><h3>Description</h3> <?php echo $bookView->getBook()->getDescription() ?>
 
+        <?php if (\service\authentication\Authentication::isAuthenticated()): ?>
+            <form action="/catalog/add-to-cart" method="POST">
+                <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
+                <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+            </form>
+        <?php endif; ?>
+
         <h3>Reviews</h3>
         <div class="reviews">
             <?php foreach ($bookView->getReviewViews() as $reviewView): ?>
@@ -256,8 +263,9 @@
                     <p>Rating: <?php echo $reviewView->getReview()->getRating() ?>/5</p>
                     <p>Created at: <?php echo $reviewView->getReview()->getCreatedAt() ?></p>
 
-                    <?php if (\service\authentication\Authentication::getUser()
-                            ->getRoleId() == \entity\Role::ADMIN): ?>
+                    <?php
+                        if (\service\authentication\Authentication::getRole()
+                            == \entity\Role::ADMIN): ?>
                         <form action="/catalog/delete-review" method="POST">
                             <input type="hidden" name="from" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
                             <input type="hidden" name="review-id" value="<?php echo $reviewView->getReview()->getId() ?>">
@@ -266,30 +274,27 @@
                     <?php endif; ?>
                 </div>
             <?php endforeach; ?>
+
+            <?php if (\service\authentication\Authentication::isAuthenticated()): ?>
+                <form action="/catalog/add-review" method="POST" class="add-review-form">
+                    <input type="hidden" name="from" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                    <h3>Add a Review</h3>
+                    <label for="text">Your Review:</label><br>
+                    <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+                    <label for="rating">Rating:</label>
+                    <select id="rating" name="rating">
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select><br>
+                    <br>
+                    <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
+                    <button type="submit" class="add-to-cart-btn">Submit Review</button>
+                </form>
+            <?php endif; ?>
         </div>
-
-        <form action="/catalog/add-to-cart" method="POST">
-            <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
-            <button type="submit" class="add-to-cart-btn">Add to Cart</button>
-        </form>
-
-        <form action="/catalog/add-review" method="POST" class="add-review-form">
-            <input type="hidden" name="from" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
-            <h3>Add a Review</h3>
-            <label for="text">Your Review:</label><br>
-            <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
-            <label for="rating">Rating:</label>
-            <select id="rating" name="rating">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select><br>
-            <br>
-            <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
-            <button type="submit" class="add-to-cart-btn">Submit Review</button>
-        </form>
     </div>
 </div>
 <br>

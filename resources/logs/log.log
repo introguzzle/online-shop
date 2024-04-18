@@ -8308,3 +8308,43 @@ Stack trace:
 #3 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
 #4 /var/www/html/src/public/index.php(25): core\Application->run()
 #5 {main}
+[2024-04-18 12:58:14] [ERROR] Error: Call to a member function getRoleId() on null in /var/www/html/src/view/generated/book.phtml:260
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(53): require_once()
+#1 /var/www/html/src/core/Application.php(64): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-18 12:59:58] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:22
+Stack trace:
+#0 /var/www/html/src/core/Application.php(64): controller\CartController->view()
+#1 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-18 13:00:01] [ERROR] Error: Call to a member function getRoleId() on null in /var/www/html/src/view/generated/book.phtml:260
+Stack trace:
+#0 /var/www/html/src/controller/CatalogController.php(53): require_once()
+#1 /var/www/html/src/core/Application.php(64): controller\CatalogController->viewBook()
+#2 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-18 13:04:18] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/controller/CartController.php:22
+Stack trace:
+#0 /var/www/html/src/core/Application.php(64): controller\CartController->view()
+#1 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#2 /var/www/html/src/public/index.php(25): core\Application->run()
+#3 {main}
+[2024-04-18 13:04:44] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:39
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(29): service\CartService->addFromCatalog(1)
+#1 /var/www/html/src/core/Application.php(64): controller\CartController->addFromCatalog()
+#2 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}
+[2024-04-18 13:09:23] [ERROR] Error: Call to a member function getId() on null in /var/www/html/src/service/CartService.php:39
+Stack trace:
+#0 /var/www/html/src/controller/CartController.php(29): service\CartService->addFromCatalog(1)
+#1 /var/www/html/src/core/Application.php(64): controller\CartController->addFromCatalog()
+#2 /var/www/html/src/core/Application.php(54): core\Application->invokeHandler(Array, NULL)
+#3 /var/www/html/src/public/index.php(25): core\Application->run()
+#4 {main}

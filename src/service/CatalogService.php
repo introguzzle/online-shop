@@ -62,13 +62,19 @@ class CatalogService implements Service
         }, $reviews);
     }
 
-    private function computeAverageRating(array $allReviewsByBookId): float|int
+    private function computeAverageRating(array $allReviewsByBookId): float|int|string
     {
+        $count = $this->reviewRepository->count();
+
+        if ($count == 0) {
+            return "No enough reviews";
+        }
+
         $all = array_reduce($allReviewsByBookId, function(float $acc, Review $review) {
             return $acc + $review->getRating();
         }, 0.0);
 
-        return $all / count($this->reviewRepository->getAll());
+        return $all / (float) $count;
     }
 
     public function getBookView(mixed $bookId): ?BookView

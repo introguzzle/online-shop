@@ -10,12 +10,12 @@ class BookView
     private Book $book;
     private array $reviewViews;
 
-    private float $averageRating;
+    private float|string $averageRating;
 
     public function __construct(
         Book $book,
         array $reviewViews,
-        float $averageRating
+        float|string $averageRating
     )
     {
         $this->book = $book;
@@ -33,7 +33,7 @@ class BookView
         return $this->reviewViews;
     }
 
-    public function getAverageRating(): float
+    public function getAverageRating(): float|string
     {
         return $this->averageRating;
     }
