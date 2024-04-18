@@ -3,14 +3,17 @@
 namespace repository;
 
 use entity\Book;
+use repository\connection\Connection;
 use repository\hydrator\Hydrator;
 
 class BookRepository extends Repository
 {
-
-    public function __construct(Hydrator $hydrator)
+    public function __construct(
+        Connection $connection,
+        Hydrator $hydrator
+    )
     {
-        parent::__construct($hydrator);
+        parent::__construct($connection, $hydrator);
     }
 
     public function getTableName(): string

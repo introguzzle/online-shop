@@ -7,13 +7,13 @@ use repository\CartBookRepository;
 use repository\CartRepository;
 use repository\OrderRepository;
 use repository\ProfileRepository;
+use repository\ReviewRepository;
 use repository\UserRepository;
 
 use service\authentication\AuthenticationService;
 use service\authentication\SessionAuthenticationService;
 use service\CartService;
 use service\CatalogService;
-use service\LoginService;
 use service\OrderService;
 use service\ProfileService;
 use service\RegistrationService;
@@ -37,19 +37,10 @@ return [
         );
     },
 
-    LoginService::class => function(Container $container) {
-        return new LoginService(
-            $container->get(AuthenticationService::class),
-            $container->get(UserRepository::class),
-            $container->get(LoginValidator::class)
-        );
-    },
-
     RegistrationService::class => function(Container $container) {
         return new RegistrationService(
             $container->get(UserRepository::class),
             $container->get(ProfileService::class),
-            $container->get(RegistrationValidator::class)
         );
     },
 
@@ -63,7 +54,9 @@ return [
 
     CatalogService::class => function(Container $container) {
         return new CatalogService(
-            $container->get(BookRepository::class)
+            $container->get(BookRepository::class),
+            $container->get(ReviewRepository::class),
+            $container->get(UserRepository::class)
         );
     },
 
@@ -71,7 +64,6 @@ return [
         return new OrderService(
             $container->get(OrderRepository::class),
             $container->get(CartRepository::class),
-            $container->get(OrderValidator::class)
         );
     },
 

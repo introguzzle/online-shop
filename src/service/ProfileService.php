@@ -33,7 +33,7 @@ class ProfileService implements Service
         return $errors;
     }
 
-    public function saveProfile(User $user): ?Profile
+    public function saveProfile(User $user): Profile
     {
         $profile = new Profile($user->getId());
         return $this->save($profile);

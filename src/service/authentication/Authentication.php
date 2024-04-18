@@ -7,7 +7,7 @@ use entity\User;
 final class Authentication
 {
     private static AuthenticationService $authenticationService;
-    private static User $user;
+    private static ?User $user;
 
     public static function init(
         AuthenticationService $authenticationService

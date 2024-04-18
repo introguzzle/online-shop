@@ -88,13 +88,10 @@ class CartService implements Service
     {
         $views = [];
 
-        foreach ($books as $book) {
-            foreach ($cartBooks as $cartBook) {
-                if ($book->getId() === $cartBook->getBookId()) {
-                    $views[] = new CartBookView($book, $cartBook);
-                }
+        foreach ($books as $book) foreach ($cartBooks as $cartBook)
+            if ($book->getId() === $cartBook->getBookId()) {
+                $views[] = new CartBookView($book, $cartBook);
             }
-        }
 
         return $views;
     }

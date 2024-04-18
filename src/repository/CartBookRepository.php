@@ -6,6 +6,7 @@ use entity\Book;
 use entity\CartBook;
 use entity\Entity;
 use entity\User;
+use repository\connection\Connection;
 use repository\hydrator\Hydrator;
 
 class CartBookRepository extends Repository
@@ -14,12 +15,13 @@ class CartBookRepository extends Repository
     private BookRepository $bookRepository;
 
     public function __construct(
+        Connection $connection,
         Hydrator $hydrator,
         CartRepository $cartRepository,
         BookRepository $bookRepository
     )
     {
-        parent::__construct($hydrator);
+        parent::__construct($connection, $hydrator);
 
         $this->cartRepository = $cartRepository;
         $this->bookRepository = $bookRepository;
@@ -35,9 +37,8 @@ class CartBookRepository extends Repository
         if ($cartBook === null) {
             return $this->save(new CartBook($cartId, $bookId));
         } else {
-            $id = $cartBook->getId();
-            $this->incrementQuantityById($id);
 
+            $this->incrementQuantityById($cartBook->getId());
             return $book;
         }
     }

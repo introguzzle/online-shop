@@ -4,23 +4,29 @@ namespace repository;
 
 use entity\Entity;
 use InvalidArgumentException;
+use repository\connection\Connection;
+use repository\connection\ConnectionException;
 use repository\hydrator\Hydrator;
 use PDO;
 
 abstract class Repository
 {
-    protected PDO $pdo;
+    protected Connection $connection;
 
     protected Hydrator $hydrator;
 
     public const string JOIN_AND = "AND";
     public const string JOIN_OR  = "OR";
 
+    public const string ASCENDING = "ASC";
+    public const string DESCENDING = "DESC";
+
     public function __construct(
-        Hydrator $hydrator
+        Connection $connection,
+        Hydrator   $hydrator
     )
     {
-        $this->pdo = PDOHolder::getPdo();
+        $this->connection = $connection;
         $this->hydrator = $hydrator;
     }
 
@@ -32,11 +38,7 @@ abstract class Repository
         $table = $this->getTableName();
 
         $query = "SELECT * FROM $table";
-
-        $stmt = $this->pdo->prepare($query);
-        $stmt->execute();
-
-        $fetched = $stmt->fetchAll();
+        $fetched = $this->connection->prepare($query)->executeThenFetchAll();
 
         return $this->hydrateAll($fetched);
     }
@@ -45,15 +47,18 @@ abstract class Repository
         string $column,
         mixed $value,
         bool $unique = false,
+        string $join = self::JOIN_AND,
+        ?array $orderBy = null
     ): Entity | array | null
     {
-        return $this->getByCriteria([$column => $value], $unique);
+        return $this->getByCriteria([$column => $value], $unique, $join, $orderBy);
     }
 
     public function getByCriteria(
         array $criteria,
         bool $unique = false,
-        string $join = self::JOIN_AND
+        string $join = self::JOIN_AND,
+        ?array $orderBy = null
     ): Entity | array | null
     {
         $table = $this->getTableName();
@@ -63,17 +68,24 @@ abstract class Repository
             $conditions[] = "$column = :$column";
         }
 
-        $where = implode(" " . $join . " ", $conditions);
-        $query = "SELECT * FROM $table WHERE $where";
+        $orderByClause = "";
 
-        $stmt = $this->pdo->prepare($query);
+        if ($orderBy) {
+            $orderByColumn    = key($orderBy);
+            $orderByDirection = current($orderBy);
+            $orderByClause    = "ORDER BY $orderByColumn $orderByDirection";
+        }
+
+        $where = implode(" " . $join . " ", $conditions);
+        $query = "SELECT * FROM $table WHERE $where $orderByClause";
+
+        $stmt = $this->connection->prepare($query);
 
         foreach ($criteria as $column => $value) {
             $stmt->bindValue(":$column", $value);
         }
 
-        $stmt->execute();
-        $data = $stmt->fetchAll();
+        $data = $stmt->executeThenFetchAll();
 
         if (empty($data)) {
             return $unique ? null : [];
@@ -87,7 +99,7 @@ abstract class Repository
         $table = $this->getTableName();
 
         $query = "DELETE FROM $table WHERE id = :id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->connection->prepare($query);
 
         $stmt->bindValue(":id", $id);
         $stmt->execute();
@@ -99,12 +111,11 @@ abstract class Repository
         return empty($entity) ? null : $entity[0];
     }
 
-    public function save(Entity $entity): ?Entity
+    public function save(Entity $entity): Entity
     {
         $table = $this->getTableName();
         $entityData = $this->hydrator->extract($entity);
 
-        // When saved, no need to save id since it will be auto-incremented anyway
         unset($entityData["id"]);
 
         $columns = array_keys($entityData);
@@ -113,17 +124,19 @@ abstract class Repository
         $columnNames = implode(', ', $columns);
 
         $query = "INSERT INTO $table ($columnNames) VALUES ($placeholders) RETURNING id";
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->connection->prepare($query);
 
         foreach ($entityData as $column => $value) {
             $stmt->bindValue(":$column", $value, $this->acquireType($value));
         }
 
-        $stmt->execute();
-        $id = ($stmt->fetch())["id"];
+        $data = $stmt->executeThenFetch();
 
-        $entity->setId($id);
+        if (!isset($data["id"])) {
+            throw new ConnectionException();
+        }
 
+        $entity->setId($data["id"]);
         return $entity;
     }
 
@@ -168,27 +181,12 @@ abstract class Repository
         $table = $this->getTableName();
         $query = "UPDATE $table SET $column=:value WHERE id=:id";
 
-        $stmt = $this->pdo->prepare($query);
+        $stmt = $this->connection->prepare($query);
 
-        $stmt->bindParam(":value", $value);
-        $stmt->bindParam(":id", $id);
+        $stmt->bindValue(":value", $value);
+        $stmt->bindValue(":id", $id);
 
         $stmt->execute();
         return true;
-    }
-
-    public function beginTransaction(): bool
-    {
-        return $this->pdo->beginTransaction();
-    }
-
-    public function rollback(): bool
-    {
-        return $this->pdo->rollBack();
-    }
-
-    public function commit(): bool
-    {
-        return $this->pdo->commit();
     }
 }

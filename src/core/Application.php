@@ -12,6 +12,7 @@ use ReflectionMethod;
 use service\authentication\Authentication;
 use service\authentication\AuthenticationService;
 use Throwable;
+use util\NamingConventions;
 
 class Application
 {
@@ -46,13 +47,6 @@ class Application
             $class = $this->acquireHandlerParameterClass($handler);
 
             if ($class !== null) {
-                // Есть вариант с валидацией в самих реквестах.
-                // Ловить исключения здесь и передавать инстанс Errors вместо реквеста
-                // В самом контроллере проверять тип аргумента
-                // Но для этого нужно придумать какую-то дефолтную ошибку.
-                // Надо заметить, что это происходит только в случае невалидного реквеста,
-                // т.к. в конструктор не будет передано достаточно кол-во аргументов
-
                 $instance = $this->provideInstance($class);
             }
         }
@@ -175,42 +169,17 @@ class Application
         $constructor = $reflectionClass->getConstructor();
 
         if ($constructor !== null) {
-            $parameters = $constructor->getParameters();
-            $arguments = $this->getArguments($parameters);
+            $args = [];
 
-            return $reflectionClass->newInstanceArgs($arguments);
+            foreach ($_POST as $key => $value) {
+                $args[$key] = $value;
+            }
+
+            $args = [$args];
+
+            return $reflectionClass->newInstanceArgs($args);
         }
 
         return $reflectionClass->newInstance();
-    }
-
-    /**
-     * @throws Exception
-     */
-    private function getArguments(array $parameters): array
-    {
-        return $this->getArgumentsFrom($parameters, $_POST);
-    }
-
-    private function getArgumentsFrom(
-        array $parameters,
-        array $global
-    ): array
-    {
-        $arguments = [];
-
-        foreach ($parameters as $parameter) {
-            if (array_key_exists($parameter->getName(), $global)) {
-                $arguments[] = $global[$parameter->getName()];
-            } else {
-                if ($parameter->isDefaultValueAvailable()) {
-                    $arguments[] = $parameter->getDefaultValue();
-                } else {
-                    throw new Exception("Missing value for parameter '{$parameter->getName()}'");
-                }
-            }
-        }
-
-        return $arguments;
     }
 }

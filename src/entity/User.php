@@ -17,7 +17,8 @@ class User extends Entity {
         string $name,
         string $email,
         string $password,
-        int $id = 0
+        int $id = 0,
+        int $roleId = Role::USER
     )
     {
         $this->id = $id;
@@ -26,7 +27,7 @@ class User extends Entity {
         $this->password = $password;
         $this->createdAt = (new DateTime())->format('Y-m-d H:i:s');
         $this->updatedAt = $this->createdAt;
-        $this->roleId = 1;
+        $this->roleId = $roleId;
     }
 
     public function getId(): int

@@ -7,13 +7,17 @@ class LoginDTO extends DTO
     private string $email;
     private string $password;
 
+    private string $remember;
+
     public function __construct(
         string $email,
-        string $password
+        string $password,
+        string $remember
     )
     {
         $this->email = $email;
         $this->password = $password;
+        $this->remember = $remember;
     }
 
     public function getEmail(): string
@@ -36,5 +40,13 @@ class LoginDTO extends DTO
         $this->password = $password;
     }
 
+    public function getRemember(): string
+    {
+        return $this->remember;
+    }
 
+    public function setRemember(string $remember): void
+    {
+        $this->remember = $remember;
+    }
 }

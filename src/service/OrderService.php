@@ -9,33 +9,24 @@ use repository\CartRepository;
 use repository\OrderRepository;
 use service\authentication\Authentication;
 use Throwable;
-use validation\OrderValidator;
-use validation\Validator;
 
 class OrderService implements Service
 {
     private OrderRepository $orderRepository;
     private CartRepository $cartRepository;
-    private Validator $validator;
 
     public function __construct(
         OrderRepository $orderRepository,
         CartRepository $cartRepository,
-        OrderValidator $validator
     )
     {
         $this->orderRepository = $orderRepository;
         $this->cartRepository = $cartRepository;
-        $this->validator = $validator;
     }
 
     public function processOrder(OrderDTO $orderDTO): Errors
     {
-        $errors = $this->validate($orderDTO);
-
-        if ($errors->hasAny()) {
-            return $errors;
-        }
+        $errors = Errors::create();
 
         $order = $this->bindOrder($this->createOrder($orderDTO));
 
@@ -55,12 +46,12 @@ class OrderService implements Service
         return $order;
     }
 
-    private function createOrder(OrderDTO $orderForm): Order
+    private function createOrder(OrderDTO $dto): Order
     {
         return new Order(
-            $orderForm->getAddress(),
-            $orderForm->getPhone(),
-            $orderForm->getCardNumber()
+            $dto->getAddress(),
+            $dto->getPhone(),
+            $dto->getCardNumber()
         );
     }
 
@@ -73,10 +64,5 @@ class OrderService implements Service
         }
 
         return true;
-    }
-
-    private function validate(OrderDTO $dto): Errors
-    {
-        return $this->validator->validate($dto);
     }
 }

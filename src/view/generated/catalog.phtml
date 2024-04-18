@@ -246,6 +246,8 @@
             <p>Price: <?php echo $book->getPrice() ?></p>
             <p>Description: <?php echo $book->getDescription() ?></p>
 
+            <button onclick="window.location.href='/catalog/<?php echo $book->getId()?>'" class="add-to-cart-btn">About</button>
+            <br>
             <form action="/catalog/add-to-cart" method="POST">
                 <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
                 <button type="submit" class="add-to-cart-btn">Add to Cart</button>
@@ -290,6 +292,8 @@
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s ease;
+        width: 10%;
+        margin-top: 10px;
     }
 
     .add-to-cart-btn:hover {

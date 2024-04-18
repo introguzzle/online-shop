@@ -3,6 +3,7 @@
 namespace repository;
 
 use entity\Cart;
+use repository\connection\Connection;
 use repository\hydrator\Hydrator;
 
 class CartRepository extends Repository
@@ -10,11 +11,12 @@ class CartRepository extends Repository
     private BookRepository $bookRepository;
 
     public function __construct(
+        Connection $connection,
         Hydrator $hydrator,
-        BookRepository $bookRepository
+        BookRepository $bookRepository,
     )
     {
-        parent::__construct($hydrator);
+        parent::__construct($connection, $hydrator);
         $this->bookRepository = $bookRepository;
     }
 

@@ -39,6 +39,8 @@ $app->registerPostRoute(
 
 $app->registerGetRoute("/catalog", [CatalogController::class, "view"]);
 $app->registerPostRoute("/catalog/add-to-cart", [CartController::class, "addFromCatalog"]);
+$app->registerPostRoute("/catalog/add-review", [CatalogController::class, "addReview"]);
+$app->registerPostRoute("/catalog/delete-review", [CatalogController::class, "deleteReview"]);
 
 $app->registerGetRoute("/cart", [CartController::class, "view"]);
 $app->registerPostRoute("/cart/add", [CartController::class, "add"]);

@@ -9,15 +9,15 @@ class Logger {
     private static string $LOG_FILE = "./../../resources/logs/log.log";
     private static int $MAX_FILE_SIZE = 10241024;
 
-    public function error(string $error): void {
+    public function error(mixed $error): void {
         $this->write($error, "ERROR");
     }
 
-    public function info(string $info): void {
+    public function info(mixed $info): void {
         $this->write($info, "INFO");
     }
 
-    private function write(string $message, string $level): void {
+    private function write(mixed $message, string $level): void {
         $fileSize = filesize(self::$LOG_FILE);
 
         if ($fileSize >= self::$MAX_FILE_SIZE) {

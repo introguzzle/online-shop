@@ -2,26 +2,57 @@
 <div class="container c-container">
     <div class="book">
         <h1 style="text-align: center; color: #1E262DFF;">Book Details</h1>
-        <img src="<?php echo $book->getImageUrl()?>" alt="<?php echo $book->getName() ?>" class="book-img">
-        <h1><?php echo $book->getName() ?></h1>
-        <p><h3>Author</h3> <?php echo $book->getAuthor() ?></p>
-        <p><h3>Year</h3> <?php echo $book->getYear() ?></p>
-        <p><h3>Price</h3> <?php echo $book->getPrice() ?></p>
-        <p><h3>Description</h3> <?php echo $book->getDescription() ?></p>
+        <img src="<?php echo $bookView->getBook()->getImageUrl()?>" alt="<?php echo $bookView->getBook()->getName() ?>" class="book-img">
+        <h1><?php echo $bookView->getBook()->getName() ?></h1>
+        <p><h3>Author</h3> <?php echo $bookView->getBook()->getAuthor() ?>
+
+        <p><h3>Year</h3> <?php echo $bookView->getBook()->getYear() ?>
+        <p><h3>Price</h3> <?php echo $bookView->getBook()->getPrice() ?>
+        <p><h3>Rating</h3> <?php echo $bookView->getAverageRating() ?>
+        <p><h3>Description</h3> <?php echo $bookView->getBook()->getDescription() ?>
 
         <h3>Reviews</h3>
         <div class="reviews">
-            <?php foreach ($reviews as $review): ?>
+            <?php foreach ($bookView->getReviewViews() as $reviewView): ?>
                 <div class="review">
-                    <p><?php echo "111" ?></p>
-                    <p>Rating: <?php echo "5" ?>/5</p>
+                    <p class="author"><?php echo $reviewView->getUser()->getName() ?></p>
+                    <p><?php echo $reviewView->getReview()->getText() ?></p>
+                    <p>Rating: <?php echo $reviewView->getReview()->getRating() ?>/5</p>
+                    <p>Created at: <?php echo $reviewView->getReview()->getCreatedAt() ?></p>
+
+                    <?php if (\service\authentication\Authentication::getUser()
+                            ->getRoleId() == \entity\Role::ADMIN): ?>
+                        <form action="/catalog/delete-review" method="POST">
+                            <input type="hidden" name="from" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+                            <input type="hidden" name="review-id" value="<?php echo $reviewView->getReview()->getId() ?>">
+                            <button type="submit" class="delete-review-btn">Delete Review</button>
+                        </form>
+                    <?php endif; ?>
                 </div>
             <?php endforeach; ?>
         </div>
 
         <form action="/catalog/add-to-cart" method="POST">
-            <input type="hidden" name="book_id" value="<?php echo $book->getId() ?>">
+            <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
             <button type="submit" class="add-to-cart-btn">Add to Cart</button>
+        </form>
+
+        <form action="/catalog/add-review" method="POST" class="add-review-form">
+            <input type="hidden" name="from" value="<?php echo $_SERVER['REQUEST_URI']; ?>">
+            <h3>Add a Review</h3>
+            <label for="text">Your Review:</label><br>
+            <textarea id="text" name="text" rows="4" cols="50"></textarea><br>
+            <label for="rating">Rating:</label>
+            <select id="rating" name="rating">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select><br>
+            <br>
+            <input type="hidden" name="book-id" value="<?php echo $bookView->getBook()->getId() ?>">
+            <button type="submit" class="add-to-cart-btn">Submit Review</button>
         </form>
     </div>
 </div>
@@ -85,5 +116,52 @@
         border-bottom: 1px solid #ccc;
         padding-bottom: 10px;
         margin-bottom: 10px;
+        font-size: 17px;
     }
+
+    .review .author {
+        color: red;
+        font-style: revert;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .add-review-form {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .add-review-form label {
+        font-weight: bold;
+    }
+
+    .add-review-form textarea {
+        width: 100%;
+        max-width: 100%;
+        padding: 5px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .add-review-form select {
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .delete-review-btn {
+        background-color: rgb(130, 0, 200);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .delete-review-btn:hover {
+        background-color: #1E262DFF;
+    }
+
 </style>

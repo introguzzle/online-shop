@@ -8,22 +8,31 @@ use dto\RegistrationDTO;
 use request\LoginRequest;
 use request\RegistrationRequest;
 
-use service\LoginService;
+use service\authentication\AuthenticationService;
 use service\RegistrationService;
+use util\Requests;
+use validation\LoginValidator;
+use validation\RegistrationValidator;
 
 class UserController extends Controller
 {
-    private LoginService $loginService;
+    private AuthenticationService $loginService;
     private RegistrationService $registrationService;
+    private LoginValidator $loginValidator;
+    private RegistrationValidator $registrationValidator;
 
     public function __construct(
-        LoginService $loginService,
-        RegistrationService $registrationService
+        AuthenticationService $authenticationService,
+        RegistrationService   $registrationService,
+        LoginValidator        $loginValidator,
+        RegistrationValidator $registrationValidator
     )
     {
         parent::__construct();
-        $this->loginService = $loginService;
+        $this->loginService = $authenticationService;
         $this->registrationService = $registrationService;
+        $this->loginValidator = $loginValidator;
+        $this->registrationValidator = $registrationValidator;
     }
 
     public function loginView(): void
@@ -38,15 +47,15 @@ class UserController extends Controller
 
     public function login(LoginRequest $loginRequest): void
     {
-        $loginDTO = $this->toLoginDTO($loginRequest);
-        $errors = $this->loginService->processAuthentication($loginDTO);
+        $dto    = Requests::toDTO($loginRequest, LoginDTO::class);
+        $errors = $this->loginValidator->validate($dto);
 
-        if ($errors->hasNone()) {
+        if ($errors->hasNone() && $this->loginService->loginByCredentials($dto)) {
             header("Location: /home");
-
-        } else {
-            require_once $this->renderer->render("login.phtml", "Login");
+            return;
         }
+
+        require_once $this->renderer->render("login.phtml", "Login");
     }
 
     public function logout(): void
@@ -57,36 +66,14 @@ class UserController extends Controller
 
     public function register(RegistrationRequest $registrationRequest): void
     {
-        $registrationDTO = $this->toRegistrationDTO($registrationRequest);
-        $errors = $this->registrationService->processRegistration($registrationDTO);
+        $dto     = Requests::toDTO($registrationRequest, RegistrationDTO::class);
+        $errors  = $this->registrationValidator->validate($dto);
 
-        if ($errors->hasNone()) {
+        if ($errors->hasNone() && $this->registrationService->processRegistration($dto)) {
             header("Location: /login");
-
-        } else {
-            require_once $this->renderer->render("registration.phtml", "Registration");
+            return;
         }
-    }
 
-    private function toLoginDTO(
-        LoginRequest $loginRequest
-    ): LoginDTO
-    {
-        return new LoginDTO(
-            $loginRequest->getEmail(),
-            $loginRequest->getPassword()
-        );
-    }
-
-    private function toRegistrationDTO(
-        RegistrationRequest $registrationRequest
-    ): RegistrationDTO
-    {
-        return new RegistrationDTO(
-            $registrationRequest->getName(),
-            $registrationRequest->getEmail(),
-            $registrationRequest->getPassword(),
-            $registrationRequest->getPasswordRepeat()
-        );
+        require_once $this->renderer->render("registration.phtml", "Registration");
     }
 }

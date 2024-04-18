@@ -4,14 +4,14 @@ namespace request;
 
 class LoginRequest extends Request {
 
-    public function __construct(string $email,
-                                string $password,
-                                string $remember = "0") {
+    public function __construct(
+        array $body
+    ) {
         parent::__construct(
             "POST",
             "/login",
             ["Content-Type: application/x-www-form-urlencoded"],
-            ["email" => $email, "password" => $password, "remember" => $remember]
+            $body
         );
     }
 
@@ -24,6 +24,9 @@ class LoginRequest extends Request {
     }
 
     public function getRemember(): string {
-        return $this->getBody()["remember"];
+        if (isset($this->getBody()["remember"]))
+            return $this->getBody()["remember"];
+
+        return $this->getBody()["remember"] ?? "0";
     }
 }

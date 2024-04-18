@@ -84,6 +84,23 @@ CREATE TABLE orders
     finished    bool            not null
 );
 
+CREATE TABLE order_book
+(
+    id serial primary key ,
+    order_id bigint references orders(id),
+    book_id bigint references books(id)
+);
+
+CREATE TABLE reviews
+(
+    id serial primary key ,
+    user_id bigint references users(id),
+    book_id bigint references books(id),
+    text text not null,
+    rating float not null,
+    created_at timestamp DEFAULT CURRENT_TIMESTAMP
+);
+
 INSERT INTO books(name, author, description, year, price, image_url)
 VALUES ('Книга 1', 'Автор 1', 'Описание 1', '2010', '200',
         'https://i1.mybook.io/p/x756/book_covers/43/cc/43cc126f-275c-4a71-9d4a-2c44be44c657.jpg');

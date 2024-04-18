@@ -7,7 +7,7 @@ use Exception;
 use http\Exception\RuntimeException;
 use ReflectionClass;
 use Throwable;
-use util\Entities;
+use util\NamingConventions;
 
 class DefaultHydrator implements Hydrator
 {
@@ -28,7 +28,7 @@ class DefaultHydrator implements Hydrator
 
             $values = [];
             foreach ($parameters as $parameter) {
-                $snake = Entities::camelToSnake($parameter->getName());
+                $snake = NamingConventions::camelToSnake($parameter->getName());
 
                 if (in_array($snake, $columns))
                     $values[] = $data[$snake];
@@ -50,7 +50,7 @@ class DefaultHydrator implements Hydrator
         foreach ($properties as $property) {
             $propertyName = $property->getName();
 
-            $snake = Entities::camelToSnake($propertyName);
+            $snake = NamingConventions::camelToSnake($propertyName);
             $data[$snake] = $property->getValue($entity);
         }
 

@@ -2,19 +2,28 @@
 
 namespace controller;
 
+use dto\Errors;
 use dto\OrderDTO;
-use entity\Order;
 use request\OrderRequest;
 use service\OrderService;
+use util\Requests;
+use validation\OrderValidator;
+use validation\Validator;
 
 class OrderController extends Controller
 {
     private OrderService $orderService;
+    private Validator $orderValidator;
 
-    public function __construct(OrderService $orderService)
+    public function __construct(
+        OrderService $orderService,
+        OrderValidator $orderValidator
+    )
     {
         parent::__construct();
+
         $this->orderService = $orderService;
+        $this->orderValidator = $orderValidator;
     }
 
     public function view(): void
@@ -22,17 +31,12 @@ class OrderController extends Controller
         require_once $this->renderer->render("checkout.phtml");
     }
 
-    public function processOrder(): void
+    public function processOrder(OrderRequest $orderRequest): void
     {
-        $request = $this->acquireRequest();
+        $dto    = Requests::toDTO($orderRequest, OrderDTO::class);
+        $errors = $this->validate($dto);
 
-        $errors = $this->orderService->processOrder(new OrderDTO(
-            $request->getAddress(),
-            $request->getPhone(),
-            $request->getCardNumber()
-        ));
-
-        if ($errors->hasNone()) {
+        if ($errors->hasNone() && $this->orderService->processOrder($dto)->hasNone()) {
             header("Location: /catalog");
 
         } else {
@@ -40,12 +44,8 @@ class OrderController extends Controller
         }
     }
 
-    public function acquireRequest(): OrderRequest
+    private function validate(OrderDTO $dto): Errors
     {
-        return new OrderRequest(
-            $_POST["address"],
-            $_POST["phone"],
-            $_POST["card-number"]
-        );
+        return $this->orderValidator->validate($dto);
     }
 }

@@ -9,7 +9,11 @@ class OrderDTO extends DTO
     private string $cardNumber;
 
 
-    public function __construct(string $address, string $phone, string $cardNumber)
+    public function __construct(
+        string $address,
+        string $phone,
+        string $cardNumber
+    )
     {
         $this->address = $address;
         $this->phone = $phone;

@@ -7,17 +7,14 @@ use dto\Errors;
 class RegistrationRequest extends Request
 {
     public function __construct(
-        string $name,
-        string $email,
-        string $password,
-        string $passwordRepeat
+        array $body
     )
     {
         parent::__construct(
             "POST",
             "/registrate",
             ["Content-Type: application/x-www-form-urlencoded"],
-            ["name" => $name, "email" => $email, "password" => $password, "passwordRepeat" => $passwordRepeat]
+            $body
         );
     }
 
@@ -38,6 +35,6 @@ class RegistrationRequest extends Request
 
     public function getPasswordRepeat(): string
     {
-        return $this->getBody()["passwordRepeat"];
+        return $this->getBody()["password-repeat"];
     }
 }
